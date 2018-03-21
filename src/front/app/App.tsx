@@ -1,11 +1,14 @@
 import * as React from 'react'
+import {Provider} from 'react-redux'
+import {BrowserRouter} from 'react-router-dom'
+import Store from './state/Store'
 
 import './App.scss'
 
-class App extends React.Component {
-  render() {
-    return 'Hello World!'
-  }
-}
-
-export default App
+export default () => (
+    <Provider store={Store}>
+        <BrowserRouter>
+            <div>Hello world</div>
+        </BrowserRouter>
+    </Provider>
+)

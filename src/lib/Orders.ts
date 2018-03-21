@@ -1,9 +1,19 @@
 export enum ORDER_STATUS {
-    IN_PROGRESS = 0,
-    DONE = 1
+    SUBMITTED = 'SUBMITTED',
+    ACCEPTED = 'ACCEPTED',
+    READY = 'READY',
+    PICKING = 'PICKING',
+    DELIVERING = 'DELIVERING',
+    DONE = 'DONE'
+}
+
+export interface IOrderDetails {
+
 }
 
 export interface IOrder {
     id: string,
-    status: ORDER_STATUS
+    status: ORDER_STATUS,
+    restaurantId: string,
+    details: IOrderDetails
 }
