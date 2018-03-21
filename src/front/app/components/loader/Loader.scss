@@ -1,0 +1,38 @@
+#bf-demo-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.6s;
+
+  &.fade-out {
+    opacity: 0;
+  }
+
+  div {
+    width: 150px;
+    height: 150px;
+    background: url('../../style/images/blockfood-logo.svg');
+    background-size: contain;
+    animation: loader-blink 1s infinite;
+
+    @keyframes loader-blink {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+}
