@@ -52,7 +52,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "server": "rm -rf src/server/.ts/ && tsc --outDir src/server/.ts/ src/server/Server.ts && node src/server/.ts/server/Server.js"
+    "fake-server": "rm -rf .ts/ && tsc --outDir .ts/ src/fake-server/FakeServer.ts && node .ts/fake-server/FakeServer.js"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.8",

@@ -9,8 +9,8 @@
 # production
 /build
 
-# dev
-/src/server/.ts/
+# ts
+.ts/
 
 # misc
 /.idea
