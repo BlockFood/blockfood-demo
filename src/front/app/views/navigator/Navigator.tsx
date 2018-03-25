@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
@@ -23,10 +24,21 @@ class Navigator extends React.Component<any, any> {
         }
 
         this.onHelpMessageClose = this.onHelpMessageClose.bind(this)
+        this.switchView = this.switchView.bind(this)
     }
 
     onHelpMessageClose() {
         this.props.dispatch(closeHelpMessage())
+    }
+
+    switchView(event: any) {
+        const newViewPrefix = _.find([CUSTOMER_PREFIX, RESTAURANT_PREFIX, COURIER_PREFIX], viewPrefix => {
+            return event.target.className.indexOf(viewPrefix) !== -1
+        })
+
+        if (newViewPrefix) {
+            this.props.demoController.switchView(newViewPrefix)
+        }
     }
 
     componentWillReceiveProps(nextProps: any) {
@@ -36,7 +48,7 @@ class Navigator extends React.Component<any, any> {
     }
 
     render() {
-        const {visible, demoController, helpMessage} = this.props
+        const {viewPrefix, visible, demoController, helpMessage} = this.props
         const {step, stepLabel} = this.state
 
         const getStep = (minStep: STEPS, icon: string | null = null) => {
@@ -55,22 +67,38 @@ class Navigator extends React.Component<any, any> {
                     <i className="fas fa-undo-alt"/>Restart
                 </button>
                 <div className="progress">
-                    <div className="step-label">
-                        <div><span>{step + 1}.</span> {stepLabel}</div>
-                    </div>
+                    {step < STEPS.FREE_MODE && (
+                        <div className="step-label">
+                            <div><span>{step + 1}.</span> {stepLabel}</div>
+                        </div>
+                    )}
                     <div className="breadcrumb">
-                        {getStep(STEPS.CUSTOMER_SET_ADDRESS, CUSTOMER_PREFIX)}
-                        {getStep(STEPS.CUSTOMER_SET_ADDRESS)}
-                        {getStep(STEPS.CUSTOMER_CHOOSE_RESTAURANT)}
-                        {getStep(STEPS.CUSTOMER_CREATE_ORDER)}
-                        {getStep(STEPS.CUSTOMER_DO_PAYMENT)}
-                        {getStep(STEPS.RESTAURANT_ACCEPT_ORDER, RESTAURANT_PREFIX)}
-                        {getStep(STEPS.RESTAURANT_ACCEPT_ORDER)}
-                        {getStep(STEPS.RESTAURANT_NOTIFY_ORDER_READY)}
-                        {getStep(STEPS.COURIER_ACCEPT_ORDER, COURIER_PREFIX)}
-                        {getStep(STEPS.COURIER_ACCEPT_ORDER)}
-                        {getStep(STEPS.COURIER_NOTIFY_ORDER_PICKED)}
-                        {getStep(STEPS.COURIER_NOTIFY_ORDER_DELIVERED)}
+                        {step < STEPS.FREE_MODE ? (
+                            <React.Fragment>
+                                {getStep(STEPS.CUSTOMER_SET_ADDRESS, CUSTOMER_PREFIX)}
+                                {getStep(STEPS.CUSTOMER_SET_ADDRESS)}
+                                {getStep(STEPS.CUSTOMER_CHOOSE_RESTAURANT)}
+                                {getStep(STEPS.CUSTOMER_CREATE_ORDER)}
+                                {getStep(STEPS.CUSTOMER_DO_PAYMENT)}
+                                {getStep(STEPS.RESTAURANT_ACCEPT_ORDER, RESTAURANT_PREFIX)}
+                                {getStep(STEPS.RESTAURANT_ACCEPT_ORDER)}
+                                {getStep(STEPS.RESTAURANT_NOTIFY_ORDER_READY)}
+                                {getStep(STEPS.COURIER_ACCEPT_ORDER, COURIER_PREFIX)}
+                                {getStep(STEPS.COURIER_ACCEPT_ORDER)}
+                                {getStep(STEPS.COURIER_NOTIFY_ORDER_PICKED)}
+                                {getStep(STEPS.COURIER_NOTIFY_ORDER_DELIVERED)}
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                {_.map([CUSTOMER_PREFIX, RESTAURANT_PREFIX, COURIER_PREFIX], type => {
+                                    const isActive = viewPrefix.indexOf(type) === 0
+
+                                    return (
+                                        <div key={type} className={`icon btn ${type}${isActive ? ' active' : ''}`} onClick={this.switchView}/>
+                                    )
+                                })}
+                            </React.Fragment>
+                        )}
                     </div>
                 </div>
                 <a className="logo" href="http://blockfood.io" target="_blank" rel="noopener noreferrer"/>

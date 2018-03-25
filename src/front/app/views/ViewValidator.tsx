@@ -1,12 +1,27 @@
 import * as React from 'react'
 import {withRouter, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {IState} from '../state/InitialState'
 import * as Routes from './Routes'
+import {STEPS} from '../demoController/Steps'
 
-class ViewValidator extends React.Component {
+class ViewValidator extends React.Component<any, any> {
     isValid(): boolean {
-        // TODO: for each route, check the step and the state
-        return true
+        const {step} = this.props
+        const {pathname} = this.props.location
+
+        const currentRoute = Routes.getCurrentRoute(pathname)
+
+        switch (currentRoute) {
+            case Routes.CUSTOMER_EXAMPLE_ROUTE:
+                return (step === STEPS.FREE_MODE || (step >= STEPS.CUSTOMER_SET_ADDRESS && step <= STEPS.CUSTOMER_DO_PAYMENT))
+            case Routes.RESTAURANT_EXAMPLE_ROUTE:
+                return (step === STEPS.FREE_MODE || (step >= STEPS.RESTAURANT_ACCEPT_ORDER && step <= STEPS.RESTAURANT_NOTIFY_ORDER_READY))
+            case Routes.COURIER_EXAMPLE_ROUTE:
+                return (step === STEPS.FREE_MODE || (step >= STEPS.COURIER_ACCEPT_ORDER && step <= STEPS.COURIER_NOTIFY_ORDER_DELIVERED))
+            default:
+                return true
+        }
     }
 
     render() {
@@ -19,4 +34,10 @@ class ViewValidator extends React.Component {
     }
 }
 
-export default withRouter<any>(connect()(ViewValidator))
+const mapStateToProps = (state: IState) => {
+    return {
+        step: state.step
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(ViewValidator) as any) as any

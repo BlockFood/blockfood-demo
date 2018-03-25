@@ -16,6 +16,12 @@ const CUSTOMER_ROUTES_LIST = [
     CUSTOMER_EXAMPLE_ROUTE
 ]
 
+const ALL_ROUTES = [
+    CUSTOMER_EXAMPLE_ROUTE,
+    RESTAURANT_EXAMPLE_ROUTE,
+    COURIER_EXAMPLE_ROUTE
+]
+
 const getRouteWithDemoId = (route: string): string => {
     return route.replace(':demoId', Api.getDemoId())
 }
@@ -42,4 +48,8 @@ export const getViewPrefixFromPathname = (pathname: string): string | null => {
 
 export const getCustomerRouteIndex = (pathname: string) => {
     return _.findIndex(CUSTOMER_ROUTES_LIST, path => matchPath(pathname, {path, exact: true}))
+}
+
+export const getCurrentRoute = (pathname: string) => {
+    return _.find(ALL_ROUTES, path => matchPath(pathname, {path, exact: true}))
 }

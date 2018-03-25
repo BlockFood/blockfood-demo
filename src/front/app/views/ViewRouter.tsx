@@ -106,7 +106,7 @@ class MainView extends React.Component<any, any> {
                                 <Route path={Routes.COURIER_EXAMPLE_ROUTE} exact component={CourierExample}/>
                                 <Redirect to={Routes.HOME}/>
                             </Switch>
-                            <Navigator visible={showHeaderAndNavigator}/>
+                            <Navigator viewPrefix={viewPrefix} visible={showHeaderAndNavigator}/>
                         </ViewValidator>
                     )}
                     <Loader active={!ready}/>
