@@ -2,12 +2,12 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import Api from '../../api/Api'
 import doWithMinTime from '../../utils/DoWithMinTime'
-import withDemoController from '../../demoController/DemoController'
+import withDemoController from '../../demoController/WithDemoController'
 import {restart} from '../../state/Actions'
 
-import './DemoStart.scss'
+import './Start.scss'
 
-class DemoStart extends React.Component<any, any> {
+class Start extends React.Component<any, any> {
     constructor(props: any) {
         super(props)
 
@@ -39,4 +39,4 @@ class DemoStart extends React.Component<any, any> {
     }
 }
 
-export default connect()(withDemoController(DemoStart))
+export default connect()(withDemoController(Start))

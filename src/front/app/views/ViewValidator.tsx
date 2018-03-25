@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {withRouter, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {IState} from '../state/InitialState'
 import * as Routes from './Routes'
 
 class ViewValidator extends React.Component {
@@ -20,8 +19,4 @@ class ViewValidator extends React.Component {
     }
 }
 
-const mapStateToProps = (state: IState) => {
-    return {}
-}
-
-export default withRouter<any>(connect(mapStateToProps)(ViewValidator))
+export default withRouter<any>(connect()(ViewValidator))

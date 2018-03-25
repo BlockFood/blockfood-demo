@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import './DemoError.scss'
+import './ApiError.scss'
 
-class DemoError extends React.Component<any, any> {
+class ApiError extends React.Component<any, any> {
     constructor(props: any) {
         super(props)
 
@@ -23,4 +23,4 @@ class DemoError extends React.Component<any, any> {
     }
 }
 
-export default DemoError
+export default ApiError

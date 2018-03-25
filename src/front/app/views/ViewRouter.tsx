@@ -6,11 +6,11 @@ import Api from '../api/Api'
 import * as Routes from './Routes'
 import {ORDER_STATUS} from '../../../lib/Orders'
 import {STEPS, FIRST_STEP_WITH_AN_ORDER} from '../demoController/Steps'
-import DemoError from './demo/DemoError'
-import DemoStart from './demo/DemoStart'
+import ApiError from './misc/ApiError'
+import Start from './misc/Start'
 import ViewValidator from './ViewValidator'
 import Header from './header/Header'
-import Navigator from '../demoController/navigator/Navigator'
+import Navigator from './navigator/Navigator'
 import CustomerExample from './main/customer-views/CustomerExample'
 import RestaurantExample from './main/restaurant-views/RestaurantExample'
 import CourierExample from './main/courier-views/CourierExample'
@@ -86,7 +86,7 @@ class MainView extends React.Component<any, any> {
         const {error, ready} = this.state
 
         if (error) {
-            return <DemoError/>
+            return <ApiError/>
         }
         else {
             const {pathname} = this.props.location
@@ -100,7 +100,7 @@ class MainView extends React.Component<any, any> {
                         <ViewValidator>
                             <Header viewPrefix={viewPrefix} visible={showHeaderAndNavigator}/>
                             <Switch>
-                                <Route path={Routes.HOME} exact component={DemoStart}/>
+                                <Route path={Routes.HOME} exact component={Start}/>
                                 <Route path={Routes.CUSTOMER_EXAMPLE_ROUTE} exact component={CustomerExample}/>
                                 <Route path={Routes.RESTAURANT_EXAMPLE_ROUTE} exact component={RestaurantExample}/>
                                 <Route path={Routes.COURIER_EXAMPLE_ROUTE} exact component={CourierExample}/>

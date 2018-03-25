@@ -18,7 +18,7 @@
     transition: 0.5s opacity;
 
     .wrapper {
-      transition: 0.5s transform;
+      transition: 0.3s transform;
     }
   }
 
@@ -62,7 +62,7 @@
       padding: 20px;
       background-color: #FFFFFF;
       font-family: "Open Sans", sans-serif;
-      color: #4b3f80;
+      color: $mainColor;
       font-size: 1.2em;
       border-radius: 5px;
 

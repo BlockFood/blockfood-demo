@@ -43,7 +43,7 @@ class Modal extends React.Component {
                     <div className="wrapper">
                         <div className="container">
                             {this.props.children}
-                            <div className="close" onClick={this.close}>GO!</div>
+                            <div className="close" onClick={this.close}>Go!</div>
                         </div>
                     </div>
                 </div>
