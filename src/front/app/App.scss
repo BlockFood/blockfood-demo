@@ -1,6 +1,9 @@
 @import '../../../node_modules/reset-css/reset.scss';
 
+@import './style/Variables';
+
 html, body, #root {
   position: relative;
   height: 100%;
+  color: $textColor;
 }

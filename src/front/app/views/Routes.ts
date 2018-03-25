@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import Api from '../api/Api'
 
 export const CUSTOMER_PREFIX = 'customer-view'
@@ -22,4 +23,12 @@ export const getRouteRestaurantExample = (): string => {
 
 export const getRouteCourierExample = (): string => {
     return getRouteWithDemoId(COURIER_EXAMPLE_ROUTE)
+}
+
+export const getViewPrefixFromPathname = (pathname: string): string | null => {
+    return _.find([
+        CUSTOMER_PREFIX,
+        RESTAURANT_PREFIX,
+        COURIER_PREFIX
+    ], route => pathname.indexOf(route) !== -1) || null
 }

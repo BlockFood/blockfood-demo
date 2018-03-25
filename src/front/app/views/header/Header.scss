@@ -1,0 +1,104 @@
+@import '../../style/Variables';
+
+#bf-demo-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75px;
+  box-shadow: 0 0 5px rgba($mainColor, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  box-sizing: border-box;
+  transform: translateY(-90px);
+  transition: transform 0.5s;
+  z-index: 2;
+
+  &.visible {
+    transform: translateY(0);
+  }
+
+  .logo {
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    .name {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Poppins, sans-serif;
+      font-size: 2em;
+      font-weight: bold;
+      color: $mainColor;
+
+      i {
+        width: 60px;
+        height: 60px;
+        display: block;
+        margin-right: 10px;
+
+        &.customer {
+          background: url('../../style/images/customer-color.svg');
+        }
+
+        &.restaurant {
+          background: url('../../style/images/restaurant-color.svg');
+        }
+
+        &.courier {
+          background: url('../../style/images/courier-color.svg');
+        }
+      }
+
+      span {
+        font-weight: normal;
+
+        &:last-of-type {
+          text-transform: uppercase;
+          opacity: 0.3;
+        }
+      }
+    }
+
+    .icon {
+      margin-left: 15px;
+      font-weight: 400;
+      font-style: italic;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      span {
+        font-family: Poppins, sans-serif;
+        margin-top: -2px;
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .user {
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-left: 25px;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .username {
+      font-family: "Open Sans", sans-serif;
+      font-size: 1.2em;
+
+      i {
+        margin-right: 3px;
+      }
+
+      span {
+        font-weight: bold;
+      }
+    }
+  }
+}

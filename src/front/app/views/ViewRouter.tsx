@@ -7,6 +7,8 @@ import ViewValidator from './ViewValidator'
 import * as Routes from './Routes'
 import DemoError from './demo/DemoError'
 import DemoStart from './demo/DemoStart'
+import Header from './header/Header'
+import Navigator from '../demoController/navigator/Navigator'
 import CustomerExample from './main/customer-views/CustomerExample'
 import RestaurantExample from './main/restaurant-views/RestaurantExample'
 import CourierExample from './main/courier-views/CourierExample'
@@ -47,10 +49,15 @@ class MainView extends React.Component<any, any> {
             return <DemoError/>
         }
         else {
+            const {pathname} = this.props.location
+
+            const viewPrefix = Routes.getViewPrefixFromPathname(pathname)
+
             return (
                 <React.Fragment>
                     {ready && (
                         <ViewValidator>
+                            <Header viewPrefix={viewPrefix} visible={pathname !== '/'}/>
                             <Switch>
                                 <Route path="/" exact component={DemoStart}/>
                                 <Route path={Routes.CUSTOMER_EXAMPLE_ROUTE} exact component={CustomerExample}/>
@@ -58,6 +65,7 @@ class MainView extends React.Component<any, any> {
                                 <Route path={Routes.COURIER_EXAMPLE_ROUTE} exact component={CourierExample}/>
                                 <Redirect to="/"/>
                             </Switch>
+                            <Navigator visible={pathname !== '/'}/>
                         </ViewValidator>
                     )}
                     <Loader active={!ready}/>
@@ -67,4 +75,4 @@ class MainView extends React.Component<any, any> {
     }
 }
 
-export default withRouter<any>(connect()(MainView))
+export default withRouter(connect()(MainView) as any) as any

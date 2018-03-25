@@ -20,3 +20,13 @@
     opacity: 0.3;
   }
 }
+
+@mixin btn-reverse-color($color: $mainColor) {
+  @include btn(white);
+  background-color: $color;
+
+  &:not(.disabled):hover {
+    background-color: white;
+    color: $color;
+  }
+}
