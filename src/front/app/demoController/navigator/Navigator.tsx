@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {IState} from '../../state/InitialState'
 import {getHelpMessageContent} from '../HelpMessages'
+import withDemoController from '../DemoController'
 import Modal from '../../components/modal/Modal'
 import {closeHelpMessage} from '../../state/Actions'
 
@@ -12,12 +13,7 @@ class Navigator extends React.Component<any, any> {
     constructor(props: any) {
         super(props)
 
-        this.onRestart = this.onRestart.bind(this)
         this.onHelpMessageClose = this.onHelpMessageClose.bind(this)
-    }
-
-    onRestart() {
-        this.props.history.replace('/')
     }
 
     onHelpMessageClose() {
@@ -25,11 +21,11 @@ class Navigator extends React.Component<any, any> {
     }
 
     render() {
-        const {visible, helpMessage} = this.props
+        const {visible, demoController, helpMessage} = this.props
 
         return (
             <footer id="bf-demo-navigator" className={visible ? 'visible' : ''}>
-                <button className="restart" onClick={this.onRestart}><i className="fas fa-undo-alt"/>Restart</button>
+                <button className="restart" onClick={demoController.restart}><i className="fas fa-undo-alt"/>Restart</button>
                 {helpMessage && (
                     <Modal onImmediateClose={helpMessage.onClose} onClose={this.onHelpMessageClose}>
                         {getHelpMessageContent(helpMessage.id)}
@@ -46,4 +42,4 @@ const mapStateToProps = (state: IState) => {
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Navigator) as any) as any
+export default withRouter(connect(mapStateToProps)(withDemoController(Navigator)) as any) as any

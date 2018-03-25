@@ -2,6 +2,7 @@ import * as React from 'react'
 import {withRouter, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {IState} from '../state/InitialState'
+import * as Routes from './Routes'
 
 class ViewValidator extends React.Component {
     isValid(): boolean {
@@ -14,7 +15,7 @@ class ViewValidator extends React.Component {
             return this.props.children
         }
         else {
-            return <Redirect to="/"/>
+            return <Redirect to={Routes.HOME}/>
         }
     }
 }

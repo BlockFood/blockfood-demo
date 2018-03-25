@@ -22,7 +22,7 @@ class MainView extends React.Component<any, any> {
         super(props)
 
         const {pathname} = this.props.location
-        const demoId = pathname !== '/' ? pathname.split('/')[1] : null
+        const demoId = pathname !== Routes.HOME ? pathname.split('/')[1] : null
 
         Api.init(demoId, this.onError.bind(this))
 
@@ -45,36 +45,41 @@ class MainView extends React.Component<any, any> {
     componentDidMount() {
         const {pathname} = this.props.location
 
-        Api.getOrders(false)
-            .then((orders) => {
-                let step: STEPS
-                if (orders.length === 0) {
-                    // At the beginning, as a customer, 1 route = 1 step,
-                    // so the step is given by the current route
-                    step = Routes.getCustomerRouteIndex(pathname) as STEPS
-                }
-                else if (orders[0].status === ORDER_STATUS.DONE) {
-                    step = STEPS.FREE_MODE
-                }
-                else {
-                    // After the customer part, each order status = 1 step,
-                    // so the step is given by the current order status
-                    const statusIndex = _.findIndex(_.values(ORDER_STATUS), status => status === orders[0].status)
-                    step = (statusIndex + FIRST_STEP_WITH_AN_ORDER) as STEPS
-                }
+        if (pathname !== Routes.HOME) {
+            Api.getOrders(false)
+                .then((orders) => {
+                    let step: STEPS
+                    if (orders.length === 0) {
+                        // At the beginning, as a customer, 1 route = 1 step,
+                        // so the step is given by the current route
+                        step = Routes.getCustomerRouteIndex(pathname) as STEPS
+                    }
+                    else if (orders[0].status === ORDER_STATUS.DONE) {
+                        step = STEPS.FREE_MODE
+                    }
+                    else {
+                        // After the customer part, each order status = 1 step,
+                        // so the step is given by the current order status
+                        const statusIndex = _.findIndex(_.values(ORDER_STATUS), status => status === orders[0].status)
+                        step = (statusIndex + FIRST_STEP_WITH_AN_ORDER) as STEPS
+                    }
 
-                this.props.dispatch(setStep(step))
-                this.props.dispatch(setOrders(orders))
-                this.setState({ready: true})
-            })
-            .catch((err) => {
-                if (!err || !err.response || !err.response.status || err.response.status !== 403) {
-                    console.error(err)
-                }
+                    this.props.dispatch(setStep(step))
+                    this.props.dispatch(setOrders(orders))
+                    this.setState({ready: true})
+                })
+                .catch((err) => {
+                    if (!err || !err.response || !err.response.status || err.response.status !== 403) {
+                        console.error(err)
+                    }
 
-                this.props.history.replace('/')
-                this.setState({ready: true})
-            })
+                    this.props.history.replace(Routes.HOME)
+                    this.setState({ready: true})
+                })
+        }
+        else {
+            this.setState({ready: true})
+        }
     }
 
     render() {
@@ -87,7 +92,7 @@ class MainView extends React.Component<any, any> {
             const {pathname} = this.props.location
 
             const viewPrefix = Routes.getViewPrefixFromPathname(pathname)
-            const showHeaderAndNavigator = pathname !== '/'
+            const showHeaderAndNavigator = pathname !== Routes.HOME
 
             return (
                 <React.Fragment>
@@ -95,11 +100,11 @@ class MainView extends React.Component<any, any> {
                         <ViewValidator>
                             <Header viewPrefix={viewPrefix} visible={showHeaderAndNavigator}/>
                             <Switch>
-                                <Route path="/" exact component={DemoStart}/>
+                                <Route path={Routes.HOME} exact component={DemoStart}/>
                                 <Route path={Routes.CUSTOMER_EXAMPLE_ROUTE} exact component={CustomerExample}/>
                                 <Route path={Routes.RESTAURANT_EXAMPLE_ROUTE} exact component={RestaurantExample}/>
                                 <Route path={Routes.COURIER_EXAMPLE_ROUTE} exact component={CourierExample}/>
-                                <Redirect to="/"/>
+                                <Redirect to={Routes.HOME}/>
                             </Switch>
                             <Navigator visible={showHeaderAndNavigator}/>
                         </ViewValidator>

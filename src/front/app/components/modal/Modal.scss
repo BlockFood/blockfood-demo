@@ -82,6 +82,10 @@
         margin-top: 20px;
         font-weight: 700;
       }
+
+      p:not(:last-of-type) {
+        margin-bottom: 5px;
+      }
     }
   }
 }

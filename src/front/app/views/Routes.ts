@@ -2,6 +2,8 @@ import * as _ from 'lodash'
 import {matchPath} from 'react-router-dom'
 import Api from '../api/Api'
 
+export const HOME = '/'
+
 export const CUSTOMER_PREFIX = 'customer-view'
 export const RESTAURANT_PREFIX = 'restaurant-view'
 export const COURIER_PREFIX = 'courier-view'
