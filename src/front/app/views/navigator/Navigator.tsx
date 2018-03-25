@@ -31,6 +31,7 @@ class Navigator extends React.Component<any, any> {
                         {getHelpMessageContent(helpMessage.id)}
                     </Modal>
                 )}
+                <a className="logo" href="http://blockfood.io" target="_blank" rel="noopener noreferrer"/>
             </footer>
         )
     }

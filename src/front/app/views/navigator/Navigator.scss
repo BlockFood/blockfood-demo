@@ -24,13 +24,22 @@
 
   button {
     @include btn-reverse-color();
+    width: 140px;
     margin-right: 25px;
-    padding: 5px 15px;
+    padding: 5px 0;
     font-size: 1.3em;
 
     i {
       margin-right: 10px;
       font-size: 0.9em;
     }
+  }
+
+  .logo {
+    width: 140px;
+    height: 100px;
+    background: url('../../style/images/blockfood-logo.svg') no-repeat center;
+    background-size: contain;
+    cursor: pointer;
   }
 }
