@@ -20,7 +20,7 @@ const reduceStep = (state: IState, action: any): IState => {
 }
 
 const reduceHelpMessage = (state: IState, action: any): IState => {
-    const helpMessage: IHelpMessageModal | null = action.id ? {
+    const helpMessage: IHelpMessageModal | null = !action.close ? {
         id: action.id,
         onClose: action.onClose
     } : null

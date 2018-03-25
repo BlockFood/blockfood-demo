@@ -11,7 +11,8 @@ export const RESTART = 'RESTART'
 
 export const setStep = (step: STEPS) => ({type: SET_STEP, step})
 
-export const setHelpMessage = (helpMessage: HELP_MESSAGES) => ({type: SET_HELP_MESSAGE, helpMessage})
+export const setHelpMessage = (id: HELP_MESSAGES | null, onClose: any = null) => ({type: SET_HELP_MESSAGE, id, onClose})
+export const closeHelpMessage = () => ({type: SET_HELP_MESSAGE, close: true})
 
 export const setOrders = (orders: IOrder[]) => ({type: SET_ORDERS, orders})
 

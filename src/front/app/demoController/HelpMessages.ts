@@ -1,6 +1,0 @@
-export const enum HELP_MESSAGES {
-    START_AS_CUSTOMER = 0,
-    START_AS_RESTAURANT = 1,
-    START_AS_COURIER = 2,
-    START_FREE_MODE = 3
-}

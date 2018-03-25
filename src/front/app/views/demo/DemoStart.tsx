@@ -2,10 +2,8 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import Api from '../../api/Api'
 import doWithMinTime from '../../utils/DoWithMinTime'
-import {STEPS} from '../../demoController/Steps'
-import {HELP_MESSAGES} from '../../demoController/HelpMessages'
-import {getRouteCustomerExample} from '../Routes'
-import {restart, setStep, setHelpMessage} from '../../state/Actions'
+import withDemoController from '../../demoController/DemoController'
+import {restart} from '../../state/Actions'
 
 import './DemoStart.scss'
 
@@ -23,11 +21,7 @@ class DemoStart extends React.Component<any, any> {
     onStartDemo() {
         this.setState({loading: true})
 
-        doWithMinTime(() => Api.startDemo()).then(() => {
-            this.props.dispatch(setStep(STEPS.CUSTOMER_SET_ADDRESS))
-            this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_CUSTOMER))
-            this.props.history.replace(getRouteCustomerExample())
-        })
+        doWithMinTime(() => Api.startDemo()).then(() => this.props.demoController.start())
     }
 
     componentDidMount() {
@@ -45,4 +39,4 @@ class DemoStart extends React.Component<any, any> {
     }
 }
 
-export default connect()(DemoStart)
+export default connect()(withDemoController(DemoStart))
