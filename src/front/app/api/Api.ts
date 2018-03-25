@@ -25,10 +25,10 @@ class Api {
             .catch(this.onError)
     }
 
-    getOrders(): Promise<IOrder[]> {
+    getOrders(defaultErrorHandler = true): Promise<IOrder[]> {
         return Http.get(`${API_REMOTE_URL}/api/${this.demoId}/orders`)
             .then(({data: orders}: any) => orders as IOrder[])
-            .catch(this.onError)
+            .catch((err) => defaultErrorHandler ? this.onError() : Promise.reject(err))
     }
 
     createNewOrder(restaurantId: string, details: IOrderDetails): Promise<IOrder[]> {

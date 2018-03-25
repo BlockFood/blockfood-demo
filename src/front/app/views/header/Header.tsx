@@ -31,7 +31,7 @@ class Header extends React.Component<any, any> {
 
     componentWillReceiveProps(nextProps: any) {
         if (nextProps.viewPrefix !== this.props.viewPrefix) {
-            const {type, userLabel} = this.getStatus()
+            const {type, userLabel} = this.getStatus(nextProps)
 
             type && this.setState({type, userLabel})
         }

@@ -1,5 +1,6 @@
 import {STEPS} from '../demoController/Steps'
 import {HELP_MESSAGES} from '../demoController/HelpMessages'
+import {IOrder} from '../../../lib/Orders'
 
 export const SET_STEP = 'SET_STEP'
 export const SET_HELP_MESSAGE = 'SET_HELP_MESSAGE'
@@ -11,5 +12,7 @@ export const RESTART = 'RESTART'
 export const setStep = (step: STEPS) => ({type: SET_STEP, step})
 
 export const setHelpMessage = (helpMessage: HELP_MESSAGES) => ({type: SET_HELP_MESSAGE, helpMessage})
+
+export const setOrders = (orders: IOrder[]) => ({type: SET_ORDERS, orders})
 
 export const restart = () => ({type: RESTART})

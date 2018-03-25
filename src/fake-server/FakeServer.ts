@@ -85,7 +85,7 @@ app.get('/api/:demoId/orders', (req, res) => {
     const {demoId} = req.params
     const orders = database[demoId]
 
-    if (!orders || orders.length === 0) {
+    if (!orders) {
         res.sendStatus(403)
     }
     else {

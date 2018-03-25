@@ -5,6 +5,7 @@ import {IState} from '../state/InitialState'
 
 class ViewValidator extends React.Component {
     isValid(): boolean {
+        // TODO: for each route, check the step and the state
         return true
     }
 
