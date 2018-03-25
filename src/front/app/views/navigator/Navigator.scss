@@ -22,9 +22,12 @@
     transform: translateY(0);
   }
 
-  button {
-    @include btn-reverse-color();
+  & > button, .logo {
     width: 140px;
+  }
+
+  & > button {
+    @include btn-reverse-color();
     margin-right: 25px;
     padding: 5px 0;
     font-size: 1.3em;
@@ -35,11 +38,96 @@
     }
   }
 
+  .progress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .step-label {
+      height: 17px;
+      line-height: 17px;
+      font-family: Poppins, sans-serif;
+      font-size: 1.1em;
+      color: white;
+      margin-bottom: 14px;
+
+      span {
+        margin-right: 5px;
+      }
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      & > * {
+        position: relative;
+        margin-left: 25px;
+        transition: opacity 0.3s;
+        opacity: 1;
+        user-select: none;
+
+        &:not(.completed) {
+          opacity: 0.3;
+        }
+
+        &:not(:first-of-type):before {
+          content: '';
+          position: absolute;
+          top: calc((100% - 4px) / 2);
+          left: -25px;
+          height: 4px;
+          width: 25px;
+          background: white;
+          z-index: -1;
+        }
+      }
+
+      .icon {
+        width: 60px;
+        height: 60px;
+        background: white no-repeat center;
+        background-size: 65%;
+        border-radius: 100%;
+
+        &.customer-view {
+          background-image: url('../../style/images/customer.svg');
+        }
+
+        &.restaurant-view {
+          background-image: url('../../style/images/restaurant.svg');
+        }
+
+        &.courier-view {
+          background-image: url('../../style/images/courier.svg');
+        }
+      }
+
+      .step {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        background: white;
+        font-family: Poppins, sans-serif;
+        border-radius: 100%;
+        text-align: center;
+        font-weight: bold;
+      }
+    }
+  }
+
   .logo {
-    width: 140px;
+    width: 100px;
     height: 100px;
-    background: url('../../style/images/blockfood-logo.svg') no-repeat center;
+    background: url('../../style/images/blockfood-logo.svg') no-repeat center right;
     background-size: contain;
     cursor: pointer;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 }
