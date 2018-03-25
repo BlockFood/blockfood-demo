@@ -1,0 +1,27 @@
+@import '../../style/Variables';
+@import '../../style/Mixins';
+
+#bf-demo-start {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    font-size: 3em;
+    color: $mainColor;
+    animation-duration: 0.9s;
+    animation-timing-function: ease-in-out;
+  }
+
+  button {
+    @include btn();
+    padding: 5px 25px;
+    font-size: 2.7em;
+    border-width: 3px;
+  }
+}

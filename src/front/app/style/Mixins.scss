@@ -1,0 +1,22 @@
+@import './Variables';
+
+@mixin btn($color: $mainColor) {
+  outline: none;
+  user-select: none;
+  background-color: white;
+  border-radius: 5px;
+  border: 2px solid $color;
+  color: $color;
+  font-family: Poppins, sans-serif;
+  font-weight: bold;
+
+  &:not(.disabled):hover {
+    cursor: pointer;
+    background-color: $color;
+    color: white;
+  }
+
+  &.disabled {
+    opacity: 0.3;
+  }
+}

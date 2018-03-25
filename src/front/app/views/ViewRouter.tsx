@@ -1,9 +1,15 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {withRouter} from 'react-router'
+import {withRouter, Switch, Route, Redirect} from 'react-router'
 import Api from '../api/Api'
 import Loader from '../components/loader/Loader'
 import ViewValidator from './ViewValidator'
+import * as Routes from './Routes'
+import DemoError from './demo/DemoError'
+import DemoStart from './demo/DemoStart'
+import CustomerExample from './main/customer-views/CustomerExample'
+import RestaurantExample from './main/restaurant-views/RestaurantExample'
+import CourierExample from './main/courier-views/CourierExample'
 
 class MainView extends React.Component<any, any> {
     constructor(props: any) {
@@ -38,19 +44,20 @@ class MainView extends React.Component<any, any> {
         const {error, ready} = this.state
 
         if (error) {
-            return (
-                <div id="bf-demo-error">
-                    <p>Error... Please restart the demo...</p>
-                    <button onClick={this.onRestart}>Restart demo</button>
-                </div>
-            )
+            return <DemoError/>
         }
         else {
             return (
                 <React.Fragment>
                     {ready && (
                         <ViewValidator>
-                            <div>Hello BlockFood!</div>
+                            <Switch>
+                                <Route path="/" exact component={DemoStart}/>
+                                <Route path={Routes.CUSTOMER_EXAMPLE_ROUTE} exact component={CustomerExample}/>
+                                <Route path={Routes.RESTAURANT_EXAMPLE_ROUTE} exact component={RestaurantExample}/>
+                                <Route path={Routes.COURIER_EXAMPLE_ROUTE} exact component={CourierExample}/>
+                                <Redirect to="/"/>
+                            </Switch>
                         </ViewValidator>
                     )}
                     <Loader active={!ready}/>

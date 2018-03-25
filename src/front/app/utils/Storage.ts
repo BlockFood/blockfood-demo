@@ -32,7 +32,7 @@ class Storage {
         Storage._writeObjectToSessionStorage('current-address', currentAddress)
     }
 
-    static getCurrentAddress() {
+    static getCurrentAddress(): string {
         return Storage._readObjectFromSessionStorage('current-address')
     }
 
@@ -40,7 +40,7 @@ class Storage {
         Storage._writeObjectToSessionStorage('order-in-progress', orderInProgress)
     }
 
-    static getOrderInProgress() {
+    static getOrderInProgress(): any {
         return Storage._readObjectFromSessionStorage('order-in-progress')
     }
 

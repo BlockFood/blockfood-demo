@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {IState} from '../state/InitialState'
 
 class ViewValidator extends React.Component {
-    isValid() {
+    isValid(): boolean {
         return true
     }
 
