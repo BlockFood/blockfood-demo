@@ -2,7 +2,7 @@
 @import '../../style/Mixins';
 
 #bf-demo-error {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -11,6 +11,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: white;
+  z-index: 99;
 
   p {
     font-family: "Open Sans", sans-serif;

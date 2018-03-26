@@ -25,10 +25,9 @@
       @include btn();
       font-size: 1.3em;
       padding: 5px 10px;
-      width: 375px;
 
       b {
-        margin-left: 5px;
+        margin-left: 10px;
       }
 
       &:not(:first-of-type) {

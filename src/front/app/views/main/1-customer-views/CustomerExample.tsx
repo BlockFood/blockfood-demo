@@ -24,7 +24,7 @@ class RestaurantButton extends React.Component<any, any> {
     render() {
         const {index, disabled} = this.props
 
-        return <button className={disabled ? 'disabled' : ''} onClick={this.onClick}>CREATE ORDER IN RESTAURANT {index}</button>
+        return <button className={disabled ? 'disabled' : ''} onClick={this.onClick}>CREATE ORDER IN RESTAURANT: <b>{index}</b></button>
     }
 }
 

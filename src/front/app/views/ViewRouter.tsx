@@ -5,8 +5,8 @@ import Api from '../api/Api'
 import * as Routes from './Routes'
 import withDemoController from '../demoController/WithDemoController'
 import DemoControllerPanel from '../demoController/panel/DemoControllerPanel'
-import ApiError from './misc/ApiError'
-import Start from './misc/Start'
+import Error from '../components/error/Error'
+import Start from './start/Start'
 import DemoViewValidator from '../demoController/DemoViewValidator'
 import Header from './header/Header'
 import CustomerExample from './main/1-customer-views/CustomerExample'
@@ -68,7 +68,7 @@ class MainView extends React.Component<any, any> {
         const {error, ready} = this.state
 
         if (error) {
-            return <ApiError/>
+            return <Error/>
         }
         else {
             const {pathname} = this.props.location

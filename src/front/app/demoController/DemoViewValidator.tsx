@@ -1,9 +1,10 @@
 import * as React from 'react'
-import {withRouter, Redirect} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {IState} from '../state/InitialState'
 import * as Routes from '../views/Routes'
 import {STEPS} from './types/Steps'
+import Error from '../components/error/Error'
 
 class DemoViewValidator extends React.Component<any, any> {
     isValid(): boolean {
@@ -34,7 +35,7 @@ class DemoViewValidator extends React.Component<any, any> {
             return this.props.children
         }
         else {
-            return <Redirect to={Routes.HOME}/>
+            return <Error/>
         }
     }
 }

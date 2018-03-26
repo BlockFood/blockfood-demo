@@ -100,6 +100,11 @@ export default (WrappedComponent: any) => {
                 return false
             }
             else if (step < STEPS.COURIER_ACCEPT_ORDER) {
+                this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_COURIER, () => {
+                    this.props.dispatch(setStep(STEPS.COURIER_ACCEPT_ORDER))
+                    this.props.history.replace(Routes.getDefaultRouteCourier())
+                }))
+
                 return false
             }
             else {
