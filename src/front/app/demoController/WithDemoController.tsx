@@ -2,6 +2,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
+import {IState} from '../state/InitialState'
 import {IOrder, ORDER_STATUS} from '../../../lib/Orders'
 import {FIRST_STEP_WITH_AN_ORDER, STEPS} from './types/Steps'
 import {HELP_MESSAGES} from './types/HelpMessages'
@@ -20,6 +21,7 @@ export default (WrappedComponent: any) => {
             this.start = this.start.bind(this)
             this.restart = this.restart.bind(this)
             this.switchView = this.switchView.bind(this)
+            this.goToNextStep = this.goToNextStep.bind(this)
         }
 
         init(orders: IOrder[]) {
@@ -66,7 +68,15 @@ export default (WrappedComponent: any) => {
                 routeToRedirect = LAST_FREE_MODE_ROUTES[Routes.CUSTOMER_VIEW] || Routes.getDefaultRouteCustomer()
             }
             else if (newView === Routes.RESTAURANT_VIEW) {
-                routeToRedirect = LAST_FREE_MODE_ROUTES[Routes.RESTAURANT_VIEW] || Routes.getDefaultRouteRestaurant()
+                let restaurantId
+                if (LAST_FREE_MODE_ROUTES[Routes.RESTAURANT_VIEW]) {
+                    restaurantId = Routes.getRestaurantIdFromPathname(LAST_FREE_MODE_ROUTES[Routes.RESTAURANT_VIEW])
+                }
+                else {
+                    restaurantId = this.props.orders[0].restaurantId
+                }
+
+                routeToRedirect = LAST_FREE_MODE_ROUTES[Routes.RESTAURANT_VIEW] || Routes.getDefaultRouteRestaurant(restaurantId)
             }
             else {
                 routeToRedirect = LAST_FREE_MODE_ROUTES[Routes.COURIER_VIEW] || Routes.getDefaultRouteCourier()
@@ -75,17 +85,47 @@ export default (WrappedComponent: any) => {
             this.props.history.replace(routeToRedirect)
         }
 
+        goToNextStep() {
+            const {step} = this.props
+
+            if (step === STEPS.FREE_MODE) {
+                return true
+            }
+            else if (step < STEPS.RESTAURANT_ACCEPT_ORDER) {
+                this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_RESTAURANT, () => {
+                    this.props.dispatch(setStep(STEPS.RESTAURANT_ACCEPT_ORDER))
+                    this.props.history.replace(Routes.getDefaultRouteRestaurant(this.props.orders[0].restaurantId))
+                }))
+
+                return false
+            }
+            else if (step < STEPS.COURIER_ACCEPT_ORDER) {
+                return false
+            }
+            else {
+                return false
+            }
+        }
+
         render() {
             const demoController = {
                 init: this.init,
                 start: this.start,
                 restart: this.restart,
-                switchView: this.switchView
+                switchView: this.switchView,
+                goToNextStep: this.goToNextStep
             }
 
             return <WrappedComponent {...this.props} demoController={demoController}/>
         }
     }
 
-    return withRouter(connect()(WrappedComponentWithDemoController) as any) as any
+    const mapStateToProps = (state: IState) => {
+        return {
+            step: state.step,
+            orders: state.orders
+        }
+    }
+
+    return withRouter(connect(mapStateToProps)(WrappedComponentWithDemoController) as any) as any
 }

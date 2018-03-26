@@ -7,3 +7,14 @@ html, body, #root {
   height: 100%;
   color: $textColor;
 }
+
+#bf-demo-main-view {
+  position: relative;
+  top: $headerHeight;
+  left: 0;
+  width: 100%;
+  height: calc(100% - #{$headerHeight} - #{$demoControllerHeight});
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 1;
+}

@@ -9,9 +9,9 @@ import ApiError from './misc/ApiError'
 import Start from './misc/Start'
 import DemoViewValidator from '../demoController/DemoViewValidator'
 import Header from './header/Header'
-import CustomerExample from './main/customer-views/CustomerExample'
-import RestaurantExample from './main/restaurant-views/RestaurantExample'
-import CourierExample from './main/courier-views/CourierExample'
+import CustomerExample from './main/1-customer-views/CustomerExample'
+import RestaurantExample from './main/2-restaurant-views/RestaurantExample'
+import CourierExample from './main/3-courier-views/CourierExample'
 import Loader from '../components/loader/Loader'
 import {setOrders} from '../state/Actions'
 
@@ -80,13 +80,15 @@ class MainView extends React.Component<any, any> {
                     {ready && (
                         <DemoViewValidator>
                             <Header view={view}/>
-                            <Switch>
-                                <Route path={Routes.HOME} exact component={Start}/>
-                                <Route path={Routes.CUSTOMER_EXAMPLE_ROUTE} exact component={CustomerExample}/>
-                                <Route path={Routes.RESTAURANT_EXAMPLE_ROUTE} exact component={RestaurantExample}/>
-                                <Route path={Routes.COURIER_EXAMPLE_ROUTE} exact component={CourierExample}/>
-                                <Redirect to={Routes.HOME}/>
-                            </Switch>
+                            <div id="bf-demo-main-view">
+                                <Switch>
+                                    <Route path={Routes.HOME} exact component={Start}/>
+                                    <Route path={Routes.CUSTOMER_EXAMPLE_ROUTE} exact component={CustomerExample}/>
+                                    <Route path={Routes.RESTAURANT_EXAMPLE_ROUTE} exact component={RestaurantExample}/>
+                                    <Route path={Routes.COURIER_EXAMPLE_ROUTE} exact component={CourierExample}/>
+                                    <Redirect to={Routes.HOME}/>
+                                </Switch>
+                            </div>
                             <DemoControllerPanel view={view}/>
                         </DemoViewValidator>
                     )}

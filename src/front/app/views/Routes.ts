@@ -11,11 +11,15 @@ export const COURIER_VIEW = 'courier-view'
 export const ALL_VIEWS = [CUSTOMER_VIEW, RESTAURANT_VIEW, COURIER_VIEW]
 
 export const CUSTOMER_EXAMPLE_ROUTE = `/:demoId/${CUSTOMER_VIEW}/`
-export const RESTAURANT_EXAMPLE_ROUTE = `/:demoId/${RESTAURANT_VIEW}/`
+export const RESTAURANT_EXAMPLE_ROUTE = `/:demoId/${RESTAURANT_VIEW}/:restaurantId`
 export const COURIER_EXAMPLE_ROUTE = `/:demoId/${COURIER_VIEW}/`
 
 const CUSTOMER_ROUTES_LIST = [
     CUSTOMER_EXAMPLE_ROUTE
+]
+
+const RESTAURANT_ROUTES_LIST = [
+    RESTAURANT_EXAMPLE_ROUTE
 ]
 
 const ALL_ROUTES = [
@@ -32,8 +36,8 @@ export const getRouteCustomerExample = (): string => {
     return getRouteWithDemoId(CUSTOMER_EXAMPLE_ROUTE)
 }
 
-export const getRouteRestaurantExample = (): string => {
-    return getRouteWithDemoId(RESTAURANT_EXAMPLE_ROUTE)
+export const getRouteRestaurantExample = (restaurantId: string): string => {
+    return getRouteWithDemoId(RESTAURANT_EXAMPLE_ROUTE).replace(':restaurantId', restaurantId)
 }
 
 export const getRouteCourierExample = (): string => {
@@ -44,8 +48,8 @@ export const getDefaultRouteCustomer = () => {
  return getRouteCustomerExample()
 }
 
-export const getDefaultRouteRestaurant = () => {
-    return getRouteRestaurantExample()
+export const getDefaultRouteRestaurant = (restaurantId: string) => {
+    return getRouteRestaurantExample(restaurantId)
 }
 
 export const getDefaultRouteCourier = () => {
@@ -62,4 +66,9 @@ export const getCustomerRouteIndex = (pathname: string) => {
 
 export const getCurrentRoute = (pathname: string) => {
     return _.find(ALL_ROUTES, path => matchPath(pathname, {path, exact: true}))
+}
+
+export const getRestaurantIdFromPathname = (pathname: string): string => {
+    const currentRestaurantRoute = _.find(RESTAURANT_ROUTES_LIST, path => matchPath(pathname, {path, exact: true}))
+    return (matchPath(pathname, {path: currentRestaurantRoute, exact: true}) as any).params.restaurantId
 }
