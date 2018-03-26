@@ -59,6 +59,7 @@ export default (WrappedComponent: any) => {
 
         switchView(newView: string) {
             const {pathname} = this.props.location
+            const {orders} = this.props._demoControllerProps
 
             const currentView = Routes.getViewFromPathname(pathname) as string
             LAST_FREE_MODE_ROUTES[currentView] = pathname
@@ -73,7 +74,7 @@ export default (WrappedComponent: any) => {
                     restaurantId = Routes.getRestaurantIdFromPathname(LAST_FREE_MODE_ROUTES[Routes.RESTAURANT_VIEW])
                 }
                 else {
-                    restaurantId = this.props.orders[0].restaurantId
+                    restaurantId = orders[0].restaurantId
                 }
 
                 routeToRedirect = LAST_FREE_MODE_ROUTES[Routes.RESTAURANT_VIEW] || Routes.getDefaultRouteRestaurant(restaurantId)
@@ -86,7 +87,7 @@ export default (WrappedComponent: any) => {
         }
 
         goToNextStep() {
-            const {step} = this.props
+            const {step, orders} = this.props._demoControllerProps
 
             if (step === STEPS.FREE_MODE) {
                 return true
@@ -94,7 +95,7 @@ export default (WrappedComponent: any) => {
             else if (step < STEPS.RESTAURANT_ACCEPT_ORDER) {
                 this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_RESTAURANT, () => {
                     this.props.dispatch(setStep(STEPS.RESTAURANT_ACCEPT_ORDER))
-                    this.props.history.replace(Routes.getDefaultRouteRestaurant(this.props.orders[0].restaurantId))
+                    this.props.history.replace(Routes.getDefaultRouteRestaurant(orders[0].restaurantId))
                 }))
 
                 return false
@@ -108,6 +109,10 @@ export default (WrappedComponent: any) => {
                 return false
             }
             else {
+                this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_FREE_MODE, () => {
+                    this.props.dispatch(setStep(STEPS.FREE_MODE))
+                }))
+
                 return false
             }
         }
@@ -121,14 +126,19 @@ export default (WrappedComponent: any) => {
                 goToNextStep: this.goToNextStep
             }
 
-            return <WrappedComponent {...this.props} demoController={demoController}/>
+            const props = _.assign({}, this.props) as any
+            delete props._demoControllerProps
+
+            return <WrappedComponent {...props} demoController={demoController}/>
         }
     }
 
     const mapStateToProps = (state: IState) => {
         return {
-            step: state.step,
-            orders: state.orders
+            _demoControllerProps: {
+                step: state.step,
+                orders: state.orders
+            }
         }
     }
 

@@ -88,11 +88,12 @@ class DemoControllerPanel extends React.Component<any, any> {
                             </React.Fragment>
                         ) : (
                             <React.Fragment>
-                                {_.map(ALL_VIEWS, view => {
-                                    const isActive = view.indexOf(view) === 0
+                                {_.map(ALL_VIEWS, currentView => {
+                                    const isActive = currentView === view
+                                    const className = `icon btn ${currentView}${isActive ? ' active' : ''}`
 
                                     return (
-                                        <div key={view} className={`icon btn ${view}${isActive ? ' active' : ''}`} onClick={this.switchView}/>
+                                        <div key={currentView} className={className} onClick={this.switchView}/>
                                     )
                                 })}
                             </React.Fragment>

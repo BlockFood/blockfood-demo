@@ -11,5 +11,5 @@ export const selectOrdersForCourier = (orders: IOrder[]): IOrder[] => {
         ORDER_STATUS.PICKING,
         ORDER_STATUS.DELIVERING,
         ORDER_STATUS.DONE
-    ].indexOf(order.status))
+    ].indexOf(order.status) !== -1)
 }
