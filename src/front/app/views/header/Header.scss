@@ -1,3 +1,4 @@
+@import '../../../../../node_modules/react-select/dist/react-select.css';
 @import '../../style/Variables';
 
 #bf-demo-header {
@@ -23,6 +24,9 @@
   .logo {
     flex-grow: 0;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     .name {
       display: flex;
@@ -87,6 +91,47 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
+    .select {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      i {
+        font-size: 1.5em;
+        margin-right: 5px;
+      }
+
+      .Select {
+        width: 200px;
+        margin-right: 25px;
+
+        &, * {
+          font-family: "Open Sans", sans-serif;
+          font-weight: bold;
+          color: black;
+          cursor: pointer;
+        }
+
+        .Select-control {
+          border: 2px solid black;
+          box-shadow: none !important;
+        }
+
+        .Select-menu-outer {
+          border: 2px solid black;
+          border-top: none;
+        }
+
+        .Select-option.is-focused {
+          background-color: lightgray;
+        }
+
+        .Select-arrow {
+          border-top-color: black;
+        }
+      }
+    }
 
     .username {
       font-family: "Open Sans", sans-serif;

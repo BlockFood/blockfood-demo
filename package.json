@@ -31,6 +31,7 @@
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
+    "react-select": "^1.2.1",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "reset-css": "^3.0.0",
@@ -64,6 +65,7 @@
     "@types/react-dom": "^16.0.4",
     "@types/react-redux": "^5.0.15",
     "@types/react-router-dom": "^4.2.5",
+    "@types/react-select": "^1.2.6",
     "@types/uuid": "^3.4.3",
     "typescript": "^2.7.2"
   },

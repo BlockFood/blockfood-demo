@@ -18,13 +18,17 @@ class RestaurantButton extends React.Component<any, any> {
     }
 
     onClick() {
-        this.props.onClick(this.props.id)
+        this.props.onClick(this.props.restaurant.id)
     }
 
     render() {
-        const {index, disabled} = this.props
+        const {restaurant, disabled} = this.props
 
-        return <button className={disabled ? 'disabled' : ''} onClick={this.onClick}>CREATE ORDER IN RESTAURANT: <b>{index}</b></button>
+        return (
+            <button className={disabled ? 'disabled' : ''} onClick={this.onClick}>
+                CREATE ORDER IN RESTAURANT: <b>"{restaurant.name}"</b>
+            </button>
+        )
     }
 }
 
@@ -57,9 +61,9 @@ class CustomerExample extends React.Component<any, any> {
             <div className="view-example">
                 <div>My order(s): {orders.length}</div>
                 <div className="buttons">
-                    {_.map(RESTAURANTS, (restaurant, index) => (
+                    {_.map(RESTAURANTS, restaurant => (
                         <RestaurantButton key={restaurant.id}
-                                          id={restaurant.id} index={index + 1}
+                                          restaurant={restaurant}
                                           disabled={loading}
                                           onClick={this.onCreateOrder}/>
                     ))}

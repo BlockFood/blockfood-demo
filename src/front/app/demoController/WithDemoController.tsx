@@ -22,6 +22,7 @@ export default (WrappedComponent: any) => {
             this.restart = this.restart.bind(this)
             this.switchView = this.switchView.bind(this)
             this.goToNextStep = this.goToNextStep.bind(this)
+            this.isFreeMode = this.isFreeMode.bind(this)
         }
 
         init(orders: IOrder[]) {
@@ -117,13 +118,20 @@ export default (WrappedComponent: any) => {
             }
         }
 
+        isFreeMode() {
+            const {step} = this.props._demoControllerProps
+
+            return step === STEPS.FREE_MODE
+        }
+
         render() {
             const demoController = {
                 init: this.init,
                 start: this.start,
                 restart: this.restart,
                 switchView: this.switchView,
-                goToNextStep: this.goToNextStep
+                goToNextStep: this.goToNextStep,
+                isFreeMode: this.isFreeMode
             }
 
             const props = _.assign({}, this.props) as any
