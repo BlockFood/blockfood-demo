@@ -16,18 +16,10 @@
 
   &.with-transition {
     transition: 0.5s opacity;
-
-    .wrapper {
-      transition: 0.3s transform;
-    }
   }
 
   &.ready {
     opacity: 1;
-
-    .wrapper {
-      transform: scale(1);
-    }
   }
 
   &.closing {
@@ -38,7 +30,6 @@
   .wrapper {
     max-width: 80%;
     max-height: 80%;
-    transform: scale(1.2);
     overflow: auto;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
 

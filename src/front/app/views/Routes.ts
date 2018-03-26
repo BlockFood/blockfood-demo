@@ -4,13 +4,15 @@ import Api from '../api/Api'
 
 export const HOME = '/'
 
-export const CUSTOMER_PREFIX = 'customer-view'
-export const RESTAURANT_PREFIX = 'restaurant-view'
-export const COURIER_PREFIX = 'courier-view'
+export const CUSTOMER_VIEW = 'customer-view'
+export const RESTAURANT_VIEW = 'restaurant-view'
+export const COURIER_VIEW = 'courier-view'
 
-export const CUSTOMER_EXAMPLE_ROUTE = `/:demoId/${CUSTOMER_PREFIX}/`
-export const RESTAURANT_EXAMPLE_ROUTE = `/:demoId/${RESTAURANT_PREFIX}/`
-export const COURIER_EXAMPLE_ROUTE = `/:demoId/${COURIER_PREFIX}/`
+export const ALL_VIEWS = [CUSTOMER_VIEW, RESTAURANT_VIEW, COURIER_VIEW]
+
+export const CUSTOMER_EXAMPLE_ROUTE = `/:demoId/${CUSTOMER_VIEW}/`
+export const RESTAURANT_EXAMPLE_ROUTE = `/:demoId/${RESTAURANT_VIEW}/`
+export const COURIER_EXAMPLE_ROUTE = `/:demoId/${COURIER_VIEW}/`
 
 const CUSTOMER_ROUTES_LIST = [
     CUSTOMER_EXAMPLE_ROUTE
@@ -38,12 +40,20 @@ export const getRouteCourierExample = (): string => {
     return getRouteWithDemoId(COURIER_EXAMPLE_ROUTE)
 }
 
-export const getViewPrefixFromPathname = (pathname: string): string | null => {
-    return _.find([
-        CUSTOMER_PREFIX,
-        RESTAURANT_PREFIX,
-        COURIER_PREFIX
-    ], route => pathname.indexOf(route) !== -1) || null
+export const getDefaultRouteCustomer = () => {
+ return getRouteCustomerExample()
+}
+
+export const getDefaultRouteRestaurant = () => {
+    return getRouteRestaurantExample()
+}
+
+export const getDefaultRouteCourier = () => {
+    return getRouteCourierExample()
+}
+
+export const getViewFromPathname = (pathname: string): string | null => {
+    return _.find(ALL_VIEWS, route => pathname.indexOf(route) !== -1) || null
 }
 
 export const getCustomerRouteIndex = (pathname: string) => {

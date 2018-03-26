@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {CUSTOMER_PREFIX, RESTAURANT_PREFIX, COURIER_PREFIX} from '../Routes'
+import {CUSTOMER_VIEW, RESTAURANT_VIEW, COURIER_VIEW} from '../Routes'
 
 import './Header.scss'
 
@@ -16,21 +16,21 @@ class Header extends React.Component<any, any> {
     }
 
     getStatus(props = this.props) {
-        const {viewPrefix} = props
+        const {view} = props
 
-        const type = viewPrefix ? viewPrefix.split('-')[0] : null
+        const type = view ? view.split('-')[0] : null
 
         const userLabel = {
-            [CUSTOMER_PREFIX]: 'a hungry customer',
-            [RESTAURANT_PREFIX]: 'a passionate chef',
-            [COURIER_PREFIX]: 'a motivated courier'
-        }[viewPrefix]
+            [CUSTOMER_VIEW]: 'a hungry customer',
+            [RESTAURANT_VIEW]: 'a passionate chef',
+            [COURIER_VIEW]: 'a motivated courier'
+        }[view]
 
         return {type, userLabel}
     }
 
     componentWillReceiveProps(nextProps: any) {
-        if (nextProps.viewPrefix !== this.props.viewPrefix) {
+        if (nextProps.view !== this.props.view) {
             const {type, userLabel} = this.getStatus(nextProps)
 
             type && this.setState({type, userLabel})
@@ -38,11 +38,11 @@ class Header extends React.Component<any, any> {
     }
 
     render() {
-        const {visible} = this.props
+        const {view} = this.props
         const {type, userLabel} = this.state
 
         return (
-            <header id="bf-demo-header" className={visible ? 'visible' : ''}>
+            <header id="bf-demo-header" className={!!view ? 'visible' : ''}>
                 <div className="logo">
                     <div className="name">
                         <i className={type}/>

@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import {IOrderDetails, IOrder} from '../../../lib/Orders'
-import {STEPS} from '../demoController/Steps'
-import {HELP_MESSAGES} from '../demoController/HelpMessages'
+import {STEPS} from '../demoController/types/Steps'
+import {HELP_MESSAGES} from '../demoController/types/HelpMessages'
 import Storage from '../utils/Storage'
 
 export interface IHelpMessageModal {

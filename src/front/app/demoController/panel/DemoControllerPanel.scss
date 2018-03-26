@@ -1,7 +1,7 @@
 @import '../../style/Variables';
 @import '../../style/Mixins';
 
-#bf-demo-navigator {
+#bf-demo-controller-panel {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -33,7 +33,6 @@
 
   & > button {
     @include btn-reverse-color();
-    margin-right: 25px;
     padding: 5px 0;
     font-size: 1.3em;
 
@@ -48,6 +47,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 0 25px;
 
     .step-label {
       height: 17px;
