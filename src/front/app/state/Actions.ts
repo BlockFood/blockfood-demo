@@ -4,8 +4,6 @@ import {IOrder} from '../../../lib/Orders'
 
 export const SET_STEP = 'SET_STEP'
 export const SET_HELP_MESSAGE = 'SET_HELP_MESSAGE'
-export const SET_CUSTOMER_ADDRESS = 'SET_CUSTOMER_ADDRESS'
-export const SET_ORDER_IN_PROGRESS = 'SET_ORDER_IN_PROGRESS'
 export const SET_ORDERS = 'SET_ORDERS'
 export const RESTART = 'RESTART'
 

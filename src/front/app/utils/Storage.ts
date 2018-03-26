@@ -1,5 +1,4 @@
 import * as _ from 'lodash'
-import {IOrderDetails} from '../../../lib/Orders'
 
 const STORAGE_PREFIX = 'bf-demo-'
 
@@ -26,22 +25,6 @@ class Storage {
             window.sessionStorage.setItem(STORAGE_PREFIX + key, JSON.stringify(object))
         }
         catch (e) {}
-    }
-
-    static setCurrentAddress(currentAddress: string) {
-        Storage._writeObjectToSessionStorage('current-address', currentAddress)
-    }
-
-    static getCurrentAddress(): string {
-        return Storage._readObjectFromSessionStorage('current-address')
-    }
-
-    static setOrderInProgress(orderInProgress: IOrderDetails) {
-        Storage._writeObjectToSessionStorage('order-in-progress', orderInProgress)
-    }
-
-    static getOrderInProgress(): any {
-        return Storage._readObjectFromSessionStorage('order-in-progress')
     }
 
     static clearAll() {
