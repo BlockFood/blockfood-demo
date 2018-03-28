@@ -26,6 +26,7 @@ contract BlockFoodDemo {
 
     modifier onlyNewDemo(uint orderId) {
         require(orders[orderId].status == OrderStatus.Unset);
+        require(orders[orderId].customer == 0x0);
         _;
     }
 
@@ -58,9 +59,11 @@ contract BlockFoodDemo {
     function newDemo(
         uint orderId
     )
-    public onlyNewDemo(orderId) {
+    public onlyNewDemo(orderId)
+    {
         orders[orderId] = Order(orderId, msg.sender, 0x0, 0x0, OrderStatus.Unset);
         ordersIds.push(orderId);
+        OrderUpdate(orderId, OrderStatus.Unset);
     }
 
     function submit(
