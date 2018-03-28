@@ -46,7 +46,10 @@ contract('BlockFoodDemo', function (accounts) {
 
         await instance.newDemo(orderId, { from: customer })
 
-        await instance.submit(orderId, restaurant, web3.toWei(0.2, 'ether'), web3.toWei(0.1, 'ether'), {
+        const restaurantPayment = web3.toWei(0.2, 'ether')
+        const courierPayment = web3.toWei(0.1, 'ether')
+
+        await instance.submit(orderId, restaurant, restaurantPayment, courierPayment, {
             from: customer,
             value: web3.toWei(0.3, 'ether')
         })
@@ -54,10 +57,26 @@ contract('BlockFoodDemo', function (accounts) {
         await instance.accept(orderId, { from: restaurant })
         await instance.ready(orderId, { from: restaurant })
 
-        await instance.picking(orderId, { from : courier })
-        await instance.delivering(orderId, { from : courier })
+        await instance.picking(orderId, { from: courier })
+        await instance.delivering(orderId, { from: courier })
 
-        await instance.done(orderId, { from : courier })
+        const restaurantBalanceBefore = await getBalance(restaurant)
+        const courierBalanceBefore = await getBalance(courier)
+
+        const tx = await instance.done(orderId, { from: courier })
+
+        const restaurantBalanceAfter = await getBalance(restaurant)
+        const courierBalanceAfter = await getBalance(courier)
+        const gasUsed = tx.receipt.cumulativeGasUsed * Math.pow(10, 11)
+
+        assert.equal(
+            restaurantBalanceBefore.plus(restaurantPayment).toNumber(),
+            restaurantBalanceAfter.toNumber()
+        )
+        assert.equal(
+            courierBalanceBefore.plus(courierPayment).toNumber(),
+            courierBalanceAfter.plus(gasUsed).toNumber()
+        )
     })
 
 })

@@ -143,6 +143,5 @@ contract BlockFoodDemo {
 
         orders[orderId].restaurant.transfer(restaurantPayment);
         orders[orderId].courier.transfer(courierPayment);
-
     }
 }
