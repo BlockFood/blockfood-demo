@@ -77,6 +77,7 @@ class DemoControllerPanel extends React.Component<any, any> {
                                 {getStep(STEPS.CUSTOMER_SET_ADDRESS)}
                                 {getStep(STEPS.CUSTOMER_CHOOSE_RESTAURANT)}
                                 {getStep(STEPS.CUSTOMER_CREATE_ORDER)}
+                                {getStep(STEPS.CUSTOMER_SET_POSITION)}
                                 {getStep(STEPS.CUSTOMER_DO_PAYMENT)}
                                 {getStep(STEPS.RESTAURANT_ACCEPT_ORDER, RESTAURANT_VIEW)}
                                 {getStep(STEPS.RESTAURANT_ACCEPT_ORDER)}
