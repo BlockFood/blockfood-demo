@@ -1,4 +1,3 @@
-import * as _ from 'lodash'
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {IState} from '../../../state/InitialState'
@@ -12,15 +11,7 @@ import {selectOrdersByRestaurantId} from '../../../state/Selectors'
 import {setOrders} from '../../../state/Actions'
 
 class HandleButton extends React.Component<any, any> {
-    constructor(props: any) {
-        super(props)
-
-        this.onClick = this.onClick.bind(this)
-    }
-
-    onClick() {
-        this.props.onClick(this.props.id)
-    }
+    onClick = () => this.props.onClick(this.props.id)
 
     render() {
         const {id, disabled} = this.props
@@ -30,17 +21,11 @@ class HandleButton extends React.Component<any, any> {
 }
 
 class RestaurantExample extends React.Component<any, any> {
-    constructor(props: any) {
-        super(props)
-
-        this.state = {
-            loading: false
-        }
-
-        this.onHandleOrder = this.onHandleOrder.bind(this)
+    state = {
+        loading: false
     }
 
-    onHandleOrder(orderId: string) {
+    onHandleOrder = (orderId: string) => {
         if (!this.state.loading) {
             this.setState({loading: true})
             doWithMinTime(() => Api.updateOrderStatus(orderId, ORDER_STATUS.READY)).then((orders) => {
@@ -58,23 +43,25 @@ class RestaurantExample extends React.Component<any, any> {
         if (!RESTAURANTS_BY_IDS[restaurantId]) {
             return <Error/>
         }
-        else {
-            return (
-                <div className="view-example">
-                    <div>My order(s): {orders.length}</div>
-                    <div className="buttons">
-                        {_.map(orders, (order) => {
-                            return order.status === ORDER_STATUS.SUBMITTED ? (
-                                <HandleButton key={order.id}
-                                              id={order.id}
-                                              disabled={loading}
-                                              onClick={this.onHandleOrder}/>
-                            ) : null
-                        })}
-                    </div>
+
+        return (
+            <div className="view-example">
+                <div>My order(s): {orders.length}</div>
+                <div className="buttons">
+                    {orders.map((order: any) => {
+                        console.log('order', order);
+                        return order.status === ORDER_STATUS.SUBMITTED ? (
+                            <HandleButton
+                                key={order.id}
+                                id={order.id}
+                                disabled={loading}
+                                onClick={this.onHandleOrder}
+                            />
+                        ) : null
+                    })}
                 </div>
-            )
-        }
+            </div>
+        )
     }
 }
 

@@ -1,0 +1,40 @@
+.orderButtons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 0 0 10px;
+  margin: 0 5px;
+}
+
+.button {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 8px 30px;
+  border-radius: 2px;
+  transition: all .2s ease-in-out;
+  cursor: pointer;
+  color: #fff;
+}
+
+.validateButton {
+  background-color: #50dcb5;
+  border-color: #50dcb5;
+}
+
+.validateButton:hover {
+  background-color: #3cc8a1;
+  border-color: #3cc8a1;
+}
+
+.declineButton {
+  background-color: #df5150;
+  border-color: #df5150;
+}
+
+.declineButton:hover {
+  background-color: #cb3d3c;
+  border-color: #cb3d3c;
+}
