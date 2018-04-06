@@ -48,7 +48,9 @@ class CustomerExample extends React.Component<any, any> {
             this.setState({loading: true})
             doWithMinTime(() => Api.createNewOrder(restaurantId, {})).then((orders) => {
                 this.props.dispatch(setOrders(orders))
-                this.props.demoController.goToNextStep() && this.setState({loading: false})
+                if (this.props.demoController.goToNextStep()) {
+                    this.setState({loading: false})
+                }
             })
         }
     }

@@ -87,10 +87,16 @@ export default (WrappedComponent: any) => {
             this.props.history.replace(routeToRedirect)
         }
 
+        // Return false if the caller is not allowed to continue
         goToNextStep() {
             const {step, orders} = this.props._demoControllerProps
 
             if (step === STEPS.FREE_MODE) {
+                return true
+            }
+            else if (step < STEPS.CUSTOMER_CHOOSE_RESTAURANT) {
+                this.props.dispatch(setStep(STEPS.CUSTOMER_CHOOSE_RESTAURANT))
+
                 return true
             }
             else if (step < STEPS.RESTAURANT_ACCEPT_ORDER) {
