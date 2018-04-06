@@ -1,0 +1,76 @@
+#bf-demo-view-customer-location {
+  width: 100%;
+  height: calc(100% - 70px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  color: #121e1f;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+
+  .localisation {
+    min-width: 50%;
+    max-width: 500px;
+    display: flex;
+    flex-flow: column;
+    align-items: left;
+    justify-content: center;
+    border-radius: 5px;
+    text-align: left;
+  }
+
+  .search {
+    position: relative;
+    width: 100%;
+  }
+
+  .input {
+    width: 70%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 11px;
+    border: 0;
+    font-size: 14px;
+    outline: 1px solid rgba(149, 149, 149, 0.4196078431372549);
+    overflow: hidden;
+  }
+
+  .searchButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    border: 2px solid #00D9C1;
+    background: #00D9C1;
+    vertical-align: top;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    line-height: 0;
+    outline: 1px solid #00D9C1;
+  }
+
+  .searchButton:active, .input:active {
+    outline: none;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    line-height: 5vw;
+  }
+}
