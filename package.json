@@ -53,7 +53,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "fake-server": "rm -rf .ts/ && tsc --outDir .ts/ src/fake-server/FakeServer.ts && node .ts/fake-server/FakeServer.js"
+    "fake-server": "rimraf .ts/ && tsc --outDir .ts/ src/fake-server/FakeServer.ts && node .ts/fake-server/FakeServer.js"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.8",
@@ -67,6 +67,7 @@
     "@types/react-router-dom": "^4.2.5",
     "@types/react-select": "^1.2.6",
     "@types/uuid": "^3.4.3",
+    "rimraf": "^2.6.2",
     "typescript": "^2.7.2"
   },
   "jest": {
