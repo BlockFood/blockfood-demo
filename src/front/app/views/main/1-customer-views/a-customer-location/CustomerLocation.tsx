@@ -1,4 +1,7 @@
 import * as React from 'react'
+import {connect} from 'react-redux'
+import {IState} from '../../../../state/InitialState'
+import {setCustomerLocation} from '../../../../state/Actions'
 
 import './CustomerLocation.scss'
 
@@ -6,19 +9,15 @@ export class CustomerLocation extends React.Component<any, any> {
     constructor(props: any) {
         super(props)
 
-        this.state = {
-            savedCityName: ''
-        }
-
         this.onChange = this.onChange.bind(this)
     }
 
     onChange = (event: any) => {
-        this.setState({savedCityName: event.target.value})
+        this.props.dispatch(setCustomerLocation(event.target.value))
     }
 
     render() {
-        const {savedCityName} = this.state
+        const {customerLocation} = this.props
 
         return (
             <div id="bf-demo-view-customer-location">
@@ -27,7 +26,7 @@ export class CustomerLocation extends React.Component<any, any> {
                     <div className="search">
                         <input className="input" type="text"
                                placeholder="Enter your delivery address"
-                               value={savedCityName} onChange={this.onChange}/>
+                               value={customerLocation} onChange={this.onChange}/>
                         <button className="searchButton">I am hungry!</button>
                     </div>
                 </div>
@@ -36,4 +35,10 @@ export class CustomerLocation extends React.Component<any, any> {
     }
 }
 
-export default CustomerLocation
+const mapStatToProps = (state: IState) => {
+    return {
+        customerLocation: state.customerLocation
+    }
+}
+
+export default connect(mapStatToProps)(CustomerLocation)

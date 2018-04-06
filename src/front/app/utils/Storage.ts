@@ -27,6 +27,14 @@ class Storage {
         catch (e) {}
     }
 
+    static setCustomerLocation(customerLocation: string) {
+        Storage._writeObjectToSessionStorage('customer-location', customerLocation)
+    }
+
+    static getCustomerLocation(): string {
+        return Storage._readObjectFromSessionStorage('customer-location')
+    }
+
     static clearAll() {
         _.forEach(_.keys(window.sessionStorage), key => {
             if (key.indexOf(STORAGE_PREFIX) === 0) {

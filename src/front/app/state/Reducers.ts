@@ -4,7 +4,8 @@ import {
     SET_STEP,
     SET_HELP_MESSAGE,
     SET_ORDERS,
-    RESTART
+    RESTART,
+    SET_CUSTOMER_LOCATION
 } from './Actions'
 import Storage from '../utils/Storage'
 
@@ -29,6 +30,11 @@ const reduceOrders = (state: IState, action: any): IState => {
     return _.assign({}, state, {orders: action.orders})
 }
 
+const reduceCustomerLocation = (state: IState, action: any): IState => {
+    Storage.setCustomerLocation(action.customerLocation)
+    return _.assign({}, state, {customerLocation: action.customerLocation})
+}
+
 export const rootReducer = (state = INITIAL_STATE, action: any) => {
     switch (action.type) {
         case SET_STEP:
@@ -40,6 +46,8 @@ export const rootReducer = (state = INITIAL_STATE, action: any) => {
         case RESTART:
             Storage.clearAll()
             return DEFAULT_STATE
+        case SET_CUSTOMER_LOCATION:
+            return reduceCustomerLocation(state, action)
         default:
             return state
     }
