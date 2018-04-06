@@ -10,11 +10,13 @@ export const COURIER_VIEW = 'courier-view'
 
 export const ALL_VIEWS = [CUSTOMER_VIEW, RESTAURANT_VIEW, COURIER_VIEW]
 
-export const CUSTOMER_EXAMPLE_ROUTE = `/:demoId/${CUSTOMER_VIEW}/`
-export const RESTAURANT_EXAMPLE_ROUTE = `/:demoId/${RESTAURANT_VIEW}/:restaurantId`
+export const CUSTOMER_LOCATION_ROUTE = `/:demoId/${CUSTOMER_VIEW}/`
+export const CUSTOMER_EXAMPLE_ROUTE = `/:demoId/${CUSTOMER_VIEW}/example/`
+export const RESTAURANT_EXAMPLE_ROUTE = `/:demoId/${RESTAURANT_VIEW}/:restaurantId/`
 export const COURIER_EXAMPLE_ROUTE = `/:demoId/${COURIER_VIEW}/`
 
 const CUSTOMER_ROUTES_LIST = [
+    CUSTOMER_LOCATION_ROUTE,
     CUSTOMER_EXAMPLE_ROUTE
 ]
 
@@ -32,6 +34,10 @@ const getRouteWithDemoId = (route: string): string => {
     return route.replace(':demoId', Api.getDemoId())
 }
 
+export const getRouteLocationExample = (): string => {
+    return getRouteWithDemoId(CUSTOMER_LOCATION_ROUTE)
+}
+
 export const getRouteCustomerExample = (): string => {
     return getRouteWithDemoId(CUSTOMER_EXAMPLE_ROUTE)
 }
@@ -45,7 +51,7 @@ export const getRouteCourierExample = (): string => {
 }
 
 export const getDefaultRouteCustomer = () => {
- return getRouteCustomerExample()
+ return getRouteLocationExample()
 }
 
 export const getDefaultRouteRestaurant = (restaurantId: string) => {

@@ -9,6 +9,7 @@ import Error from '../components/error/Error'
 import Start from './start/Start'
 import DemoViewValidator from '../demoController/DemoViewValidator'
 import Header from './header/Header'
+import CustomerLocation from './main/1-customer-views/a-customer-location/CustomerLocation'
 import CustomerExample from './main/1-customer-views/CustomerExample'
 import RestaurantExample from './main/2-restaurant-views/RestaurantExample'
 import CourierExample from './main/3-courier-views/CourierExample'
@@ -83,6 +84,7 @@ class MainView extends React.Component<any, any> {
                             <div id="bf-demo-main-view">
                                 <Switch>
                                     <Route path={Routes.HOME} exact component={Start}/>
+                                    <Route path={Routes.CUSTOMER_LOCATION_ROUTE} exact component={CustomerLocation}/>
                                     <Route path={Routes.CUSTOMER_EXAMPLE_ROUTE} exact component={CustomerExample}/>
                                     <Route path={Routes.RESTAURANT_EXAMPLE_ROUTE} exact component={RestaurantExample}/>
                                     <Route path={Routes.COURIER_EXAMPLE_ROUTE} exact component={CourierExample}/>
