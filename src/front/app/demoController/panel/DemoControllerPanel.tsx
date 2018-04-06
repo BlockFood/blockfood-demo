@@ -73,8 +73,8 @@ class DemoControllerPanel extends React.Component<any, any> {
                     <div className="breadcrumb">
                         {step < STEPS.FREE_MODE ? (
                             <React.Fragment>
-                                {getStep(STEPS.CUSTOMER_SET_ADDRESS, CUSTOMER_VIEW)}
-                                {getStep(STEPS.CUSTOMER_SET_ADDRESS)}
+                                {getStep(STEPS.CUSTOMER_SET_LOCATION, CUSTOMER_VIEW)}
+                                {getStep(STEPS.CUSTOMER_SET_LOCATION)}
                                 {getStep(STEPS.CUSTOMER_CHOOSE_RESTAURANT)}
                                 {getStep(STEPS.CUSTOMER_CREATE_ORDER)}
                                 {getStep(STEPS.CUSTOMER_SET_POSITION)}

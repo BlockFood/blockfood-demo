@@ -48,7 +48,7 @@ export default (WrappedComponent: any) => {
         }
 
         start() {
-            this.props.dispatch(setStep(STEPS.CUSTOMER_SET_ADDRESS))
+            this.props.dispatch(setStep(STEPS.CUSTOMER_SET_LOCATION))
             this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_CUSTOMER))
             this.props.history.replace(Routes.getDefaultRouteCustomer())
         }
