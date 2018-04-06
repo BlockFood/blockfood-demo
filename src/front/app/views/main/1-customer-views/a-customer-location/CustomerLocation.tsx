@@ -34,14 +34,11 @@ export class CustomerLocation extends React.Component<any, any> {
             <div id="bf-demo-view-customer-location">
                 <div className="localisation">
                     <h1>Deliver my food</h1>
-                    <div className="search">
-                        <form onSubmit={this.onSubmit}>
-                            <input className="input" type="text"
-                                   placeholder="Enter your delivery address"
-                                   value={customerLocation} onChange={this.onChange}/>
-                            <button type="submit" className="searchButton">I am hungry!</button>
-                        </form>
-                    </div>
+                    <form onSubmit={this.onSubmit}>
+                        <input type="text" placeholder="Enter your delivery address"
+                               value={customerLocation} onChange={this.onChange}/>
+                        <button type="submit">I am hungry!</button>
+                    </form>
                 </div>
             </div>
         )
