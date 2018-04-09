@@ -1,3 +1,5 @@
+@import '../../../style/Variables';
+
 .orderOrderedItem {
   display: flex;
   flex-flow: row nowrap;
@@ -20,5 +22,5 @@
 .orderedItemTotalPrice {
   flex: 1 0 20%;
   text-align: right;
-  color: #50dcb5;
+  color: $mainColor;
 }

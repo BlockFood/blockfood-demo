@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {formatCurrency} from '../../../utils/FormatCurrency'
 
-import './OrderOrderedItem.css';
+import './OrderOrderedItem.scss';
 
 export interface OrderedItem {
     label: string
     count: number
-    totalItemPrice: number
+    totalItemPrice?: number
 }
 
 export const OrderOrderedItem = ({label, count, totalItemPrice}: OrderedItem) => (

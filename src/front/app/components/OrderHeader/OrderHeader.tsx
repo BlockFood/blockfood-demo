@@ -4,7 +4,7 @@ import {formatTime} from '../../utils/FormatTime'
 import './OrderHeader.scss';
 
 interface OrderHeaderProps {
-    orderId?: number
+    orderId?: string
     deliveryTime: number | Date
 }
 

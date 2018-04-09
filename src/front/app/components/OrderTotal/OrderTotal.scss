@@ -1,12 +1,14 @@
+@import '../../style/Variables';
+
 .orderTotal {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  border-top: 1px solid #65656599;
+  border-top: 1px solid rgba(101, 101, 101, 60%);
   margin: 0 5px 5px;
   padding: 10px 0 5px;
 }
 
 .orderTotalAmount {
-  color: #50dcb5;
+  color: $mainColor;
 }

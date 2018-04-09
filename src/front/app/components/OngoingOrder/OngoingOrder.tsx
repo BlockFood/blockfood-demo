@@ -8,10 +8,10 @@ import { OrderedItem } from '../OrderOrderedItemList/OrderOrderedItem'
 import './OngoingOrder.scss';
 
 interface OngoingOrderProps {
-    orderId: number
+    orderId: string
     deliveryTime: number | Date
     orderedItems: OrderedItem[]
-    comment: string
+    comment?: string
 }
 
 export const OngoingOrder: React.SFC<OngoingOrderProps> = ({orderId, deliveryTime, orderedItems, comment}) => (

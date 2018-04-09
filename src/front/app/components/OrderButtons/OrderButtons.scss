@@ -1,3 +1,5 @@
+@import '../../style/Variables';
+
 .orderButtons {
   display: flex;
   flex-flow: row nowrap;
@@ -20,21 +22,21 @@
 }
 
 .validateButton {
-  background-color: #50dcb5;
-  border-color: #50dcb5;
+  background-color: $mainColor;
+  border-color: $mainColor;
 }
 
 .validateButton:hover {
-  background-color: #3cc8a1;
-  border-color: #3cc8a1;
+  background-color: darken($mainColor, 5%);
+  border-color: darken($mainColor, 5%);
 }
 
 .declineButton {
-  background-color: #df5150;
-  border-color: #df5150;
+  background-color: $red;
+  border-color: $red;
 }
 
 .declineButton:hover {
-  background-color: #cb3d3c;
-  border-color: #cb3d3c;
+  background-color: darken($red, 5%);
+  border-color: darken($red, 5%);
 }

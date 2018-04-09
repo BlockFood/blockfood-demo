@@ -1,7 +1,9 @@
+@import '../../style/Variables';
+
 .finishedOrder.order {
   background-color: #f8f8f8;
 }
 
 .finishedOrder .orderHeader {
-  background-color: #50dcb5;
+  background-color: $mainColor;
 }
