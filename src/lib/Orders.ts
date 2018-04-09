@@ -7,8 +7,16 @@ export enum ORDER_STATUS {
     DONE = 'DONE'
 }
 
-export interface IOrderDetails {
+export interface IOrderedItem {
+    label: string
+    count: number
+    totalItemPrice?: number
+}
 
+export interface IOrderDetails {
+    orderTime?: Date
+    orderedItems?: IOrderedItem[]
+    comment?: string
 }
 
 export interface IOrder {

@@ -3,22 +3,24 @@ import {Order} from '../Order';
 import {OrderHeader} from '../OrderHeader';
 import {OrderOrderedItemList} from '../OrderOrderedItemList';
 import {OrderComment} from '../OrderComment';
-import { OrderedItem } from '../OrderOrderedItemList/OrderOrderedItem'
+import {IOrderedItem} from '../../../../lib/Orders'
 
 import './OngoingOrder.scss';
+import {OngoingOrderButtons} from '../OngoingOrderButtons'
 
 interface OngoingOrderProps {
     orderId: string
-    deliveryTime: number | Date
-    orderedItems: OrderedItem[]
+    orderTime: Date
+    orderedItems: IOrderedItem[]
     comment?: string
+    onFinish?: () => void
 }
 
-export const OngoingOrder: React.SFC<OngoingOrderProps> = ({orderId, deliveryTime, orderedItems, comment}) => (
+export const OngoingOrder: React.SFC<OngoingOrderProps> = ({orderId, orderTime, orderedItems, comment, onFinish}) => (
     <Order className='ongoingOrder'>
         <OrderHeader
             orderId={orderId}
-            deliveryTime={deliveryTime}
+            orderTime={orderTime}
         />
         <OrderOrderedItemList
             orderedItems={orderedItems}
@@ -27,6 +29,12 @@ export const OngoingOrder: React.SFC<OngoingOrderProps> = ({orderId, deliveryTim
             comment &&
             <OrderComment
                 comment={comment}
+            />
+        }
+        {
+            onFinish &&
+            <OngoingOrderButtons
+                onFinish={onFinish}
             />
         }
     </Order>

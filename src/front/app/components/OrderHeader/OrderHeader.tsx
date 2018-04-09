@@ -5,11 +5,11 @@ import './OrderHeader.scss';
 
 interface OrderHeaderProps {
     orderId?: string
-    deliveryTime: number | Date
+    orderTime: Date
 }
 
 /* eslint-disable jsx-a11y/accessible-emoji */
-export const OrderHeader: React.SFC<OrderHeaderProps> = ({orderId, deliveryTime}) => (
+export const OrderHeader: React.SFC<OrderHeaderProps> = ({orderId, orderTime}) => (
     <div className='orderHeader'>
         {
             orderId &&
@@ -18,7 +18,7 @@ export const OrderHeader: React.SFC<OrderHeaderProps> = ({orderId, deliveryTime}
             </div>
         }
         <div className='orderHeaderTime'>
-            🕑 {formatTime(deliveryTime)}
+            🕑 {formatTime(orderTime)}
         </div>
     </div>
 );

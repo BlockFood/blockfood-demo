@@ -4,4 +4,4 @@ const timeFormatter = new Intl.DateTimeFormat('en-US', {
     hour12: false,
 });
 
-export const formatTime =  (timestamp: number | Date): string => timeFormatter.format(timestamp)
+export const formatTime =  (timestamp: Date): string => timeFormatter.format(timestamp)

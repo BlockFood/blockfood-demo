@@ -3,21 +3,23 @@ import {Order} from '../Order';
 import {OrderHeader} from '../OrderHeader';
 import {OrderOrderedItemList} from '../OrderOrderedItemList';
 import {OrderComment} from '../OrderComment';
-import {OrderButtons} from '../OrderButtons';
-import {OrderedItem} from '../OrderOrderedItemList/OrderOrderedItem'
+import {PendingOrderButtons} from '../PendingOrderButtons';
+import {IOrderedItem} from '../../../../lib/Orders'
 
 interface PendingOrderProps {
     orderId: string
-    deliveryTime: number | Date
-    orderedItems: OrderedItem[]
+    orderTime: Date
+    orderedItems: IOrderedItem[]
     comment?: string
+    onAccept?: () => void
+    onDecline?: () => void
 }
 
-export const PendingOrder: React.SFC<PendingOrderProps> = ({orderId, deliveryTime, orderedItems, comment}) => (
+export const PendingOrder: React.SFC<PendingOrderProps> = ({orderId, orderTime, orderedItems, comment, onAccept, onDecline}) => (
     <Order className='pendingOrder'>
         <OrderHeader
             orderId={orderId}
-            deliveryTime={deliveryTime}
+            orderTime={orderTime}
         />
         <OrderOrderedItemList
             orderedItems={orderedItems}
@@ -28,6 +30,9 @@ export const PendingOrder: React.SFC<PendingOrderProps> = ({orderId, deliveryTim
                 comment={comment}
             />
         }
-        <OrderButtons/>
+        <PendingOrderButtons
+            onAccept={onAccept}
+            onDecline={onDecline}
+        />
     </Order>
 );

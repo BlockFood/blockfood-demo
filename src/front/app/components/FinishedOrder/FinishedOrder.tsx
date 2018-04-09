@@ -3,23 +3,23 @@ import { Order } from '../Order';
 import { OrderHeader } from '../OrderHeader';
 import { OrderOrderedItemList } from '../OrderOrderedItemList';
 import { OrderTotal } from '../OrderTotal';
-import {OrderedItem} from '../OrderOrderedItemList/OrderOrderedItem'
+import {IOrderedItem} from '../../../../lib/Orders'
 
 import './FinishedOrder.scss';
 
 interface FinishedOrderProps {
     orderId: string
-    deliveryTime: number | Date
-    orderedItems: OrderedItem[]
+    orderTime: Date
+    orderedItems: IOrderedItem[]
 }
 
-const computeTotalPrice = (orderedItems: OrderedItem[]) => orderedItems.reduce((total, item) => (item && item.totalItemPrice) ? total + item.totalItemPrice : total, 0);
+const computeTotalPrice = (orderedItems: IOrderedItem[]) => orderedItems.reduce((total, item) => (item && item.totalItemPrice) ? total + item.totalItemPrice : total, 0);
 
-export const FinishedOrder: React.SFC<FinishedOrderProps> = ({ orderId, deliveryTime, orderedItems }) => (
+export const FinishedOrder: React.SFC<FinishedOrderProps> = ({ orderId, orderTime, orderedItems }) => (
   <Order className='finishedOrder'>
     <OrderHeader
       orderId={orderId}
-      deliveryTime={deliveryTime}
+      orderTime={orderTime}
     />
     <OrderOrderedItemList
       orderedItems={orderedItems}

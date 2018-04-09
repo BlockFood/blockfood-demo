@@ -1,10 +1,11 @@
 import * as React from 'react';
-import {OrderedItem, OrderOrderedItem} from './OrderOrderedItem';
+import {OrderOrderedItem} from './OrderOrderedItem';
+import {IOrderedItem} from '../../../../lib/Orders'
 
 import './OrderOrderedItemList.scss';
 
 interface OrderOrderedItemListProps {
-    orderedItems: OrderedItem[]
+    orderedItems: IOrderedItem[]
 }
 
 export const OrderOrderedItemList: React.SFC<OrderOrderedItemListProps> = ({orderedItems}) => (

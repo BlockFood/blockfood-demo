@@ -1,15 +1,10 @@
 import * as React from 'react';
 import {formatCurrency} from '../../../utils/FormatCurrency'
+import {IOrderedItem} from '../../../../../lib/Orders'
 
 import './OrderOrderedItem.scss';
 
-export interface OrderedItem {
-    label: string
-    count: number
-    totalItemPrice?: number
-}
-
-export const OrderOrderedItem = ({label, count, totalItemPrice}: OrderedItem) => (
+export const OrderOrderedItem = ({label, count, totalItemPrice}: IOrderedItem) => (
     <li className='orderOrderedItem'>
         <div className='orderedItemLabel'>
             {label}
