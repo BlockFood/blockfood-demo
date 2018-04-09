@@ -1,0 +1,108 @@
+@import '../../../../style/Mixins';
+
+.restaurantListContainer {
+  display: block;
+  padding: 20px 30px;
+  width: 100%;
+  height: 100%;
+  flex-flow: row wrap;
+  font-family: "Open Sans", sans-serif;
+}
+.restaurantList {
+  display: block;
+  padding: 10px 30px;
+}
+.cityTitle {
+  font-weight: bold;
+  color: $mainColor;
+}
+.restaurants {
+  width: 100%;
+  margin: auto;
+  flex-flow: row wrap;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+.restaurant {
+  display: flex;
+  flex-direction: column;
+  width: 33.3333%;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  > div {
+    padding: 15px;
+  }
+  &:active {
+    outline: 1px solid #cecece;
+  }
+  a {
+    padding: 15px;
+  }
+
+}
+.restaurantImage {
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  background-color: rgb(117, 117, 117);
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  height: 230px;
+  object-fit: cover;
+}
+.restaurantName {
+  text-transform: uppercase;
+  padding-top: 10px;
+  font-size: 16px;
+  line-height: 24px;
+}
+.restaurantDetail {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  contain: size layout;
+  color: #262626;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+  text-decoration: none;
+}
+.restaurantDescription {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: rgb(117, 117, 117);
+  padding: 2px 0px;
+  max-width: 100%;
+  line-height: 22px;
+  font-size: 14px;
+}
+.category{}
+.restaurantRate {
+  margin-top: 10px;
+}
+.restaurantRate .colored path {
+  fill: $mainColor;
+}
+.restaurantRate .white path {
+  fill: #ccc;
+  stroke: black;
+}
+
+
+@media screen and (max-width: 1050px) {
+  .restaurant {
+    width: 50%;
+  }
+}
+@media screen and (max-width: 650px) {
+  .restaurant {
+    width: 100%;
+  }
+}

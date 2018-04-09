@@ -1,0 +1,55 @@
+@import '../../../../style/Mixins';
+
+.progressContainer{
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  height: calc(100% - 70px);
+  font-family: "Open Sans", sans-serif;
+  padding: 20px 30px;
+
+}
+.progress{
+  margin-top: 30px;
+}
+.mainTitleProgress{
+  font-size: 22px;
+  margin: 0 0 0 10%;
+}
+.progressBar{
+  width: 80%;
+  background: #cccccc;
+  display: flex;
+  flex-flow: row;
+  height: 2px;
+  margin: 20px auto;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.progressBar > div{
+  position: relative;
+}
+.progressBar div.round{
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #cccccc;
+}
+.progressBar div.colored{
+  background: $mainColor;
+}
+.progressBar div.colored span{
+  color: $mainColor;
+}
+
+.progressDescription{
+
+}
+.progressText{
+  position: absolute;
+  top: 25px;
+  left: -100%;
+}

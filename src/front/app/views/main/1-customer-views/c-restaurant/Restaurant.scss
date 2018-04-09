@@ -1,0 +1,226 @@
+@import '../../../../style/Mixins';
+
+.restaurantContainer {
+  padding: 0 40px;
+  font-family: "Open Sans", sans-serif;
+}
+.header {
+  width: 100%;
+  top: 0;
+  Left: 0;
+  position: relative;
+  border-bottom: 1px solid rgba(158, 158, 158, 0.47);
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  text-align: left;
+  padding: 50px 0;
+  background-color: #b3b3b3;
+}
+.restaurantMainImage {
+  width: 100%;
+  height: inherit;
+  object-fit: cover;
+}
+.mainTitle {
+  margin: 0;
+  padding: 0 0 5px 0;
+  font-size: 1.5em;
+}
+.subTitle {
+  color: #595959;
+}
+.foodList {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.foods {
+  display: flex;
+  flex: 1 auto;
+  padding: 15px;
+  justify-content: center;
+  align-items: left;
+  text-align: left;
+  color: #595959;
+  border-radius: 2px;
+  position: relative;
+  flex-flow: column;
+  overflow: hidden;
+  object-fit: cover;
+  flex-direction: column;
+  width: 33.3333%;
+  height: 280px;
+  max-width: 280PX;
+  cursor: pointer;
+  &:active {
+    border: 1px solid #cecece;
+  }
+}
+
+.foodPart {
+  margin: 20px auto 0;
+  a {
+    text-transform: uppercase;
+    color: #595959;
+    line-height: 2em;
+  }
+}
+
+.titleDescription {
+  margin-left: 50px;
+  padding-top: 40px;
+}
+.deliveryAddress {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 365px;
+}
+.addressTitle {
+  padding: 10px 0;
+}
+.foodImage {
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  background-color: #b3b3b3;
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  object-fit: cover;
+  height: 200px;
+
+}
+.foodTitle {
+}
+.foods h2 {
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding-top: 10px;
+  line-height: 24px;
+  font-weight: bold;
+}
+.foods p {
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin: 5px 0;
+}
+.foods h3 {
+  font-size: 14px;
+  font-weight: bold;
+  color: $mainColor;
+}
+.foodContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  position: relative;
+}
+.validateButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $mainColor;
+  color: white;
+  font-weight: bold;
+  font-size: larger;
+  width: 90%;
+  height: 55px;
+  cursor: pointer;
+  margin: 15px auto;
+  a {
+    color: white;
+    &:active {
+      color: white;
+    }
+  }
+}
+
+.foodContent {
+  width: 70%;
+}
+.foodOrder {
+  width: 30%;
+  background-color: white;
+  border: 1px solid #ccc;
+  height: 500px;
+  max-width: 350px;top: -30px;
+  position: absolute;
+  right: 0;
+  border-radius: 3px;
+  box-shadow: 0 0 1px rgba(75, 63, 128, 0.5);
+}
+.colored {
+  color: $mainColor;
+}
+.divider {
+  width: 90%;
+  padding: 20px 0;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: column;
+  justify-content: left;
+  align-items: left;
+}
+.divider div {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+  align-items: stretch;
+  margin: 5px 0;
+}
+
+.borderGray {
+  border-top: 1px solid #ccc;
+}
+.svg {
+  padding: 0 20px;
+  svg {
+    width: 15px !important;
+    height: auto !important;
+    path{
+      fill: $mainColor
+    }
+  }
+}
+.star {
+  color: $mainColor;
+  font-weight: bold;
+  font-size: larger;
+  margin-top: 10px;
+  .colored path {
+    fill: $mainColor
+  }
+  .white path {
+    fill: #ccc;
+    stroke: black;
+  }
+}
+
+.add {
+  display: flex;
+  flex-flow: row;
+  letter-spacing: 2px;
+}
+.time {
+  display: flex;
+  flex-flow: row;
+  margin-top: 30px;
+}
+.star {
+  margin: 20px 0;
+}
+

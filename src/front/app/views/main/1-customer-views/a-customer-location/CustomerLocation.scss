@@ -21,7 +21,7 @@
     flex-flow: column;
     align-items: left;
     justify-content: center;
-    border-radius: 5px;
+    border-radius: 2px;
     text-align: left;
 
     form {
@@ -41,7 +41,8 @@
         outline: none;
         border: 1px solid #d9d9d9;
         padding: 10px 12px;
-        border-radius: 5px;
+        border-radius: 2px;
+        color: #595959;
 
         &::-webkit-input-placeholder {
           color: #d9d9d9;
@@ -65,11 +66,11 @@
         color: white;
         background-color: $mainColor;
         padding: 10px 32px;
-        border-radius: 5px;
+        border-radius: 2px;
         border: none;
         outline: none;
         font-weight: bold;
-        margin-left: 8px;
+        margin-left: 4px;
         cursor: pointer;
       }
     }

@@ -1,13 +1,20 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {IState} from '../../../../state/InitialState'
+import { IState } from '../../../../state/InitialState'
 import * as Routes from '../../../Routes'
 import withDemoController from '../../../../demoController/WithDemoController'
 import {setCustomerLocation} from '../../../../state/Actions'
 
 import './CustomerLocation.scss'
 
-export class CustomerLocation extends React.Component<any, any> {
+interface IProps {
+    dispatch: any
+    demoController: any
+    customerLocation: any
+    history: any
+}
+
+export class CustomerLocation extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props)
 
@@ -15,19 +22,20 @@ export class CustomerLocation extends React.Component<any, any> {
         this.onSubmit = this.onSubmit.bind(this)
     }
 
-    onChange = (event: any) => {
+    private onChange = (event: any) => {
         this.props.dispatch(setCustomerLocation(event.target.value))
     }
 
-    onSubmit = (event: any) => {
+    private onSubmit = (event: any) => {
+        const {customerLocation} = this.props
         event.preventDefault()
 
         if (this.props.demoController.goToNextStep()) {
-            this.props.history.replace(Routes.getRouteCustomerExample())
+            this.props.history.replace(Routes.getRouteCustomerExample(customerLocation))
         }
     }
 
-    render() {
+    public render() {
         const {customerLocation} = this.props
 
         return (

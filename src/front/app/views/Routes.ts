@@ -11,13 +11,17 @@ export const COURIER_VIEW = 'courier-view'
 export const ALL_VIEWS = [CUSTOMER_VIEW, RESTAURANT_VIEW, COURIER_VIEW]
 
 export const CUSTOMER_LOCATION_ROUTE = `/:demoId/${CUSTOMER_VIEW}/`
-export const CUSTOMER_EXAMPLE_ROUTE = `/:demoId/${CUSTOMER_VIEW}/example/`
+export const CUSTOMER_EXAMPLE_ROUTE = `/:demoId/${CUSTOMER_VIEW}/:customerLocation/`
+export const CUSTOMER_RESTAURANT_NAME_ROUTE = `/:demoId/${CUSTOMER_VIEW}/:customerLocation/:restaurantId/`
+export const CUSTOMER_PROGRESS_ROUTE = `/:demoId/${CUSTOMER_VIEW}/progress`
 export const RESTAURANT_EXAMPLE_ROUTE = `/:demoId/${RESTAURANT_VIEW}/:restaurantId/`
 export const COURIER_EXAMPLE_ROUTE = `/:demoId/${COURIER_VIEW}/`
 
 const CUSTOMER_ROUTES_LIST = [
     CUSTOMER_LOCATION_ROUTE,
-    CUSTOMER_EXAMPLE_ROUTE
+    CUSTOMER_EXAMPLE_ROUTE,
+    CUSTOMER_RESTAURANT_NAME_ROUTE,
+    CUSTOMER_PROGRESS_ROUTE
 ]
 
 const RESTAURANT_ROUTES_LIST = [
@@ -27,7 +31,9 @@ const RESTAURANT_ROUTES_LIST = [
 const ALL_ROUTES = [
     CUSTOMER_EXAMPLE_ROUTE,
     RESTAURANT_EXAMPLE_ROUTE,
-    COURIER_EXAMPLE_ROUTE
+    COURIER_EXAMPLE_ROUTE,
+    CUSTOMER_RESTAURANT_NAME_ROUTE,
+    CUSTOMER_PROGRESS_ROUTE
 ]
 
 const getRouteWithDemoId = (route: string): string => {
@@ -38,8 +44,16 @@ export const getRouteLocationExample = (): string => {
     return getRouteWithDemoId(CUSTOMER_LOCATION_ROUTE)
 }
 
-export const getRouteCustomerExample = (): string => {
-    return getRouteWithDemoId(CUSTOMER_EXAMPLE_ROUTE)
+export const getRouteRestaurantProgressExample = (): string => {
+    return getRouteWithDemoId(CUSTOMER_PROGRESS_ROUTE)
+}
+
+export const getRouteCustomerExample = (customerLocation: string): string => {
+    return getRouteWithDemoId(CUSTOMER_EXAMPLE_ROUTE).replace(':customerLocation', customerLocation)
+}
+
+export const getRouteRestaurantNameExample = (customerLocation: string, restaurantId: string): string => {
+    return getRouteWithDemoId(CUSTOMER_RESTAURANT_NAME_ROUTE).replace(':restaurantId', restaurantId).replace(':customerLocation', customerLocation)
 }
 
 export const getRouteRestaurantExample = (restaurantId: string): string => {

@@ -10,7 +10,9 @@ import Start from './start/Start'
 import DemoViewValidator from '../demoController/DemoViewValidator'
 import Header from './header/Header'
 import CustomerLocation from './main/1-customer-views/a-customer-location/CustomerLocation'
-import CustomerExample from './main/1-customer-views/CustomerExample'
+import RestaurantList from './main/1-customer-views/b-restaurantList/RestaurantList'
+import Restaurant from './main/1-customer-views/c-restaurant/Restaurant'
+import Progress from './main/1-customer-views/d-progress/Progress'
 import RestaurantExample from './main/2-restaurant-views/RestaurantExample'
 import CourierExample from './main/3-courier-views/CourierExample'
 import Loader from '../components/loader/Loader'
@@ -85,7 +87,9 @@ class MainView extends React.Component<any, any> {
                                 <Switch>
                                     <Route path={Routes.HOME} exact component={Start}/>
                                     <Route path={Routes.CUSTOMER_LOCATION_ROUTE} exact component={CustomerLocation}/>
-                                    <Route path={Routes.CUSTOMER_EXAMPLE_ROUTE} exact component={CustomerExample}/>
+                                    <Route path={Routes.CUSTOMER_PROGRESS_ROUTE} exact component={Progress}/>
+                                    <Route path={Routes.CUSTOMER_EXAMPLE_ROUTE} exact component={RestaurantList}/>
+                                    <Route path={Routes.CUSTOMER_RESTAURANT_NAME_ROUTE} exact component={Restaurant}/>
                                     <Route path={Routes.RESTAURANT_EXAMPLE_ROUTE} exact component={RestaurantExample}/>
                                     <Route path={Routes.COURIER_EXAMPLE_ROUTE} exact component={CourierExample}/>
                                     <Redirect to={Routes.HOME}/>
