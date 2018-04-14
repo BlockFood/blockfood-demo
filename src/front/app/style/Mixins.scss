@@ -30,3 +30,22 @@
     color: $color;
   }
 }
+
+@mixin btn-fill() {
+  font-family: "Open Sans", sans-serif;
+  color: white;
+  background-color: $mainColor;
+  padding: 10px 32px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-weight: bold;
+
+  &:not(:disabled) {
+    cursor: pointer;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+  }
+}

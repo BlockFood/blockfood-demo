@@ -1,4 +1,5 @@
 @import "../../../../style/Variables";
+@import "../../../../style/Mixins";
 
 #bf-demo-view-customer-location {
   width: 100%;
@@ -62,22 +63,8 @@
       }
 
       button {
-        color: white;
-        background-color: $mainColor;
-        padding: 10px 32px;
-        border-radius: 5px;
-        border: none;
-        outline: none;
-        font-weight: bold;
+        @include btn-fill();
         margin-left: 8px;
-
-        &:not(:disabled) {
-          cursor: pointer;
-        }
-
-        &:disabled {
-          opacity: 0.7;
-        }
       }
     }
 

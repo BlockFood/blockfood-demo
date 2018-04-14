@@ -25,14 +25,47 @@ class CustomerOrder extends React.Component<any, any> {
         }
 
         this.onGoBack = this.onGoBack.bind(this)
-        this.getTheTotal = this.getTheTotal.bind(this)
-        this.addToShoppingList = this.addToShoppingList.bind(this)
         this.addToShoppingList = this.addToShoppingList.bind(this)
         this.validate = this.validate.bind(this)
     }
 
     private onGoBack() {
         this.props.history.replace(Routes.getRouteCustomerRestaurantList())
+    }
+
+    private validate = (event: any) => {
+        event.preventDefault()
+
+        if (this.state.basket.length > 0) {
+            // TODO
+        }
+    }
+
+    private getTheTotal = (delivery: boolean) => {
+        const {basket} = this.state
+
+        const totalPrice = _.reduce(basket, (total, item) => {
+            total += (item.item.price_euro * item.value)
+            return total
+        }, 0)
+        return delivery ? totalPrice + DELIVERY_FEE : totalPrice
+    }
+
+    private addToShoppingList = (item: IMenu, valueItem: number) => {
+        const {basket} = this.state
+
+        const container = basket.length ? basket : []
+
+        const foundItem = _.find(basket, value => value.item.id === item.id)
+
+        if (foundItem) {
+            foundItem.value = foundItem.value + valueItem
+        }
+        else {
+            container.push({value: valueItem, item})
+        }
+
+        this.setState({basket: container})
     }
 
     public render() {
@@ -50,7 +83,7 @@ class CustomerOrder extends React.Component<any, any> {
             return items.length > 0 ? (
                 <div key={category} className="foodPart">
                     <h6>{category}</h6>
-                    <div className="foodList">
+                    <div className="list">
                         {_.map(items, (food: IMenu) => (
                             <div key={food.id} className="foods" onClick={() => this.addToShoppingList(food, 1)}>
                                 <h2>{food.name}</h2>
@@ -79,79 +112,45 @@ class CustomerOrder extends React.Component<any, any> {
                         </div>
                     </div>
                 </div>
-                <div className="foodContent">
+                <div className="content">
                     {_.map(MENU_CATEGORIES, category => categorizingFoods(category))}
                 </div>
-                <div className='foodOrder'>
-                    <div className='validateButton' onClick={this.validate}>
+                <div className="order">
+                    <button className="validate-button" disabled={basket.length === 0} onClick={this.validate}>
                         Validate my order
-                    </div>
-                    <div className='foodList divider'>
-                        {_.map(basket, item => {
+                    </button>
+                    <div className="list divider">
+                        {basket.length > 0 ? _.map(basket, item => {
                             return (<div key={item.item.id}>
-                                <div className='fooName'>
+                                <div className="name">
                                     <span>{item.value} x {item.item.name} </span>
-                                    <span className='colored'>{item.item.price_euro * item.value} ETH</span>
+                                    <span className="colored">{item.item.price_euro * item.value} ETH</span>
                                 </div>
                             </div>)
-                        })}
+                        }) : (
+                            <div className="empty">Empty...</div>
+                        )}
                     </div>
-                    <div className='foodPriceResume divider borderGray'>
+                    <div className="divider borderGray">
                         <div>
-                            <span>Total: </span>
-                            <span className='colored'> {this.getTheTotal(false)} ETH</span>
+                            <span>Total:</span>
+                            <span className="colored">{this.getTheTotal(false)} ETH</span>
                         </div>
                         <div>
                             <span>Delivery: </span>
-                            <span className='colored'> {DELIVERY_FEE} ETH</span>
+                            <span className="colored">{DELIVERY_FEE} ETH</span>
                         </div>
                     </div>
-                    <div className='foodPriceTotal divider borderGray'>
+                    <div className="divider borderGray">
                         <div>
-                            <span>TOTAL: </span>
-                            <span className='colored'> {this.getTheTotal(true)} ETH</span>
+                            <span>TOTAL:</span>
+                            <span className="colored">{this.getTheTotal(true)} ETH</span>
                         </div>
                     </div>
                 </div>
             </div>
         )
     }
-
-    private getTheTotal = (delivery: boolean) => {
-        const {basket} = this.state
-
-        const totalPrice = _.reduce(basket, (total, item) => {
-            total += (item.item.price_euro * item.value)
-            return total
-        }, 0)
-        return delivery ? totalPrice + DELIVERY_FEE : totalPrice
-    }
-
-    private addToShoppingList = (item: IMenu, valueItem: number) => {
-        const {basket} = this.state
-
-        const container = basket.length ? basket : []
-
-        const foundItem = _.find(basket, value => {
-            return value.item.id === item.id
-        })
-
-        if (foundItem) {
-            foundItem.value = foundItem.value + valueItem
-        } else {
-            container.push({
-                value: valueItem,
-                item
-            })
-        }
-
-        this.setState({
-            basket: container
-        })
-    }
-    private validate = (event: any) => {
-        event.preventDefault()
-    }
-
 }
+
 export default (withDemoController(CustomerOrder))
