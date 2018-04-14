@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {IState} from '../../../../state/InitialState'
-// import * as Routes from '../../../Routes'
+import * as Routes from '../../../Routes'
 import withDemoController from '../../../../demoController/WithDemoController'
 import {IRestaurant, RESTAURANTS} from '../../../../../../lib/Restaurants'
 import RestaurantType from './restaurantType/RestaurantType'
@@ -10,7 +10,7 @@ import RestaurantItem from './restaurantItem/RestaurantItem'
 
 import './CustomerRestaurantList.scss'
 
-class RestaurantList extends React.Component<any, any> {
+class CustomerRestaurantList extends React.Component<any, any> {
     constructor(props: any) {
         super(props)
 
@@ -18,9 +18,14 @@ class RestaurantList extends React.Component<any, any> {
             filters: []
         }
 
+        this.onGoBack = this.onGoBack.bind(this)
         this.toggleFilter = this.toggleFilter.bind(this)
         this.clearFilters = this.clearFilters.bind(this)
         this.selectRestaurant = this.selectRestaurant.bind(this)
+    }
+
+    private onGoBack() {
+        this.props.history.replace(Routes.getRouteCustomerLocation())
     }
 
     private toggleFilter(filter: string) {
@@ -48,16 +53,15 @@ class RestaurantList extends React.Component<any, any> {
 
         return (
             <div id="bf-demo-view-customer-restaurant-list">
+                <div className="back" onClick={this.onGoBack}><i className="fas fa-long-arrow-alt-left"/>Go back</div>
                 <RestaurantType filters={filters} toggleFilter={this.toggleFilter} clearFilters={this.clearFilters}/>
                 {customerLocation ? (
-                    <h2 className="title"> {RESTAURANTS.length} restaurants in <span>{customerLocation}</span></h2>
+                    <h2 className="title">{RESTAURANTS.length} restaurants in <span>{customerLocation}</span></h2>
                 ) : (
-                    <h2 className="title"> {RESTAURANTS.length} restaurants</h2>
+                    <h2 className="title">All {RESTAURANTS.length} restaurants</h2>
                 )}
                 <div className="restaurant-list">
                     {_.reduce(RESTAURANTS, (restaurants: any, restaurant: IRestaurant, index: Number) => {
-
-                        console.log(filters, restaurant.category)
                         if (filters.length === 0 || filters.includes(restaurant.category)) {
                             restaurants.push(
                                 <RestaurantItem key={restaurant.id}
@@ -85,4 +89,4 @@ const mapStatToProps = (state: IState) => {
     }
 }
 
-export default connect(mapStatToProps)(withDemoController(RestaurantList))
+export default connect(mapStatToProps)(withDemoController(CustomerRestaurantList))

@@ -89,39 +89,50 @@ export default (WrappedComponent: any) => {
 
         // Return false if the caller is not allowed to continue
         goToNextStep() {
-            const {step, orders} = this.props._demoControllerProps
+            const {pathname} = this.props.location
+            const {step} = this.props._demoControllerProps
+
+            const currentRoute = Routes.getCurrentRoute(pathname) as string
 
             if (step === STEPS.FREE_MODE) {
                 return true
             }
-            else if (step < STEPS.CUSTOMER_CHOOSE_RESTAURANT) {
+            else if (step === STEPS.CUSTOMER_SET_LOCATION && currentRoute === Routes.CUSTOMER_LOCATION_ROUTE) {
                 this.props.dispatch(setStep(STEPS.CUSTOMER_CHOOSE_RESTAURANT))
 
                 return true
             }
-            else if (step < STEPS.RESTAURANT_ACCEPT_ORDER) {
-                this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_RESTAURANT, () => {
-                    this.props.dispatch(setStep(STEPS.RESTAURANT_ACCEPT_ORDER))
-                    this.props.history.replace(Routes.getDefaultRouteRestaurant(orders[0].restaurantId))
-                }))
-
-                return false
-            }
-            else if (step < STEPS.COURIER_ACCEPT_ORDER) {
-                this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_COURIER, () => {
-                    this.props.dispatch(setStep(STEPS.COURIER_ACCEPT_ORDER))
-                    this.props.history.replace(Routes.getDefaultRouteCourier())
-                }))
-
-                return false
-            }
             else {
-                this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_FREE_MODE, () => {
-                    this.props.dispatch(setStep(STEPS.FREE_MODE))
-                }))
-
-                return false
+                return true
             }
+            // else if (step < STEPS.CUSTOMER_CHOOSE_RESTAURANT) {
+            //     this.props.dispatch(setStep(STEPS.CUSTOMER_CHOOSE_RESTAURANT))
+            //
+            //     return true
+            // }
+            // else if (step < STEPS.RESTAURANT_ACCEPT_ORDER) {
+            //     this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_RESTAURANT, () => {
+            //         this.props.dispatch(setStep(STEPS.RESTAURANT_ACCEPT_ORDER))
+            //         this.props.history.replace(Routes.getDefaultRouteRestaurant(orders[0].restaurantId))
+            //     }))
+            //
+            //     return false
+            // }
+            // else if (step < STEPS.COURIER_ACCEPT_ORDER) {
+            //     this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_COURIER, () => {
+            //         this.props.dispatch(setStep(STEPS.COURIER_ACCEPT_ORDER))
+            //         this.props.history.replace(Routes.getDefaultRouteCourier())
+            //     }))
+            //
+            //     return false
+            // }
+            // else {
+            //     this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_FREE_MODE, () => {
+            //         this.props.dispatch(setStep(STEPS.FREE_MODE))
+            //     }))
+            //
+            //     return false
+            // }
         }
 
         isFreeMode() {

@@ -3,8 +3,32 @@
 #bf-demo-view-customer-restaurant-list {
   width: 100%;
   height: 100%;
-  padding: 25px;
+  padding: 35px 25px;
   box-sizing: border-box;
+
+  .back {
+    margin-left: 25px;
+    margin-bottom: 10px;
+    display: inline-block;
+    font-family: Poppins, sans-serif;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid black;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+    user-select: none;
+    cursor: pointer;
+
+    i {
+      margin-right: 8px;
+    }
+
+    &:hover {
+      background-color: $mainColor;
+      color: white;
+      opacity: 1;
+    }
+  }
 
   h2 {
     margin-bottom: 25px;

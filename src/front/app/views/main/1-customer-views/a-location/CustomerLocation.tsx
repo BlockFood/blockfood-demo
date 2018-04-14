@@ -13,21 +13,33 @@ export class CustomerLocation extends React.Component<any, any> {
 
         this.onChange = this.onChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
+        this.onBrowseAll = this.onBrowseAll.bind(this)
     }
 
-    onChange = (event: any) => {
+    private onChange = (event: any) => {
         this.props.dispatch(setCustomerLocation(event.target.value))
     }
 
-    onSubmit = (event: any) => {
-        event.preventDefault()
-
+    private _onSubmit() {
         if (this.props.demoController.goToNextStep()) {
             this.props.history.replace(Routes.getRouteCustomerRestaurantList())
         }
     }
 
-    render() {
+    private onSubmit = (event: any) => {
+        event.preventDefault()
+
+        if (this.props.customerLocation.length > 0) {
+            this._onSubmit()
+        }
+    }
+
+    private onBrowseAll() {
+        this.props.dispatch(setCustomerLocation(''))
+        this._onSubmit()
+    }
+
+    public render() {
         const {customerLocation} = this.props
 
         return (
@@ -37,8 +49,9 @@ export class CustomerLocation extends React.Component<any, any> {
                     <form onSubmit={this.onSubmit}>
                         <input type="text" placeholder="Enter your delivery address"
                                value={customerLocation} onChange={this.onChange}/>
-                        <button type="submit">I am hungry!</button>
+                        <button type="submit" disabled={customerLocation.length === 0}>I am hungry!</button>
                     </form>
+                    <a onClick={this.onBrowseAll}>Browse all</a>
                 </div>
             </div>
         )

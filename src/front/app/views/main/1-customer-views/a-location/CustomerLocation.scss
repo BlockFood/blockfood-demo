@@ -70,7 +70,26 @@
         outline: none;
         font-weight: bold;
         margin-left: 8px;
-        cursor: pointer;
+
+        &:not(:disabled) {
+          cursor: pointer;
+        }
+
+        &:disabled {
+          opacity: 0.7;
+        }
+      }
+    }
+
+    a {
+      margin-top: 15px;
+      font-style: italic;
+      cursor: pointer;
+      font-size: 0.9em;
+      opacity: 0.7;
+
+      &:hover {
+        text-decoration: underline;
       }
     }
   }
