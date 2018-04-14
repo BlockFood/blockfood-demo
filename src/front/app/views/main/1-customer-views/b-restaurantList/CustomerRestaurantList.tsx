@@ -7,6 +7,7 @@ import withDemoController from '../../../../demoController/WithDemoController'
 import {IRestaurant, RESTAURANTS} from '../../../../../../lib/Restaurants'
 import RestaurantType from './restaurantType/RestaurantType'
 import RestaurantItem from './restaurantItem/RestaurantItem'
+import GoBack from '../../../../components/goBack/GoBack'
 
 import './CustomerRestaurantList.scss'
 
@@ -55,7 +56,7 @@ class CustomerRestaurantList extends React.Component<any, any> {
 
         return (
             <div id="bf-demo-view-customer-restaurant-list">
-                <div className="back" onClick={this.onGoBack}><i className="fas fa-long-arrow-alt-left"/>Go back</div>
+                <GoBack onGoBack={this.onGoBack}/>
                 <RestaurantType filters={filters} toggleFilter={this.toggleFilter} clearFilters={this.clearFilters}/>
                 {customerLocation ? (
                     <h2 className="title">{RESTAURANTS.length} restaurants in <span>{customerLocation}</span></h2>

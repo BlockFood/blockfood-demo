@@ -1,8 +1,7 @@
 import * as React from 'react'
+import {TOTAL_RESTAURANT_STAR} from '../../../../../../../lib/Restaurants'
 
 import './RestaurantItem.scss'
-
-const TOTAL_RESTAURANT_STAR = 5
 
 export class RestaurantItem extends React.Component<any, any> {
     constructor(props: any) {
@@ -32,7 +31,6 @@ export class RestaurantItem extends React.Component<any, any> {
                         <div className="rate">
                             <i className="colored fas fa-star"/> {restaurant.star}/{TOTAL_RESTAURANT_STAR}
                         </div>
-
                     </div>
                 </div>
             </div>

@@ -53,6 +53,12 @@ export const RESTAURANT_TYPES = {
     MOST_POPULAR: "Most Popular"
 }
 
+export const MENU_CATEGORIES = {
+    FOOD: 'FOOD',
+    DRINK: 'DRINK',
+    DESSERT: 'DESSERT',
+}
+
 export const RESTAURANTS: IRestaurant[] = [
     {
         "id": "sdf454azad",
@@ -66,56 +72,56 @@ export const RESTAURANTS: IRestaurant[] = [
                 "name": "Moutabal Baba Ghanouj",
                 "price_eth": 12,
                 "price_euro": 6,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "Hommos",
                 "name": "hommos",
                 "price_eth": 15,
                 "price_euro": 6.25,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "Kibbeh",
                 "name": "Kibbeh",
                 "price_eth": 30,
                 "price_euro": 15,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "Shawarma Lamb",
                 "name": "Shawarma_Lamb",
                 "price_eth": 6.5,
                 "price_euro": 12,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "coca",
                 "name": "Coca-Cola",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "drink"
+                "category": MENU_CATEGORIES.DRINK
             },
             {
                 "id": "sparkling_water",
                 "name": "Sparkling water",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "drink"
+                "category": MENU_CATEGORIES.DRINK
             },
             {
                 "id": "cookie",
                 "name": "cookie",
                 "price_eth": 5,
                 "price_euro": 2,
-                "category": "dessert"
+                "category": MENU_CATEGORIES.DESSERT
             },
             {
                 "id": "ice_cream",
                 "name": "ice cream",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "dessert"
+                "category": MENU_CATEGORIES.DESSERT
             }
         ],
         "image": "https://f.roocdn.com/images/menus/24538/header-image.jpg"
@@ -131,42 +137,42 @@ export const RESTAURANTS: IRestaurant[] = [
                 "name": "Egg Noodles",
                 "price_eth": 30,
                 "price_euro": 15,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "Veggie_Dish",
                 "name": "The Veggie Dish",
                 "price_eth": 40,
                 "price_euro": 20,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "Meat_Noodles",
                 "name": "Meat Noodles",
                 "price_eth": 50,
                 "price_euro": 25,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "Chicken_Noodles",
                 "name": "Chicken Noodles",
                 "price_eth": 50,
                 "price_euro": 25,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "Coca_Cola",
                 "name": "Coca-Cola",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "drink"
+                "category": MENU_CATEGORIES.DRINK
             },
             {
                 "id": "Sparkling_water",
                 "name": "Sparkling water",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "drink"
+                "category": MENU_CATEGORIES.DRINK
             }
         ],
         "image": "https://f.roocdn.com/images/menus/16532/header-image.jpg"
@@ -182,41 +188,41 @@ export const RESTAURANTS: IRestaurant[] = [
                 "id": "Basilic_1",
                 "price_eth": 30,
                 "price_euro": 15,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "Basilic_2",
                 "name": "Basilic 2",
                 "price_eth": 40,
                 "price_euro": 20,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "Basilic_3",
                 "name": "Basilic 3",
                 "price_eth": 50,
                 "price_euro": 25,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "Coca_Cola",
                 "name": "Coca-Cola",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "drink"
+                "category": MENU_CATEGORIES.DRINK
             },
             {
                 "id": "Sparkling_water",
                 "name": "Sparkling water",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "drink"
+                "category": MENU_CATEGORIES.DRINK
             }, {
                 "id": "cookie",
                 "name": "cookie",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "dessert"
+                "category": MENU_CATEGORIES.DESSERT
             }
         ],
         "image": "https://ow.roocdn.com/assets/images/campaign-landing-pages/thumbs/vegetarian-fa4b679813cfac9cdeebe704f4a3e07c.jpg"
@@ -232,42 +238,42 @@ export const RESTAURANTS: IRestaurant[] = [
                 "name": "California dream",
                 "price_eth": 30,
                 "price_euro": 15,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "super_salmon",
                 "name": "super Salmon",
                 "price_eth": 40,
                 "price_euro": 20,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "Salmon_lovers",
                 "name": "Salmon lovers",
                 "price_eth": 50,
                 "price_euro": 25,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "Seven_Up",
                 "name": "Seven-Up",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "drink"
+                "category": MENU_CATEGORIES.DRINK
             },
             {
                 "id": "cookie",
                 "name": "cookie",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "dessert"
+                "category": MENU_CATEGORIES.DESSERT
             },
             {
                 "id": "ice_cream",
                 "name": "ice cream",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "dessert"
+                "category": MENU_CATEGORIES.DESSERT
             }
         ],
         "image": "https://duyt4h9nfnj50.cloudfront.net/resized/39eea2f47cdd7dc388ca42dfe71b21dd-w750-bc.jpg"
@@ -284,35 +290,35 @@ export const RESTAURANTS: IRestaurant[] = [
                 "name": "box 1",
                 "price_eth": 30,
                 "price_euro": 15,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "coca",
                 "name": "Coca-Cola",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "drink"
+                "category": MENU_CATEGORIES.DRINK
             },
             {
                 "id": "sparkling_water",
                 "name": "Sparkling water",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "drink"
+                "category": MENU_CATEGORIES.DRINK
             },
             {
                 "id": "cookie",
                 "name": "cookie",
                 "price_eth": 5,
                 "price_euro": 2,
-                "category": "dessert"
+                "category": MENU_CATEGORIES.DESSERT
             },
             {
                 "id": "ice_cream",
                 "name": "ice cream",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "dessert"
+                "category": MENU_CATEGORIES.DESSERT
             }
         ],
         "image": "https://duyt4h9nfnj50.cloudfront.net/resized/02210e1d2c6fdec88b7ee40604c4da46-w750-bd.jpg"
@@ -328,33 +334,35 @@ export const RESTAURANTS: IRestaurant[] = [
                 "name": "pizza Napolitain",
                 "price_eth": 30,
                 "price_euro": 15,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "pizza Vegie",
                 "name": "pizza_Vegie",
                 "price_eth": 40,
                 "price_euro": 20,
-                "category": "food"
+                "category": MENU_CATEGORIES.FOOD
             },
             {
                 "id": "Coca_Cola",
                 "name": "Coca-Cola",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "drink"
+                "category": MENU_CATEGORIES.DRINK
             },
             {
                 "id": "Sparkling_water",
                 "name": "Sparkling water",
                 "price_eth": 10,
                 "price_euro": 5,
-                "category": "drink"
+                "category": MENU_CATEGORIES.DRINK
             }
         ],
         "image": "https://duyt4h9nfnj50.cloudfront.net/resized/6c30305e0d24fcc3c68975303ec481c5-w750-f1.jpg"
     }
 ]
+
+export const TOTAL_RESTAURANT_STAR = 5
 
 export const EMPTY_RESTAURANT_TYPES = _.filter(RESTAURANT_TYPES, type => !_.find(RESTAURANTS, restaurant => restaurant.category === type))
 export const RESTAURANTS_BY_IDS = _.keyBy(RESTAURANTS, ({id}) => id)
