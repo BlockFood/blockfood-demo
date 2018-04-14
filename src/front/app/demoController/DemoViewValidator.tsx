@@ -19,6 +19,7 @@ class DemoViewValidator extends React.Component<any, any> {
         else {
             switch (currentRoute) {
                 case Routes.CUSTOMER_LOCATION_ROUTE:
+                case Routes.CUSTOMER_RESTAURANT_LIST_ROUTE:
                 case Routes.CUSTOMER_EXAMPLE_ROUTE:
                     return step >= STEPS.CUSTOMER_SET_LOCATION && step <= STEPS.CUSTOMER_DO_PAYMENT
                 case Routes.RESTAURANT_EXAMPLE_ROUTE:

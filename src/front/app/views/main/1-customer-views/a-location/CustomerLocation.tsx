@@ -23,7 +23,7 @@ export class CustomerLocation extends React.Component<any, any> {
         event.preventDefault()
 
         if (this.props.demoController.goToNextStep()) {
-            this.props.history.replace(Routes.getRouteCustomerExample())
+            this.props.history.replace(Routes.getRouteCustomerRestaurantList())
         }
     }
 
