@@ -1,5 +1,5 @@
 import Http from 'axios'
-import {IOrder, IOrderDetails, ORDER_STATUS} from '../../../lib/Orders'
+import {IOrder, IOrderDetail, ORDER_STATUS} from '../../../lib/Orders'
 
 const API_REMOTE_URL = 'http://localhost:4242'
 
@@ -31,7 +31,7 @@ class Api {
             .catch((err) => defaultErrorHandler ? this.onError() : Promise.reject(err))
     }
 
-    createNewOrder(restaurantId: string, details: IOrderDetails): Promise<IOrder[]> {
+    createNewOrder(restaurantId: string, details: IOrderDetail[]): Promise<IOrder[]> {
         const orderData = {restaurantId, details}
         return Http.post(`${API_REMOTE_URL}/api/${this.demoId}/order`, orderData)
             .then(({data: orders}: any) => orders as IOrder[])

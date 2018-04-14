@@ -1,12 +1,17 @@
 import * as _ from 'lodash'
 import * as React from 'react'
+import {connect} from 'react-redux'
+import {IState} from '../../../../state/InitialState'
 import withDemoController from '../../../../demoController/WithDemoController'
 import * as Routes from '../../../Routes'
 import {
-    IRestaurant, RESTAURANTS_BY_IDS, TOTAL_RESTAURANT_STAR,
-    IMenu, MENU_CATEGORIES
+    IRestaurant, RESTAURANTS_BY_IDS, MENU_ITEMS_BY_IDS, TOTAL_RESTAURANT_STAR,
+    IMenuItem, MENU_CATEGORIES
 } from '../../../../../../lib/Restaurants'
+import {IOrderDetail} from '../../../../../../lib/Orders'
+import {createCustomerOrderInProgress, setCustomerOrderInProgress} from '../../../../state/Actions'
 import GoBack from '../../../../components/goBack/GoBack'
+import MenuItem from './menuItem/MenuItem'
 
 import './CustomerOrder.scss'
 
@@ -14,18 +19,17 @@ const DELIVERY_FEE = 4
 
 class CustomerOrder extends React.Component<any, any> {
     private restaurant: IRestaurant
+    private menuItems: any
 
     constructor(props: any) {
         super(props)
 
-        this.restaurant = RESTAURANTS_BY_IDS[this.props.match.params.restaurantId]
-
-        this.state = {
-            basket: []
-        }
+        const {restaurantId} = this.props.match.params
+        this.restaurant = RESTAURANTS_BY_IDS[restaurantId]
+        this.menuItems = MENU_ITEMS_BY_IDS[restaurantId]
 
         this.onGoBack = this.onGoBack.bind(this)
-        this.addToShoppingList = this.addToShoppingList.bind(this)
+        this.addToOrderInProgress = this.addToOrderInProgress.bind(this)
         this.validate = this.validate.bind(this)
     }
 
@@ -36,59 +40,89 @@ class CustomerOrder extends React.Component<any, any> {
     private validate = (event: any) => {
         event.preventDefault()
 
-        if (this.state.basket.length > 0) {
+        const {customerOrderInProgress} = this.props
+
+        if (customerOrderInProgress.details.length > 0) {
             // TODO
         }
     }
 
     private getTheTotal = (delivery: boolean) => {
-        const {basket} = this.state
+        const {customerOrderInProgress} = this.props
 
-        const totalPrice = _.reduce(basket, (total, item) => {
-            total += (item.item.price_euro * item.value)
+        const totalPrice = _.reduce(customerOrderInProgress.details, (total, detail) => {
+            const price = this.menuItems[detail.menuItemId].price_eth
+            total += (price * detail.quantity)
             return total
         }, 0)
+
         return delivery ? totalPrice + DELIVERY_FEE : totalPrice
     }
 
-    private addToShoppingList = (item: IMenu, valueItem: number) => {
-        const {basket} = this.state
+    private addToOrderInProgress = (menuItemId: string, deltaQuantity: number) => {
+        const {customerOrderInProgress} = this.props
 
-        const container = basket.length ? basket : []
+        let menuItemFound = false
+        const newDetails = _.reduce(customerOrderInProgress.details, (newDetails: IOrderDetail[], detail) => {
+            if (detail.menuItemId === menuItemId) {
+                menuItemFound = true
 
-        const foundItem = _.find(basket, value => value.item.id === item.id)
+                const newQuantity = detail.quantity + deltaQuantity
 
-        if (foundItem) {
-            foundItem.value = foundItem.value + valueItem
+                if (newQuantity > 0) {
+                    const newDetail = _.assign({}, detail, {quantity: newQuantity})
+                    newDetails.push(newDetail)
+                }
+            }
+            else {
+                newDetails.push(detail)
+            }
+
+            return newDetails
+        }, [])
+
+        if (!menuItemFound) {
+            newDetails.push({menuItemId, quantity: deltaQuantity})
         }
-        else {
-            container.push({value: valueItem, item})
-        }
 
-        this.setState({basket: container})
+        const newOrderInProgress = _.assign({}, customerOrderInProgress, {details: newDetails})
+
+        this.props.dispatch(setCustomerOrderInProgress(newOrderInProgress))
+    }
+
+    public componentDidMount() {
+        const {customerOrderInProgress} = this.props
+
+        if (!customerOrderInProgress || customerOrderInProgress.restaurantId !== this.restaurant.id) {
+            this.props.dispatch(createCustomerOrderInProgress(this.restaurant.id))
+        }
     }
 
     public render() {
         const {restaurant} = this
-        const {basket} = this.state
+        const {customerOrderInProgress} = this.props
+
+        if (!customerOrderInProgress) {
+            return null
+        }
+
+        const isEmpty = customerOrderInProgress.details.length === 0
 
         const categorizingFoods = (category: string) => {
-            const items = _.reduce(restaurant.menu, (items, menu) => {
-                if (menu.category === category) {
-                    return [...items, menu]
+            const menuItems = _.reduce(restaurant.menuItems, (menuItems, menuItem) => {
+                if (menuItem.category === category) {
+                    return [...menuItems, menuItem]
                 }
-                return items
+                return menuItems
             }, [])
 
-            return items.length > 0 ? (
-                <div key={category} className="foodPart">
+            return menuItems.length > 0 ? (
+                <div key={category} className="menu-items-category">
                     <h6>{category}</h6>
                     <div className="list">
-                        {_.map(items, (food: IMenu) => (
-                            <div key={food.id} className="foods" onClick={() => this.addToShoppingList(food, 1)}>
-                                <h2>{food.name}</h2>
-                                <h3>{food.price_eth} ETH</h3>
-                            </div>
+                        {_.map(menuItems, (menuItem: IMenuItem) => (
+                            <MenuItem key={menuItem.id} menuItem={menuItem}
+                                      addToOrderInProgress={this.addToOrderInProgress}/>
                         ))}
                     </div>
                 </div>
@@ -100,7 +134,7 @@ class CustomerOrder extends React.Component<any, any> {
                 <GoBack onGoBack={this.onGoBack}/>
                 <div className="header">
                     <img className="image" src={restaurant.image}/>
-                    <div className="detail">
+                    <div className="restaurant-detail">
                         <div className="name">
                             <p>{restaurant.name}</p>
                         </div>
@@ -108,7 +142,7 @@ class CustomerOrder extends React.Component<any, any> {
                             <p>{restaurant.category}</p>
                         </div>
                         <div className="rate">
-                            <i className="colored fas fa-star"/> {restaurant.star}/{TOTAL_RESTAURANT_STAR}
+                            <i className="colored fas fa-star"/> {restaurant.rate}/{TOTAL_RESTAURANT_STAR}
                         </div>
                     </div>
                 </div>
@@ -116,17 +150,21 @@ class CustomerOrder extends React.Component<any, any> {
                     {_.map(MENU_CATEGORIES, category => categorizingFoods(category))}
                 </div>
                 <div className="order">
-                    <button className="validate-button" disabled={basket.length === 0} onClick={this.validate}>
+                    <button className="validate-button" disabled={isEmpty} onClick={this.validate}>
                         Validate my order
                     </button>
                     <div className="list divider">
-                        {basket.length > 0 ? _.map(basket, item => {
-                            return (<div key={item.item.id}>
-                                <div className="name">
-                                    <span>{item.value} x {item.item.name} </span>
-                                    <span className="colored">{item.item.price_euro * item.value} ETH</span>
+                        {!isEmpty ? _.map(customerOrderInProgress.details, detail => {
+                            const menuItem = this.menuItems[detail.menuItemId]
+
+                            return (
+                                <div key={menuItem.id}>
+                                    <div className="name">
+                                        <span>{detail.quantity} x {menuItem.name} </span>
+                                        <span className="colored">{menuItem.price_eth * detail.quantity} ETH</span>
+                                    </div>
                                 </div>
-                            </div>)
+                            )
                         }) : (
                             <div className="empty">Empty...</div>
                         )}
@@ -153,4 +191,10 @@ class CustomerOrder extends React.Component<any, any> {
     }
 }
 
-export default (withDemoController(CustomerOrder))
+const mapStatToProps = (state: IState) => {
+    return {
+        customerOrderInProgress: state.customerOrderInProgress
+    }
+}
+
+export default connect(mapStatToProps)(withDemoController(CustomerOrder))

@@ -1,4 +1,5 @@
 import * as _ from 'lodash'
+import {IOrderInProgress} from '../../../lib/Orders'
 
 const STORAGE_PREFIX = 'bf-demo-'
 
@@ -33,6 +34,14 @@ class Storage {
 
     static getCustomerLocation(): string {
         return Storage._readObjectFromSessionStorage('customer-location')
+    }
+
+    static setCustomerOrderInProgress(customerOrderInProgress: IOrderInProgress) {
+        Storage._writeObjectToSessionStorage('customer-order-in-progress', customerOrderInProgress)
+    }
+
+    static getCustomerOrderInProgress(): string {
+        return Storage._readObjectFromSessionStorage('customer-order-in-progress')
     }
 
     static clearAll() {

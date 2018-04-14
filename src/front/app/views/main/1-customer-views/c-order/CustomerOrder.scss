@@ -25,7 +25,7 @@
       border-radius: 15px;
     }
 
-    .detail {
+    .restaurant-detail {
       position: relative;
       display: flex;
       flex-direction: column;
@@ -117,7 +117,7 @@
   .content {
     width: calc(100% - 415px);
 
-    .foodPart {
+    .menu-items-category {
       margin-top: 25px;
 
       h6 {
@@ -133,41 +133,6 @@
         align-items: flex-start;
         justify-content: flex-start;
         flex-wrap: wrap;
-
-        .foods {
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: left;
-          justify-content: center;
-          padding: 15px;
-          color: $textColor2;
-          border-radius: 5px;
-          box-sizing: border-box;
-          border: 1px solid #d9d9d9;
-
-          h2 {
-            font-size: 15px;
-            font-weight: bold;
-            text-transform: uppercase;
-          }
-
-          h3 {
-            margin-top: 5px;
-            font-size: 14px;
-            font-weight: bold;
-            color: $mainColor;
-          }
-
-          &:hover {
-            background-color: #d9d9d9;
-            cursor: pointer;
-          }
-
-          &:not(:last-child) {
-            margin-bottom: 15px;
-          }
-        }
       }
     }
   }

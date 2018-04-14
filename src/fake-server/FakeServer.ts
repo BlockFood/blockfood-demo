@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import * as uuid from 'uuid/v1'
-import {IOrder, IOrderDetails, ORDER_STATUS} from '../lib/Orders'
+import {IOrder, IOrderDetail, ORDER_STATUS} from '../lib/Orders'
 
 const database: { [demoId: string]: IOrder[] } = {}
 
@@ -28,7 +28,7 @@ app.post('/api/start-demo', (req, res) => {
 
 app.post('/api/:demoId/order', (req, res) => {
     const {demoId} = req.params
-    const {restaurantId, details}: {restaurantId: string, details: IOrderDetails} = req.body
+    const {restaurantId, details}: {restaurantId: string, details: IOrderDetail[]} = req.body
 
     const orders = database[demoId]
 

@@ -5,9 +5,10 @@ import {IState} from '../../../../state/InitialState'
 import * as Routes from '../../../Routes'
 import withDemoController from '../../../../demoController/WithDemoController'
 import {IRestaurant, RESTAURANTS} from '../../../../../../lib/Restaurants'
+import {createCustomerOrderInProgress} from '../../../../state/Actions'
+import GoBack from '../../../../components/goBack/GoBack'
 import RestaurantType from './restaurantType/RestaurantType'
 import RestaurantItem from './restaurantItem/RestaurantItem'
-import GoBack from '../../../../components/goBack/GoBack'
 
 import './CustomerRestaurantList.scss'
 
@@ -46,6 +47,7 @@ class CustomerRestaurantList extends React.Component<any, any> {
 
     private selectRestaurant = (restaurantId: string) => {
         if (this.props.demoController.goToNextStep()) {
+            this.props.dispatch(createCustomerOrderInProgress(restaurantId))
             this.props.history.replace(Routes.getRouteCustomerOrder(restaurantId))
         }
     }

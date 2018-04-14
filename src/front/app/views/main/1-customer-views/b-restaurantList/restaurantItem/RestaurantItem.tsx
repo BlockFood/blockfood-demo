@@ -21,7 +21,7 @@ export class RestaurantItem extends React.Component<any, any> {
             <div className="restaurant">
                 <div onClick={this.selectRestaurant}>
                     <img className="image" src={restaurant.image}/>
-                    <div className="detail">
+                    <div className="restaurant-detail">
                         <div className="name">
                             <p>{restaurant.name}</p>
                         </div>
@@ -29,7 +29,7 @@ export class RestaurantItem extends React.Component<any, any> {
                             <p>{restaurant.category}</p>
                         </div>
                         <div className="rate">
-                            <i className="colored fas fa-star"/> {restaurant.star}/{TOTAL_RESTAURANT_STAR}
+                            <i className="colored fas fa-star"/> {restaurant.rate}/{TOTAL_RESTAURANT_STAR}
                         </div>
                     </div>
                 </div>

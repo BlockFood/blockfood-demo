@@ -7,13 +7,19 @@ export enum ORDER_STATUS {
     DONE = 'DONE'
 }
 
-export interface IOrderDetails {
-
+export interface IOrderDetail {
+    menuItemId: string,
+    quantity: Number
 }
 
 export interface IOrder {
     id: string,
     status: ORDER_STATUS,
     restaurantId: string,
-    details: IOrderDetails
+    details: IOrderDetail[]
+}
+
+export interface IOrderInProgress {
+    restaurantId: string,
+    details: IOrderDetail[]
 }

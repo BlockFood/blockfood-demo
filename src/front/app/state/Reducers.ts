@@ -1,11 +1,14 @@
 import * as _ from 'lodash'
+import {IOrderInProgress} from '../../../lib/Orders'
 import {DEFAULT_STATE, INITIAL_STATE, IHelpMessageModal, IState} from './InitialState'
 import {
     SET_STEP,
     SET_HELP_MESSAGE,
     SET_ORDERS,
     RESTART,
-    SET_CUSTOMER_LOCATION
+    SET_CUSTOMER_LOCATION,
+    CREATE_CUSTOMER_ORDER_IN_PROGRESS,
+    SET_CUSTOMER_ORDER_IN_PROGRESS
 } from './Actions'
 import Storage from '../utils/Storage'
 
@@ -35,6 +38,24 @@ const reduceCustomerLocation = (state: IState, action: any): IState => {
     return _.assign({}, state, {customerLocation: action.customerLocation})
 }
 
+const reduceNewCustomerOrderInProgress = (state: IState, action: any): IState => {
+    if (state.customerOrderInProgress && state.customerOrderInProgress.restaurantId === action.restaurantId) {
+        return state
+    }
+    else {
+        const customerOrderInProgress: IOrderInProgress = {
+            restaurantId: action.restaurantId,
+            details: []
+        }
+        return reduceCustomerOrderInProgress(state, {customerOrderInProgress})
+    }
+}
+
+const reduceCustomerOrderInProgress = (state: IState, action: any): IState => {
+    Storage.setCustomerOrderInProgress(action.customerOrderInProgress)
+    return _.assign({}, state, {customerOrderInProgress: action.customerOrderInProgress})
+}
+
 export const rootReducer = (state = INITIAL_STATE, action: any) => {
     switch (action.type) {
         case SET_STEP:
@@ -48,6 +69,10 @@ export const rootReducer = (state = INITIAL_STATE, action: any) => {
             return DEFAULT_STATE
         case SET_CUSTOMER_LOCATION:
             return reduceCustomerLocation(state, action)
+        case CREATE_CUSTOMER_ORDER_IN_PROGRESS:
+            return reduceNewCustomerOrderInProgress(state, action)
+        case SET_CUSTOMER_ORDER_IN_PROGRESS:
+            return reduceCustomerOrderInProgress(state, action)
         default:
             return state
     }
