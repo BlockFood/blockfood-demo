@@ -44,7 +44,9 @@ class CustomerRestaurantList extends React.Component<any, any> {
     }
 
     private selectRestaurant = (restaurantId: string) => {
-
+        if (this.props.demoController.goToNextStep()) {
+            this.props.history.replace(Routes.getRouteCustomerOrder(restaurantId))
+        }
     }
 
     public render() {

@@ -102,6 +102,11 @@ export default (WrappedComponent: any) => {
 
                 return true
             }
+            else if (step === STEPS.CUSTOMER_CHOOSE_RESTAURANT && currentRoute === Routes.CUSTOMER_RESTAURANT_LIST_ROUTE) {
+                this.props.dispatch(setStep(STEPS.CUSTOMER_CREATE_ORDER))
+
+                return true
+            }
             else {
                 return true
             }
