@@ -34,7 +34,7 @@ const getRouteWithDemoId = (route: string): string => {
     return route.replace(':demoId', Api.getDemoId())
 }
 
-export const getRouteLocationExample = (): string => {
+export const getRouteCustomerLocation = (): string => {
     return getRouteWithDemoId(CUSTOMER_LOCATION_ROUTE)
 }
 
@@ -51,7 +51,7 @@ export const getRouteCourierExample = (): string => {
 }
 
 export const getDefaultRouteCustomer = () => {
- return getRouteLocationExample()
+ return getRouteCustomerLocation()
 }
 
 export const getDefaultRouteRestaurant = (restaurantId: string) => {
