@@ -13,15 +13,22 @@ export interface IOrderedItem {
     totalItemPrice?: number
 }
 
-export interface IOrderDetails {
-    orderTime?: Date
-    orderedItems?: IOrderedItem[]
-    comment?: string
+export interface IOrderDetail {
+    menuItemId: string,
+    quantity: Number
 }
 
 export interface IOrder {
     id: string,
     status: ORDER_STATUS,
     restaurantId: string,
-    details: IOrderDetails
+    customerPosition: [Number, Number],
+    orderTime?: Date,
+    comment?: string,
+    details: IOrderDetail[]
+}
+
+export interface IOrderInProgress {
+    restaurantId: string,
+    details: IOrderDetail[]
 }

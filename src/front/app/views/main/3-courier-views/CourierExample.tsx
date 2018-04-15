@@ -9,6 +9,8 @@ import doWithMinTime from '../../../utils/DoWithMinTime'
 import {selectOrdersForCourier} from '../../../state/Selectors'
 import {setOrders} from '../../../state/Actions'
 
+import './ViewExample.scss'
+
 class HandleButton extends React.Component<any, any> {
     constructor(props: any) {
         super(props)
@@ -43,7 +45,9 @@ class CourierExample extends React.Component<any, any> {
             this.setState({loading: true})
             doWithMinTime(() => Api.updateOrderStatus(orderId, ORDER_STATUS.DONE)).then((orders) => {
                 this.props.dispatch(setOrders(orders))
-                this.props.demoController.goToNextStep() && this.setState({loading: false})
+                if (this.props.demoController.goToNextStep()) {
+                    this.setState({loading: false})
+                }
             })
         }
     }

@@ -1,0 +1,70 @@
+@import '../../../../../style/Variables';
+
+#bf-demo-view-customer-restaurant-list .restaurant-type-list-container {
+  margin: 0 25px;
+
+  h2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    i {
+      cursor: pointer;
+
+      &:hover {
+        color: $mainColor;
+      }
+    }
+  }
+
+  h2, ul {
+    border-bottom: 1px solid #cecece;
+  }
+
+  ul {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+
+    li {
+      width: 12.5%;
+      font-size: 13px;
+      padding: 2px 0;
+      box-sizing: border-box;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      span {
+        display: inline-block;
+        padding: 5px 10px;
+        cursor: pointer;
+        user-select: none;
+        border-radius: 5px;
+        font-weight: 700;
+        color: $textColor2;
+      }
+
+      &.empty span {
+        font-style: italic;
+        font-weight: normal;
+      }
+
+      &.active span, span:hover {
+        background: $mainColor;
+        color: white;
+      }
+
+      @media screen and (max-width: 1050px) {
+        width: 25%;
+      }
+
+      @media screen and (max-width: 650px) {
+        width: 33.3333%;
+      }
+    }
+  }
+}
