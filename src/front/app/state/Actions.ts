@@ -5,6 +5,7 @@ import {IOrder, IOrderInProgress} from '../../../lib/Orders'
 export const SET_STEP = 'SET_STEP'
 export const SET_HELP_MESSAGE = 'SET_HELP_MESSAGE'
 export const SET_ORDERS = 'SET_ORDERS'
+export const TOGGLE_IS_MOBILE = 'TOGGLE_IS_MOBILE'
 export const RESTART = 'RESTART'
 export const SET_CUSTOMER_LOCATION = 'SET_CUSTOMER_LOCATION'
 export const CREATE_CUSTOMER_ORDER_IN_PROGRESS = 'CREATE_CUSTOMER_ORDER_IN_PROGRESS'
@@ -17,9 +18,11 @@ export const setHelpMessage = (id: HELP_MESSAGES | null, onClose: any = null) =>
 
 export const closeHelpMessage = () => ({type: SET_HELP_MESSAGE, close: true})
 
-export const setOrders = (orders: IOrder[]) => ({type: SET_ORDERS, orders})
+export const toggleIsMobile = () => ({type: TOGGLE_IS_MOBILE})
 
 export const restart = () => ({type: RESTART})
+
+export const setOrders = (orders: IOrder[]) => ({type: SET_ORDERS, orders})
 
 export const setCustomerLocation = (customerLocation: string) => ({type: SET_CUSTOMER_LOCATION, customerLocation})
 

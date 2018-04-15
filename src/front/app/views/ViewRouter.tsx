@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Switch, Route, Redirect} from 'react-router'
+import {IState} from '../state/InitialState'
 import Api from '../api/Api'
 import * as Routes from './Routes'
 import withDemoController from '../demoController/WithDemoController'
@@ -21,7 +22,7 @@ import CourierExample from './main/3-courier-views/CourierExample'
 import Loader from '../components/loader/Loader'
 import {setOrders} from '../state/Actions'
 
-class MainView extends React.Component<any, any> {
+class ViewRouter extends React.Component<any, any> {
     constructor(props: any) {
         super(props)
 
@@ -71,6 +72,7 @@ class MainView extends React.Component<any, any> {
     }
 
     render() {
+        const {isMobile} = this.props
         const {error, ready} = this.state
 
         if (error) {
@@ -86,20 +88,22 @@ class MainView extends React.Component<any, any> {
                     {ready && (
                         <DemoViewValidator>
                             <CubeTransitionWrapper index={Routes.ALL_VIEWS.indexOf(view as string) + 1}>
-                                <Header view={view}/>
-                                <div key={pathname} id="bf-demo-main-view">
-                                    <Switch>
-                                        <Route path={Routes.HOME} exact component={Start}/>
-                                        <Route path={Routes.CUSTOMER_LOCATION_ROUTE} exact component={CustomerLocation}/>
-                                        <Route path={Routes.CUSTOMER_RESTAURANT_LIST_ROUTE} exact component={CustomerRestaurantList}/>
-                                        <Route path={Routes.CUSTOMER_ORDER_ROUTE} exact component={CustomerOrder}/>
-                                        <Route path={Routes.CUSTOMER_POSITION_ROUTE} exact component={CustomerPosition}/>
-                                        <Route path={Routes.CUSTOMER_PAYMENT_ROUTE} exact component={CustomerPayment}/>
-                                        <Route path={Routes.CUSTOMER_ORDER_LIST_ROUTE} exact component={CustomerOrderList}/>
-                                        <Route path={Routes.RESTAURANT_EXAMPLE_ROUTE} exact component={RestaurantExample}/>
-                                        <Route path={Routes.COURIER_EXAMPLE_ROUTE} exact component={CourierExample}/>
-                                        <Redirect to={Routes.HOME}/>
-                                    </Switch>
+                                <div id="bf-demo-device" className={view && isMobile ? 'mobile' : ''}>
+                                    <Header view={view}/>
+                                    <div key={pathname} id="bf-demo-main-view">
+                                        <Switch>
+                                            <Route path={Routes.HOME} exact component={Start}/>
+                                            <Route path={Routes.CUSTOMER_LOCATION_ROUTE} exact component={CustomerLocation}/>
+                                            <Route path={Routes.CUSTOMER_RESTAURANT_LIST_ROUTE} exact component={CustomerRestaurantList}/>
+                                            <Route path={Routes.CUSTOMER_ORDER_ROUTE} exact component={CustomerOrder}/>
+                                            <Route path={Routes.CUSTOMER_POSITION_ROUTE} exact component={CustomerPosition}/>
+                                            <Route path={Routes.CUSTOMER_PAYMENT_ROUTE} exact component={CustomerPayment}/>
+                                            <Route path={Routes.CUSTOMER_ORDER_LIST_ROUTE} exact component={CustomerOrderList}/>
+                                            <Route path={Routes.RESTAURANT_EXAMPLE_ROUTE} exact component={RestaurantExample}/>
+                                            <Route path={Routes.COURIER_EXAMPLE_ROUTE} exact component={CourierExample}/>
+                                            <Redirect to={Routes.HOME}/>
+                                        </Switch>
+                                    </div>
                                 </div>
                             </CubeTransitionWrapper>
                             <DemoControllerPanel view={view}/>
@@ -112,4 +116,10 @@ class MainView extends React.Component<any, any> {
     }
 }
 
-export default withRouter(connect()(withDemoController(MainView)) as any) as any
+const mapStateToProps = (state: IState) => {
+    return {
+        isMobile: state.isMobile
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(withDemoController(ViewRouter)) as any) as any

@@ -8,7 +8,7 @@ import {getHelpMessageContent} from '../types/HelpMessages'
 import {STEPS, getStepLabel} from '../types/Steps'
 import withDemoController from '../WithDemoController'
 import Modal from '../../components/modal/Modal'
-import {closeHelpMessage} from '../../state/Actions'
+import {closeHelpMessage, toggleIsMobile} from '../../state/Actions'
 
 import './DemoControllerPanel.scss'
 
@@ -24,11 +24,16 @@ class DemoControllerPanel extends React.Component<any, any> {
         }
 
         this.onHelpMessageClose = this.onHelpMessageClose.bind(this)
+        this.toggleIsMobile = this.toggleIsMobile.bind(this)
         this.switchView = this.switchView.bind(this)
     }
 
     onHelpMessageClose() {
         this.props.dispatch(closeHelpMessage())
+    }
+
+    toggleIsMobile() {
+        this.props.dispatch(toggleIsMobile())
     }
 
     switchView(event: any) {
@@ -46,7 +51,7 @@ class DemoControllerPanel extends React.Component<any, any> {
     }
 
     render() {
-        const {view, demoController, helpMessage} = this.props
+        const {view, demoController, helpMessage, isMobile} = this.props
         const {step, stepLabel} = this.state
 
         const getStep = (minStep: STEPS, icon: string | null = null) => {
@@ -61,9 +66,17 @@ class DemoControllerPanel extends React.Component<any, any> {
 
         return (
             <footer id="bf-demo-controller-panel" className={!!view ? 'visible' : ''}>
-                <button className="restart" onClick={demoController.restart}>
-                    <i className="fas fa-undo-alt"/>Restart
-                </button>
+                <div className="left">
+                    <button className="restart" onClick={demoController.restart}>
+                        <i className="fas fa-undo-alt"/>Restart
+                    </button>
+                    <div className="devices">
+                        <i className={`fas fa-desktop${!isMobile ? ' active' : ''}`}
+                           onClick={this.toggleIsMobile}/> /
+                        <i className={`fas fa-mobile-alt${isMobile ? ' active' : ''}`}
+                           onClick={this.toggleIsMobile}/>
+                    </div>
+                </div>
                 <div className="progress">
                     {step < STEPS.FREE_MODE && (
                         <div className="step-label">
@@ -101,7 +114,9 @@ class DemoControllerPanel extends React.Component<any, any> {
                         )}
                     </div>
                 </div>
-                <a className="logo" href="http://blockfood.io" target="_blank" rel="noopener noreferrer"/>
+                <div className="right">
+                    <a className="logo" href="http://blockfood.io" target="_blank" rel="noopener noreferrer"/>
+                </div>
                 {helpMessage && (
                     <Modal onImmediateClose={helpMessage.onClose} onClose={this.onHelpMessageClose}>
                         {getHelpMessageContent(helpMessage.id)}
@@ -115,7 +130,8 @@ class DemoControllerPanel extends React.Component<any, any> {
 const mapStateToProps = (state: IState) => {
     return {
         step: state.step,
-        helpMessage: state.helpMessage
+        helpMessage: state.helpMessage,
+        isMobile: state.isMobile
     }
 }
 
