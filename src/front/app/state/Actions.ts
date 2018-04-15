@@ -25,6 +25,6 @@ export const setCustomerLocation = (customerLocation: string) => ({type: SET_CUS
 
 export const createCustomerOrderInProgress = (restaurantId: string) => ({type: CREATE_CUSTOMER_ORDER_IN_PROGRESS, restaurantId})
 
-export const setCustomerOrderInProgress = (customerOrderInProgress: IOrderInProgress) => ({type: SET_CUSTOMER_ORDER_IN_PROGRESS, customerOrderInProgress})
+export const setCustomerOrderInProgress = (customerOrderInProgress: IOrderInProgress | null) => ({type: SET_CUSTOMER_ORDER_IN_PROGRESS, customerOrderInProgress})
 
 export const setCustomerPosition = (customerPosition: [Number, Number]) => ({type: SET_CUSTOMER_POSITION, customerPosition})

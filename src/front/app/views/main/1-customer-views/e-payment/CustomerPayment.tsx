@@ -6,9 +6,9 @@ import * as Routes from '../../../Routes'
 import doWithMinTime from '../../../../utils/DoWithMinTime'
 import Api from '../../../../api/Api'
 import GoBack from '../../../../components/goBack/GoBack'
+import {setCustomerOrderInProgress, setOrders} from '../../../../state/Actions'
 
 import './CustomerPayment.scss'
-import {setOrders} from "../../../../state/Actions";
 
 class CustomerPayment extends React.Component<any, any> {
     constructor(props: any) {
@@ -42,6 +42,10 @@ class CustomerPayment extends React.Component<any, any> {
                 }
             })
         }
+    }
+
+    public componentWillUnmount() {
+        this.state.done && this.props.dispatch(setCustomerOrderInProgress(null))
     }
 
     public render() {

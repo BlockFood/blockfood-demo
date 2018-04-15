@@ -6,7 +6,7 @@ const STORAGE_PREFIX = 'bf-demo-'
 class Storage {
     static _clearObjectFromSessionStorage(key: string) {
         try {
-            window.sessionStorage.removeItem(STORAGE_PREFIX + key)
+            window.sessionStorage.removeItem(key)
         }
         catch (e) {}
     }
