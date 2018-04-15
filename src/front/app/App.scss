@@ -14,13 +14,13 @@ html, body, #root {
 #bf-demo-device {
   position: relative;
   width: 100%;
-  height: calc(100% - #{$demoControllerHeight});
+  height: 100%;
   box-sizing: border-box;
 
   &.mobile {
     width: calc(100% - 70px);
     max-width: 1200px;
-    height: calc(100% - #{$demoControllerHeight} - 120px);
+    height: calc(100% - 120px);
     margin: 45px auto;
     border: 10px solid #222;
     box-sizing: border-box;

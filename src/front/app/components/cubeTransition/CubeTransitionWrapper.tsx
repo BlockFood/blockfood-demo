@@ -9,6 +9,7 @@ class CubeTransitionWrapper extends React.Component<any, any> {
     private cubeTransition: any
     private pages: any[]
     private previousHTML: string[]
+    private previousPageIndex: Number | null = null
 
     constructor(props: any) {
         super(props)
@@ -29,8 +30,29 @@ class CubeTransitionWrapper extends React.Component<any, any> {
 
     public componentWillReceiveProps(nextProps: any) {
         if (this.props.index !== nextProps.index) {
-            this.previousHTML[this.props.index] = this.pages[this.props.index].innerHTML
+            this.previousPageIndex = this.props.index
+            const previousPage = this.pages[this.previousPageIndex as number]
+            _.map(previousPage.querySelectorAll('*'), el => {
+                if (el.scrollTop) {
+                    el.setAttribute('data-scroll-top', el.scrollTop)
+                }
+            })
+            this.previousHTML[this.previousPageIndex as number] = previousPage.innerHTML
+
             this.cubeTransition.openIndex(nextProps.index + 1)
+        }
+    }
+
+    public componentDidUpdate() {
+        if (this.previousPageIndex) {
+            _.forEach(this.pages[this.previousPageIndex as number].querySelectorAll('*'), el => {
+                const scrollTop = el.getAttribute('data-scroll-top')
+                if (scrollTop) {
+                    el.scrollTop = scrollTop
+                }
+            })
+
+            this.previousPageIndex = null
         }
     }
 

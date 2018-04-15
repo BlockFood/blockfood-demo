@@ -14,17 +14,17 @@
   justify-content: space-between;
   padding: 0 25px;
   box-sizing: border-box;
-  transform: translateY($demoControllerHeight + 15px);
-  transition: transform 0.5s;
   z-index: 3;
-
-  &.visible {
-    transform: translateY(0);
-  }
 
   & > * {
     flex-grow: 0;
     flex-shrink: 0;
+    transform: translateY($demoControllerHeight + 15px);
+    transition: transform 0.5s;
+  }
+
+  &.visible > * {
+    transform: translateY(0);
   }
 
   .left, .right {
