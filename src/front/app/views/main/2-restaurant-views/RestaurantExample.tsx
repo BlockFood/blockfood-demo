@@ -45,7 +45,9 @@ class RestaurantExample extends React.Component<any, any> {
             this.setState({loading: true})
             doWithMinTime(() => Api.updateOrderStatus(orderId, ORDER_STATUS.READY)).then((orders) => {
                 this.props.dispatch(setOrders(orders))
-                this.props.demoController.goToNextStep() && this.setState({loading: false})
+                if (this.props.demoController.goToNextStep()) {
+                    this.setState({loading: false})
+                }
             })
         }
     }

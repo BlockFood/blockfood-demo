@@ -1,6 +1,6 @@
 export const enum STEPS {
     DEMO_NOT_STARTED = -1,
-    CUSTOMER_SET_ADDRESS = 0,
+    CUSTOMER_SET_LOCATION = 0,
     CUSTOMER_CHOOSE_RESTAURANT = 1,
     CUSTOMER_CREATE_ORDER = 2,
     CUSTOMER_SET_POSITION = 3,
@@ -17,7 +17,7 @@ export const FIRST_STEP_WITH_AN_ORDER = STEPS.RESTAURANT_ACCEPT_ORDER
 
 export const getStepLabel = (step: STEPS) => {
     return {
-        [STEPS.CUSTOMER_SET_ADDRESS]: 'As a customer, choose a sector by typing an address.',
+        [STEPS.CUSTOMER_SET_LOCATION]: 'As a customer, choose a location.',
         [STEPS.CUSTOMER_CHOOSE_RESTAURANT]: 'As a customer, choose a restaurant.',
         [STEPS.CUSTOMER_CREATE_ORDER]: 'As a customer, choose your order in the selected restaurant and then, validate your order.',
         [STEPS.CUSTOMER_SET_POSITION]: 'As a customer, indicate your exact position on the map.',

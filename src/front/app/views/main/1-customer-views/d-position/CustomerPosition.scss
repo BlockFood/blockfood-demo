@@ -1,0 +1,34 @@
+@import '../../../../style/Variables';
+@import '../../../../style/Mixins';
+
+#bf-demo-customer-position {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 35px 50px;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  .map-scroll-wrapper {
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+    border: 2px solid $mainColor;
+    margin: 0 35px;
+
+    .map-wrapper {
+      position: relative;
+    }
+  }
+
+  button {
+    @include btn();
+    font-size: 2em;
+    padding: 0 10px;
+  }
+}

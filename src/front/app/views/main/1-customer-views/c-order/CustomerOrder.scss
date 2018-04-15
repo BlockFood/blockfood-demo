@@ -1,0 +1,139 @@
+@import '../../../../style/Variables';
+@import '../../../../style/Mixins';
+
+#bf-demo-view-customer-order {
+  padding: 35px 50px;
+
+  .go-back {
+    margin-bottom: 15px;
+  }
+
+  .header {
+    position: relative;
+    width: 100%;
+    height: 210px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    .image {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      border-radius: 15px;
+    }
+
+    .restaurant-detail {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      color: $textColor;
+      margin: 25px;
+      padding: 25px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+
+      .name {
+        text-transform: uppercase;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .category {
+        max-width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        color: $textColor3;
+        line-height: 24px;
+        font-size: 14px;
+      }
+
+      .rate {
+        margin-top: 5px;
+
+        .colored {
+          color: $mainColor;
+        }
+      }
+    }
+  }
+
+  .order {
+    position: absolute;
+    top: 230px;
+    right: 75px;
+    width: 350px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 1px rgba($mainColor, 0.75);
+
+    .validate-button {
+      @include btn-fill();
+      width: 90%;
+      margin: 5% 5% 0;
+      font-size: 1.2em;
+      height: 55px;
+    }
+
+    .empty {
+      opacity: 0.5;
+      font-style: italic;
+    }
+
+    .divider {
+      width: 90%;
+      padding: 20px 0;
+      margin: 0 auto;
+      display: flex;
+      flex-flow: column;
+      justify-content: left;
+      align-items: left;
+
+      div {
+        width: 100%;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        flex-flow: row wrap;
+        align-items: stretch;
+        margin: 5px 0;
+      }
+    }
+
+    .colored {
+      color: $mainColor;
+    }
+
+    .borderGray {
+      border-top: 1px solid #ccc;
+    }
+  }
+
+  .content {
+    width: calc(100% - 415px);
+
+    .menu-items-category {
+      margin-top: 25px;
+
+      h6 {
+        text-transform: uppercase;
+        color: #595959;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      .list {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+    }
+  }
+}

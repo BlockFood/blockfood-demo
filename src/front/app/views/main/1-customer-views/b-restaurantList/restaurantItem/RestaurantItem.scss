@@ -1,0 +1,68 @@
+@import '../../../../../style/Variables';
+
+#bf-demo-view-customer-restaurant-list .restaurant {
+  position: relative;
+  width: 33.3333%;
+  margin-bottom: 25px;
+
+  & > div {
+    width: calc(100% - 50px);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    .image {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
+
+    .restaurant-detail {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      color: $textColor;
+      padding: 15px 0;
+
+      .name {
+        text-transform: uppercase;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .category {
+        max-width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        color: $textColor3;
+        line-height: 24px;
+        font-size: 14px;
+      }
+
+      .rate {
+        margin-top: 5px;
+
+        .colored {
+          color: $mainColor;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 1050px) {
+    width: 50%;
+  }
+
+  @media screen and (max-width: 650px) {
+    width: 100%;
+  }
+}

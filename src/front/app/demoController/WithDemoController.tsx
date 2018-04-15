@@ -28,6 +28,8 @@ export default (WrappedComponent: any) => {
         init(orders: IOrder[]) {
             const {pathname} = this.props.location
 
+            const currentRoute = Routes.getCurrentRoute(pathname) as string
+
             let step: STEPS
             if (orders.length === 0) {
                 // At the beginning, as a customer, 1 route = 1 step,
@@ -38,6 +40,7 @@ export default (WrappedComponent: any) => {
                 step = STEPS.FREE_MODE
             }
             else {
+                // TODO: update for new design (only one view)
                 // After the customer part, each order status = 1 step,
                 // so the step is given by the current order status
                 const statusIndex = _.findIndex(_.values(ORDER_STATUS), status => status === orders[0].status)
@@ -45,10 +48,15 @@ export default (WrappedComponent: any) => {
             }
 
             this.props.dispatch(setStep(step))
+
+            // Handle case of refresh during customer/restaurant/courier transitions
+            if (step === STEPS.RESTAURANT_ACCEPT_ORDER && currentRoute === Routes.CUSTOMER_PAYMENT_ROUTE) {
+                this.props.history.replace(Routes.getDefaultRouteRestaurant(orders[0].restaurantId))
+            }
         }
 
         start() {
-            this.props.dispatch(setStep(STEPS.CUSTOMER_SET_ADDRESS))
+            this.props.dispatch(setStep(STEPS.CUSTOMER_SET_LOCATION))
             this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_CUSTOMER))
             this.props.history.replace(Routes.getDefaultRouteCustomer())
         }
@@ -87,21 +95,46 @@ export default (WrappedComponent: any) => {
             this.props.history.replace(routeToRedirect)
         }
 
+        // Return false if the caller is not allowed to continue
         goToNextStep() {
+            const {pathname} = this.props.location
             const {step, orders} = this.props._demoControllerProps
+
+            const currentRoute = Routes.getCurrentRoute(pathname) as string
 
             if (step === STEPS.FREE_MODE) {
                 return true
             }
-            else if (step < STEPS.RESTAURANT_ACCEPT_ORDER) {
-                this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_RESTAURANT, () => {
-                    this.props.dispatch(setStep(STEPS.RESTAURANT_ACCEPT_ORDER))
-                    this.props.history.replace(Routes.getDefaultRouteRestaurant(orders[0].restaurantId))
-                }))
+            else if (step === STEPS.CUSTOMER_SET_LOCATION && currentRoute === Routes.CUSTOMER_LOCATION_ROUTE) {
+                this.props.dispatch(setStep(STEPS.CUSTOMER_CHOOSE_RESTAURANT))
 
-                return false
+                return true
             }
-            else if (step < STEPS.COURIER_ACCEPT_ORDER) {
+            else if (step === STEPS.CUSTOMER_CHOOSE_RESTAURANT && currentRoute === Routes.CUSTOMER_RESTAURANT_LIST_ROUTE) {
+                this.props.dispatch(setStep(STEPS.CUSTOMER_CREATE_ORDER))
+
+                return true
+            }
+            else if (step === STEPS.CUSTOMER_CREATE_ORDER && currentRoute === Routes.CUSTOMER_ORDER_ROUTE) {
+                this.props.dispatch(setStep(STEPS.CUSTOMER_SET_POSITION))
+
+                return true
+            }
+            else if (step === STEPS.CUSTOMER_SET_POSITION && currentRoute === Routes.CUSTOMER_POSITION_ROUTE) {
+                this.props.dispatch(setStep(STEPS.CUSTOMER_DO_PAYMENT))
+
+                return true
+            }
+            else if (step === STEPS.CUSTOMER_DO_PAYMENT && currentRoute === Routes.CUSTOMER_PAYMENT_ROUTE) {
+                    this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_RESTAURANT, () => {
+                        this.props.dispatch(setStep(STEPS.RESTAURANT_ACCEPT_ORDER))
+                        this.props.history.replace(Routes.getDefaultRouteRestaurant(orders[0].restaurantId))
+                    }))
+
+                    return false
+            }
+            // TODO: update for new design
+            else if (step >= STEPS.RESTAURANT_ACCEPT_ORDER && step < STEPS.COURIER_ACCEPT_ORDER) {
                 this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_COURIER, () => {
                     this.props.dispatch(setStep(STEPS.COURIER_ACCEPT_ORDER))
                     this.props.history.replace(Routes.getDefaultRouteCourier())
@@ -109,12 +142,15 @@ export default (WrappedComponent: any) => {
 
                 return false
             }
-            else {
+            else if (step >= STEPS.COURIER_ACCEPT_ORDER) {
                 this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_FREE_MODE, () => {
                     this.props.dispatch(setStep(STEPS.FREE_MODE))
                 }))
 
                 return false
+            }
+            else {
+                return true
             }
         }
 
