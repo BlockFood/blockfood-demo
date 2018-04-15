@@ -40,8 +40,16 @@ class Storage {
         Storage._writeObjectToSessionStorage('customer-order-in-progress', customerOrderInProgress)
     }
 
-    static getCustomerOrderInProgress(): string {
+    static getCustomerOrderInProgress(): IOrderInProgress {
         return Storage._readObjectFromSessionStorage('customer-order-in-progress')
+    }
+
+    static setCustomerPosition(customerPosition: [Number, Number]) {
+        Storage._writeObjectToSessionStorage('customer-position', customerPosition)
+    }
+
+    static getCustomerPosition(): [Number, Number] {
+        return Storage._readObjectFromSessionStorage('customer-position')
     }
 
     static clearAll() {

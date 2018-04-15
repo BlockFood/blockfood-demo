@@ -59,7 +59,7 @@ class CustomerPosition extends React.Component<any, any> {
     }
 
     public render() {
-        const {customerPosition} = this.props.customerOrderInProgress
+        const {customerPosition} = this.props
         const {canGoNext} = this.state
 
         return (
@@ -87,7 +87,8 @@ class CustomerPosition extends React.Component<any, any> {
 
 const mapStatToProps = (state: IState) => {
     return {
-        customerOrderInProgress: state.customerOrderInProgress
+        customerOrderInProgress: state.customerOrderInProgress,
+        customerPosition: state.customerPosition
     }
 }
 

@@ -14,7 +14,8 @@ export interface IState {
     helpMessage: IHelpMessageModal | null,
     orders: IOrder[],
     customerLocation: string,
-    customerOrderInProgress: IOrderInProgress | null
+    customerOrderInProgress: IOrderInProgress | null,
+    customerPosition: [Number, Number] | null,
 }
 
 export const DEFAULT_STATE: IState = {
@@ -22,10 +23,12 @@ export const DEFAULT_STATE: IState = {
     helpMessage: null,
     orders: [],
     customerLocation: '',
-    customerOrderInProgress: null
+    customerOrderInProgress: null,
+    customerPosition: null,
 }
 
 export const INITIAL_STATE: IState = _.assign({}, DEFAULT_STATE, {
     customerLocation: Storage.getCustomerLocation() || DEFAULT_STATE.customerLocation,
-    customerOrderInProgress: Storage.getCustomerOrderInProgress() || DEFAULT_STATE.customerOrderInProgress
+    customerOrderInProgress: Storage.getCustomerOrderInProgress() || DEFAULT_STATE.customerOrderInProgress,
+    customerPosition: Storage.getCustomerPosition() || DEFAULT_STATE.customerPosition
 })

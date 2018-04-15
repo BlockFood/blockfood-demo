@@ -39,11 +39,6 @@ const reduceCustomerLocation = (state: IState, action: any): IState => {
     return _.assign({}, state, {customerLocation: action.customerLocation})
 }
 
-const _reduceCustomerOrderInProgress = (state: IState, customerOrderInProgress: IOrderInProgress): IState => {
-    Storage.setCustomerOrderInProgress(customerOrderInProgress)
-    return _.assign({}, state, {customerOrderInProgress})
-}
-
 const reduceNewCustomerOrderInProgress = (state: IState, action: any): IState => {
     if (state.customerOrderInProgress && state.customerOrderInProgress.restaurantId === action.restaurantId) {
         return state
@@ -51,20 +46,20 @@ const reduceNewCustomerOrderInProgress = (state: IState, action: any): IState =>
     else {
         const customerOrderInProgress: IOrderInProgress = {
             restaurantId: action.restaurantId,
-            customerPosition: null,
             details: []
         }
-        return _reduceCustomerOrderInProgress(state, customerOrderInProgress)
+        return reduceCustomerOrderInProgress(state, {customerOrderInProgress})
     }
 }
 
 const reduceCustomerOrderInProgress = (state: IState, action: any): IState => {
-    return _reduceCustomerOrderInProgress(state, action.customerOrderInProgress)
+    Storage.setCustomerOrderInProgress(action.customerOrderInProgress)
+    return _.assign({}, state, {customerOrderInProgress: action.customerOrderInProgress})
 }
 
 const reduceCustomerPosition = (state: IState, action: any): IState => {
-    const customerOrderInProgress = _.assign({}, state.customerOrderInProgress, {customerPosition: action.customerPosition})
-    return _reduceCustomerOrderInProgress(state, customerOrderInProgress)
+    Storage.setCustomerPosition(action.customerPosition)
+    return _.assign({}, state, {customerPosition: action.customerPosition})
 }
 
 export const rootReducer = (state = INITIAL_STATE, action: any) => {

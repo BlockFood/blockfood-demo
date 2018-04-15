@@ -22,6 +22,5 @@ export interface IOrder {
 
 export interface IOrderInProgress {
     restaurantId: string,
-    customerPosition: [Number, Number] | null,
     details: IOrderDetail[]
 }
