@@ -107,6 +107,11 @@ export default (WrappedComponent: any) => {
 
                 return true
             }
+            else if (step === STEPS.CUSTOMER_CREATE_ORDER && currentRoute === Routes.CUSTOMER_ORDER_ROUTE) {
+                this.props.dispatch(setStep(STEPS.CUSTOMER_SET_POSITION))
+
+                return true
+            }
             else {
                 return true
             }

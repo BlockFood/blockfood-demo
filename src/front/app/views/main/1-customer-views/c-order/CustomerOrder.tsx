@@ -43,7 +43,9 @@ class CustomerOrder extends React.Component<any, any> {
         const {customerOrderInProgress} = this.props
 
         if (customerOrderInProgress.details.length > 0) {
-            // TODO
+            if (this.props.demoController.goToNextStep()) {
+                this.props.history.replace(Routes.getRouteCustomerPosition())
+            }
         }
     }
 
@@ -93,7 +95,7 @@ class CustomerOrder extends React.Component<any, any> {
     public componentDidMount() {
         const {customerOrderInProgress} = this.props
 
-        if (!customerOrderInProgress || customerOrderInProgress.restaurantId !== this.restaurant.id) {
+        if (customerOrderInProgress.restaurantId !== this.restaurant.id) {
             this.props.dispatch(createCustomerOrderInProgress(this.restaurant.id))
         }
     }
@@ -101,10 +103,6 @@ class CustomerOrder extends React.Component<any, any> {
     public render() {
         const {restaurant} = this
         const {customerOrderInProgress} = this.props
-
-        if (!customerOrderInProgress) {
-            return null
-        }
 
         const isEmpty = customerOrderInProgress.details.length === 0
 

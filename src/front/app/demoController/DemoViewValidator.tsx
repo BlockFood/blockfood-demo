@@ -9,7 +9,7 @@ import Error from '../components/error/Error'
 class DemoViewValidator extends React.Component<any, any> {
     isValid(): boolean {
         const {pathname} = this.props.location
-        const {step} = this.props
+        const {step, customerOrderInProgress} = this.props
 
         const currentRoute = Routes.getCurrentRoute(pathname)
 
@@ -17,11 +17,17 @@ class DemoViewValidator extends React.Component<any, any> {
             return true
         }
         else {
+            const isStepsCustomer = step >= STEPS.CUSTOMER_SET_LOCATION && step <= STEPS.CUSTOMER_DO_PAYMENT
+
             switch (currentRoute) {
                 case Routes.CUSTOMER_LOCATION_ROUTE:
                 case Routes.CUSTOMER_RESTAURANT_LIST_ROUTE:
+                    return isStepsCustomer
                 case Routes.CUSTOMER_ORDER_ROUTE:
-                    return step >= STEPS.CUSTOMER_SET_LOCATION && step <= STEPS.CUSTOMER_DO_PAYMENT
+                case Routes.CUSTOMER_POSITION_ROUTE:
+                    return isStepsCustomer && customerOrderInProgress
+                case Routes.CUSTOMER_PAYMENT_ROUTE:
+                    return isStepsCustomer && customerOrderInProgress /* && customerPosition */
                 case Routes.RESTAURANT_EXAMPLE_ROUTE:
                     return step >= STEPS.RESTAURANT_ACCEPT_ORDER && step <= STEPS.RESTAURANT_NOTIFY_ORDER_READY
                 case Routes.COURIER_EXAMPLE_ROUTE:
@@ -44,7 +50,8 @@ class DemoViewValidator extends React.Component<any, any> {
 
 const mapStateToProps = (state: IState) => {
     return {
-        step: state.step
+        step: state.step,
+        customerOrderInProgress: state.customerOrderInProgress
     }
 }
 

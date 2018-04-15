@@ -13,13 +13,17 @@ export const ALL_VIEWS = [CUSTOMER_VIEW, RESTAURANT_VIEW, COURIER_VIEW]
 export const CUSTOMER_LOCATION_ROUTE = `/:demoId/${CUSTOMER_VIEW}/`
 export const CUSTOMER_RESTAURANT_LIST_ROUTE = `/:demoId/${CUSTOMER_VIEW}/restaurants/`
 export const CUSTOMER_ORDER_ROUTE = `/:demoId/${CUSTOMER_VIEW}/order/:restaurantId/`
+export const CUSTOMER_POSITION_ROUTE = `/:demoId/${CUSTOMER_VIEW}/position/`
+export const CUSTOMER_PAYMENT_ROUTE = `/:demoId/${CUSTOMER_VIEW}/payment/`
 export const RESTAURANT_EXAMPLE_ROUTE = `/:demoId/${RESTAURANT_VIEW}/:restaurantId/`
 export const COURIER_EXAMPLE_ROUTE = `/:demoId/${COURIER_VIEW}/`
 
 const CUSTOMER_ROUTES_LIST = [
     CUSTOMER_LOCATION_ROUTE,
     CUSTOMER_RESTAURANT_LIST_ROUTE,
-    CUSTOMER_ORDER_ROUTE
+    CUSTOMER_ORDER_ROUTE,
+    CUSTOMER_POSITION_ROUTE,
+    CUSTOMER_PAYMENT_ROUTE
 ]
 
 const RESTAURANT_ROUTES_LIST = [
@@ -46,6 +50,14 @@ export const getRouteCustomerRestaurantList = (): string => {
 
 export const getRouteCustomerOrder = (restaurantId: string): string => {
     return getRouteWithDemoId(CUSTOMER_ORDER_ROUTE).replace(':restaurantId', restaurantId)
+}
+
+export const getRouteCustomerPosition = (): string => {
+    return getRouteWithDemoId(CUSTOMER_POSITION_ROUTE)
+}
+
+export const getRouteCustomerPayment = (): string => {
+    return getRouteWithDemoId(CUSTOMER_PAYMENT_ROUTE)
 }
 
 export const getRouteRestaurantExample = (restaurantId: string): string => {
