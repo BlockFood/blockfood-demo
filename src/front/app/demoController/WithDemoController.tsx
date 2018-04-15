@@ -112,6 +112,11 @@ export default (WrappedComponent: any) => {
 
                 return true
             }
+            else if (step === STEPS.CUSTOMER_SET_POSITION && currentRoute === Routes.CUSTOMER_POSITION_ROUTE) {
+                this.props.dispatch(setStep(STEPS.CUSTOMER_DO_PAYMENT))
+
+                return true
+            }
             else {
                 return true
             }

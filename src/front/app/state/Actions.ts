@@ -9,6 +9,7 @@ export const RESTART = 'RESTART'
 export const SET_CUSTOMER_LOCATION = 'SET_CUSTOMER_LOCATION'
 export const CREATE_CUSTOMER_ORDER_IN_PROGRESS = 'CREATE_CUSTOMER_ORDER_IN_PROGRESS'
 export const SET_CUSTOMER_ORDER_IN_PROGRESS = 'SET_CUSTOMER_ORDER_IN_PROGRESS'
+export const SET_CUSTOMER_POSITION = 'SET_CUSTOMER_POSITION'
 
 export const setStep = (step: STEPS) => ({type: SET_STEP, step})
 
@@ -25,3 +26,5 @@ export const setCustomerLocation = (customerLocation: string) => ({type: SET_CUS
 export const createCustomerOrderInProgress = (restaurantId: string) => ({type: CREATE_CUSTOMER_ORDER_IN_PROGRESS, restaurantId})
 
 export const setCustomerOrderInProgress = (customerOrderInProgress: IOrderInProgress) => ({type: SET_CUSTOMER_ORDER_IN_PROGRESS, customerOrderInProgress})
+
+export const setCustomerPosition = (customerPosition: [Number, Number]) => ({type: SET_CUSTOMER_POSITION, customerPosition})

@@ -8,7 +8,8 @@ import {
     RESTART,
     SET_CUSTOMER_LOCATION,
     CREATE_CUSTOMER_ORDER_IN_PROGRESS,
-    SET_CUSTOMER_ORDER_IN_PROGRESS
+    SET_CUSTOMER_ORDER_IN_PROGRESS,
+    SET_CUSTOMER_POSITION
 } from './Actions'
 import Storage from '../utils/Storage'
 
@@ -38,6 +39,11 @@ const reduceCustomerLocation = (state: IState, action: any): IState => {
     return _.assign({}, state, {customerLocation: action.customerLocation})
 }
 
+const _reduceCustomerOrderInProgress = (state: IState, customerOrderInProgress: IOrderInProgress): IState => {
+    Storage.setCustomerOrderInProgress(customerOrderInProgress)
+    return _.assign({}, state, {customerOrderInProgress})
+}
+
 const reduceNewCustomerOrderInProgress = (state: IState, action: any): IState => {
     if (state.customerOrderInProgress && state.customerOrderInProgress.restaurantId === action.restaurantId) {
         return state
@@ -48,13 +54,17 @@ const reduceNewCustomerOrderInProgress = (state: IState, action: any): IState =>
             customerPosition: null,
             details: []
         }
-        return reduceCustomerOrderInProgress(state, {customerOrderInProgress})
+        return _reduceCustomerOrderInProgress(state, customerOrderInProgress)
     }
 }
 
 const reduceCustomerOrderInProgress = (state: IState, action: any): IState => {
-    Storage.setCustomerOrderInProgress(action.customerOrderInProgress)
-    return _.assign({}, state, {customerOrderInProgress: action.customerOrderInProgress})
+    return _reduceCustomerOrderInProgress(state, action.customerOrderInProgress)
+}
+
+const reduceCustomerPosition = (state: IState, action: any): IState => {
+    const customerOrderInProgress = _.assign({}, state.customerOrderInProgress, {customerPosition: action.customerPosition})
+    return _reduceCustomerOrderInProgress(state, customerOrderInProgress)
 }
 
 export const rootReducer = (state = INITIAL_STATE, action: any) => {
@@ -74,6 +84,8 @@ export const rootReducer = (state = INITIAL_STATE, action: any) => {
             return reduceNewCustomerOrderInProgress(state, action)
         case SET_CUSTOMER_ORDER_IN_PROGRESS:
             return reduceCustomerOrderInProgress(state, action)
+        case SET_CUSTOMER_POSITION:
+            return reduceCustomerPosition(state, action)
         default:
             return state
     }

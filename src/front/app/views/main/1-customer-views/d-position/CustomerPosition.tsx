@@ -8,6 +8,7 @@ import {RESTAURANTS_BY_IDS} from '../../../../../../lib/Restaurants'
 import GoBack from '../../../../components/goBack/GoBack'
 import Map, {STEPS} from '../../../../components/map/Map'
 import MapData from '../../../../components/map/MapData'
+import {setCustomerPosition} from '../../../../state/Actions'
 
 import './CustomerPosition.scss'
 
@@ -21,7 +22,15 @@ class CustomerPosition extends React.Component<any, any> {
         const restaurant = RESTAURANTS_BY_IDS[restaurantId]
         this.restaurantForMap = _.assign({}, {name: restaurant.name}, restaurant.map)
 
+        this.state = {
+            canGoNext: !!this.props.customerOrderInProgress.customerPosition
+        }
+
         this.onGoBack = this.onGoBack.bind(this)
+        this.onCustomerSet = this.onCustomerSet.bind(this)
+        this.onActionStart = this.onActionStart.bind(this)
+        this.onActionEnd = this.onActionEnd.bind(this)
+        this.submit = this.submit.bind(this)
     }
 
     private onGoBack() {
@@ -29,7 +38,30 @@ class CustomerPosition extends React.Component<any, any> {
         this.props.history.replace(Routes.getRouteCustomerOrder(restaurantId))
     }
 
+    private onCustomerSet(position: [Number, Number]) {
+        this.props.dispatch(setCustomerPosition(position))
+    }
+
+    private onActionStart() {
+        this.setState({canGoNext: false})
+    }
+
+    private onActionEnd() {
+        this.setState({canGoNext: true})
+    }
+
+    private submit() {
+        if (this.state.canGoNext) {
+            if (this.props.demoController.goToNextStep()) {
+                this.props.history.replace(Routes.getRouteCustomerPayment())
+            }
+        }
+    }
+
     public render() {
+        const {customerPosition} = this.props.customerOrderInProgress
+        const {canGoNext} = this.state
+
         return (
             <div id="bf-demo-customer-position">
                 <GoBack onGoBack={this.onGoBack}/>
@@ -37,13 +69,14 @@ class CustomerPosition extends React.Component<any, any> {
                     <div className="map-wrapper" style={MapData.dimensions}>
                         <Map step={STEPS.SET_CUSTOMER_POSITION} image={MapData.image} dimensions={MapData.dimensions}
                              graph={MapData.graph}
+                             initialCustomerPosition={customerPosition}
                              restaurants={this.restaurantForMap}
-                             onCustomerSet={() => {}}
-                             onActionStart={() => {}} onActionEnd={() => {}}/>
+                             onCustomerSet={this.onCustomerSet}
+                             onActionStart={this.onActionStart} onActionEnd={this.onActionEnd}/>
                     </div>
                 </div>
                 <div>
-                    <button>
+                    <button className={!canGoNext ? 'disabled' : ''} onClick={this.submit}>
                         <i className="fas fa-arrow-right"/>
                     </button>
                 </div>
