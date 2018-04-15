@@ -3,7 +3,7 @@
 @import '../../style/Mixins';
 
 #bf-demo-header {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -14,12 +14,10 @@
   justify-content: space-between;
   padding: 0 25px;
   box-sizing: border-box;
-  transform: translateY(-$headerHeight - 15px);
-  transition: transform 0.5s;
   z-index: 2;
 
-  &.visible {
-    transform: translateY(0);
+  &:not(.visible) {
+    display: none;
   }
 
   .logo {

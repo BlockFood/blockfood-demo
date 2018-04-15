@@ -4,6 +4,7 @@ import {withRouter, Switch, Route, Redirect} from 'react-router'
 import Api from '../api/Api'
 import * as Routes from './Routes'
 import withDemoController from '../demoController/WithDemoController'
+import CubeTransitionWrapper from '../components/cubeTransition/CubeTransitionWrapper'
 import DemoControllerPanel from '../demoController/panel/DemoControllerPanel'
 import Error from '../components/error/Error'
 import Start from './start/Start'
@@ -84,21 +85,23 @@ class MainView extends React.Component<any, any> {
                 <React.Fragment>
                     {ready && (
                         <DemoViewValidator>
-                            <Header view={view}/>
-                            <div key={pathname} id="bf-demo-main-view">
-                                <Switch>
-                                    <Route path={Routes.HOME} exact component={Start}/>
-                                    <Route path={Routes.CUSTOMER_LOCATION_ROUTE} exact component={CustomerLocation}/>
-                                    <Route path={Routes.CUSTOMER_RESTAURANT_LIST_ROUTE} exact component={CustomerRestaurantList}/>
-                                    <Route path={Routes.CUSTOMER_ORDER_ROUTE} exact component={CustomerOrder}/>
-                                    <Route path={Routes.CUSTOMER_POSITION_ROUTE} exact component={CustomerPosition}/>
-                                    <Route path={Routes.CUSTOMER_PAYMENT_ROUTE} exact component={CustomerPayment}/>
-                                    <Route path={Routes.CUSTOMER_ORDER_LIST_ROUTE} exact component={CustomerOrderList}/>
-                                    <Route path={Routes.RESTAURANT_EXAMPLE_ROUTE} exact component={RestaurantExample}/>
-                                    <Route path={Routes.COURIER_EXAMPLE_ROUTE} exact component={CourierExample}/>
-                                    <Redirect to={Routes.HOME}/>
-                                </Switch>
-                            </div>
+                            <CubeTransitionWrapper index={Routes.ALL_VIEWS.indexOf(view as string) + 1}>
+                                <Header view={view}/>
+                                <div key={pathname} id="bf-demo-main-view">
+                                    <Switch>
+                                        <Route path={Routes.HOME} exact component={Start}/>
+                                        <Route path={Routes.CUSTOMER_LOCATION_ROUTE} exact component={CustomerLocation}/>
+                                        <Route path={Routes.CUSTOMER_RESTAURANT_LIST_ROUTE} exact component={CustomerRestaurantList}/>
+                                        <Route path={Routes.CUSTOMER_ORDER_ROUTE} exact component={CustomerOrder}/>
+                                        <Route path={Routes.CUSTOMER_POSITION_ROUTE} exact component={CustomerPosition}/>
+                                        <Route path={Routes.CUSTOMER_PAYMENT_ROUTE} exact component={CustomerPayment}/>
+                                        <Route path={Routes.CUSTOMER_ORDER_LIST_ROUTE} exact component={CustomerOrderList}/>
+                                        <Route path={Routes.RESTAURANT_EXAMPLE_ROUTE} exact component={RestaurantExample}/>
+                                        <Route path={Routes.COURIER_EXAMPLE_ROUTE} exact component={CourierExample}/>
+                                        <Redirect to={Routes.HOME}/>
+                                    </Switch>
+                                </div>
+                            </CubeTransitionWrapper>
                             <DemoControllerPanel view={view}/>
                         </DemoViewValidator>
                     )}
