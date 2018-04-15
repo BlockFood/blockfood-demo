@@ -9,6 +9,8 @@ import doWithMinTime from '../../../utils/DoWithMinTime'
 import {selectOrdersForCourier} from '../../../state/Selectors'
 import {setOrders} from '../../../state/Actions'
 
+import './ViewExample.scss'
+
 class HandleButton extends React.Component<any, any> {
     constructor(props: any) {
         super(props)

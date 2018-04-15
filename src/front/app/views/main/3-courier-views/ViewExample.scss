@@ -1,0 +1,42 @@
+@import '../../../style/Mixins';
+
+.view-example {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & > div:first-of-type {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 25px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    button {
+      @include btn();
+      font-size: 1.3em;
+      padding: 5px 10px;
+
+      b {
+        margin-left: 10px;
+      }
+
+      &:not(:first-of-type) {
+        margin-top: 15px;
+      }
+    }
+  }
+
+  &.loading .buttons {
+    opacity: 0.3;
+  }
+}

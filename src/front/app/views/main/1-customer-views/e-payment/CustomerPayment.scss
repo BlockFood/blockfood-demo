@@ -1,3 +1,43 @@
-#bf-demo-customer-payment {
+@import '../../../../style/Variables';
 
+#bf-demo-customer-payment {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .go-back {
+    margin-bottom: 50px;
+  }
+
+  .btn-remote-action {
+    align-self: center;
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
+    border: 10px solid $mainColor;
+    border-radius: 100%;
+    font-size: 10em;
+    transition: transform 0.3s;
+    color: $mainColor;
+
+    &.not-a-btn {
+      font-size: 2em;
+      border-color: transparent;
+
+      i {
+        animation-duration: 0.9s;
+        animation-timing-function: ease-in-out;
+      }
+    }
+
+    &:not(.not-a-btn):hover {
+      cursor: pointer;
+      background: $mainColor;
+      color: white;
+      transform: scale(1.1);
+    }
+  }
 }

@@ -23,14 +23,14 @@ class CustomerPosition extends React.Component<any, any> {
         this.restaurantForMap = _.assign({}, {name: restaurant.name}, restaurant.map)
 
         this.state = {
-            canGoNext: !!this.props.customerOrderInProgress.customerPosition
+            canGoNext: !!this.props.customerPosition
         }
 
         this.onGoBack = this.onGoBack.bind(this)
         this.onCustomerSet = this.onCustomerSet.bind(this)
         this.onActionStart = this.onActionStart.bind(this)
         this.onActionEnd = this.onActionEnd.bind(this)
-        this.submit = this.submit.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
     }
 
     private onGoBack() {
@@ -39,6 +39,7 @@ class CustomerPosition extends React.Component<any, any> {
     }
 
     private onCustomerSet(position: [Number, Number]) {
+        this.setState({canGoNext: true})
         this.props.dispatch(setCustomerPosition(position))
     }
 
@@ -50,7 +51,7 @@ class CustomerPosition extends React.Component<any, any> {
         this.setState({canGoNext: true})
     }
 
-    private submit() {
+    private onSubmit() {
         if (this.state.canGoNext) {
             if (this.props.demoController.goToNextStep()) {
                 this.props.history.replace(Routes.getRouteCustomerPayment())
@@ -76,7 +77,7 @@ class CustomerPosition extends React.Component<any, any> {
                     </div>
                 </div>
                 <div>
-                    <button className={!canGoNext ? 'disabled' : ''} onClick={this.submit}>
+                    <button className={!canGoNext ? 'disabled' : ''} onClick={this.onSubmit}>
                         <i className="fas fa-arrow-right"/>
                     </button>
                 </div>
