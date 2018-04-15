@@ -45,6 +45,7 @@ const reduceNewCustomerOrderInProgress = (state: IState, action: any): IState =>
     else {
         const customerOrderInProgress: IOrderInProgress = {
             restaurantId: action.restaurantId,
+            customerPosition: null,
             details: []
         }
         return reduceCustomerOrderInProgress(state, {customerOrderInProgress})

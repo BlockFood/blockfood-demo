@@ -31,8 +31,8 @@ class Api {
             .catch((err) => defaultErrorHandler ? this.onError() : Promise.reject(err))
     }
 
-    createNewOrder(restaurantId: string, details: IOrderDetail[]): Promise<IOrder[]> {
-        const orderData = {restaurantId, details}
+    createNewOrder(restaurantId: string, customerPosition: [Number, Number], details: IOrderDetail[]): Promise<IOrder[]> {
+        const orderData = {restaurantId, customerPosition, details}
         return Http.post(`${API_REMOTE_URL}/api/${this.demoId}/order`, orderData)
             .then(({data: orders}: any) => orders as IOrder[])
             .catch(this.onError)

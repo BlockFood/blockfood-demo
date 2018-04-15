@@ -16,10 +16,12 @@ export interface IOrder {
     id: string,
     status: ORDER_STATUS,
     restaurantId: string,
+    customerPosition: [Number, Number],
     details: IOrderDetail[]
 }
 
 export interface IOrderInProgress {
     restaurantId: string,
+    customerPosition: [Number, Number] | null,
     details: IOrderDetail[]
 }

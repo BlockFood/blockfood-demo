@@ -47,7 +47,11 @@ export interface IRestaurant {
     category: RESTAURANT_TYPES,
     rate: number,
     menuItems: IMenuItem[],
-    image: string
+    image: string,
+    map: {
+        position: [Number, Number],
+        labelDirection: string
+    }
 }
 
 export const MENU_CATEGORIES = {
@@ -112,7 +116,11 @@ export const RESTAURANTS: IRestaurant[] = [
                 "category": MENU_CATEGORIES.DESSERT
             }
         ],
-        "image": "https://f.roocdn.com/images/menus/24538/header-image.jpg"
+        "image": "https://f.roocdn.com/images/menus/24538/header-image.jpg",
+        "map": {
+            "position": [140, 106],
+            "labelDirection": 'bottom'
+        }
     }, {
         "id": "a77x84gf1b",
         "name": "Wok To Walk (Great Windmill St.)",
@@ -156,7 +164,11 @@ export const RESTAURANTS: IRestaurant[] = [
                 "category": MENU_CATEGORIES.DRINK
             }
         ],
-        "image": "https://f.roocdn.com/images/menus/16532/header-image.jpg"
+        "image": "https://f.roocdn.com/images/menus/16532/header-image.jpg",
+        "map": {
+            "position": [302, 95],
+            "labelDirection": 'bottom'
+        }
     }, {
         "id": "wcwr54dry",
         "name": "Basilic and bas",
@@ -199,7 +211,11 @@ export const RESTAURANTS: IRestaurant[] = [
                 "category": MENU_CATEGORIES.DESSERT
             }
         ],
-        "image": "https://ow.roocdn.com/assets/images/campaign-landing-pages/thumbs/vegetarian-fa4b679813cfac9cdeebe704f4a3e07c.jpg"
+        "image": "https://ow.roocdn.com/assets/images/campaign-landing-pages/thumbs/vegetarian-fa4b679813cfac9cdeebe704f4a3e07c.jpg",
+        "map": {
+            "position": [550, 165],
+            "labelDirection": 'top'
+        }
     }, {
         "id": "sdfsdfsxv45tyhh",
         "name": "Sushi shop",
@@ -243,7 +259,11 @@ export const RESTAURANTS: IRestaurant[] = [
                 "category": MENU_CATEGORIES.DESSERT
             }
         ],
-        "image": "https://duyt4h9nfnj50.cloudfront.net/resized/39eea2f47cdd7dc388ca42dfe71b21dd-w750-bc.jpg"
+        "image": "https://duyt4h9nfnj50.cloudfront.net/resized/39eea2f47cdd7dc388ca42dfe71b21dd-w750-bc.jpg",
+        "map": {
+            "position": [444, 550],
+            "labelDirection": 'top'
+        }
     },
     {
         "id": "874ezar4cf1",
@@ -282,7 +302,11 @@ export const RESTAURANTS: IRestaurant[] = [
                 "category": MENU_CATEGORIES.DESSERT
             }
         ],
-        "image": "https://duyt4h9nfnj50.cloudfront.net/resized/02210e1d2c6fdec88b7ee40604c4da46-w750-bd.jpg"
+        "image": "https://duyt4h9nfnj50.cloudfront.net/resized/02210e1d2c6fdec88b7ee40604c4da46-w750-bd.jpg",
+        "map": {
+            "position": [130, 345],
+            "labelDirection": 'bottom'
+        }
     }, {
         "id": "qdf4t4y88uuuuu",
         "name": "pizzaria",
@@ -314,7 +338,11 @@ export const RESTAURANTS: IRestaurant[] = [
                 "category": MENU_CATEGORIES.DRINK
             }
         ],
-        "image": "https://duyt4h9nfnj50.cloudfront.net/resized/6c30305e0d24fcc3c68975303ec481c5-w750-f1.jpg"
+        "image": "https://duyt4h9nfnj50.cloudfront.net/resized/6c30305e0d24fcc3c68975303ec481c5-w750-f1.jpg",
+        "map": {
+            "position": [395, 277],
+            "labelDirection": 'top'
+        }
     }
 ]
 

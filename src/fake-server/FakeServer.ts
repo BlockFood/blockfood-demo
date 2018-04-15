@@ -28,7 +28,9 @@ app.post('/api/start-demo', (req, res) => {
 
 app.post('/api/:demoId/order', (req, res) => {
     const {demoId} = req.params
-    const {restaurantId, details}: {restaurantId: string, details: IOrderDetail[]} = req.body
+    const {restaurantId, customerPosition, details}: {
+        restaurantId: string, customerPosition: [Number, Number], details: IOrderDetail[]
+    } = req.body
 
     const orders = database[demoId]
 
@@ -39,6 +41,7 @@ app.post('/api/:demoId/order', (req, res) => {
         const newOrder: IOrder = {
             id: uuid(),
             restaurantId,
+            customerPosition,
             status: ORDER_STATUS.SUBMITTED,
             details
         }
