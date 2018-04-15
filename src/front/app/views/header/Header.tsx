@@ -4,7 +4,7 @@ import Select from 'react-select'
 import withDemoController from '../../demoController/WithDemoController'
 import {
     CUSTOMER_VIEW, RESTAURANT_VIEW, COURIER_VIEW,
-    getDefaultRouteRestaurant, getRestaurantIdFromPathname
+    getRouteCustomerOrderList, getDefaultRouteRestaurant, getRestaurantIdFromPathname
 } from '../Routes'
 import {RESTAURANTS} from '../../../../lib/Restaurants'
 
@@ -24,6 +24,7 @@ class Header extends React.Component<any, any> {
         }
 
         this.onRestaurantChange = this.onRestaurantChange.bind(this)
+        this.onGoToCustomerOrderList = this.onGoToCustomerOrderList.bind(this)
     }
 
     getStatus(props = this.props) {
@@ -44,6 +45,10 @@ class Header extends React.Component<any, any> {
         this.props.history.replace(getDefaultRouteRestaurant(value))
     }
 
+    onGoToCustomerOrderList() {
+        this.props.history.replace(getRouteCustomerOrderList(this.props.location.pathname))
+    }
+
     componentWillReceiveProps(nextProps: any) {
         if (nextProps.view !== this.props.view) {
             const {type, userLabel} = this.getStatus(nextProps)
@@ -56,6 +61,7 @@ class Header extends React.Component<any, any> {
         const {view} = this.props
         const {type, userLabel} = this.state
 
+        const hasCustomerOrderListBtn = this.props.demoController.isFreeMode() && view === CUSTOMER_VIEW
         const hasSelectRestaurant = this.props.demoController.isFreeMode() && view === RESTAURANT_VIEW
         const restaurantId = hasSelectRestaurant && getRestaurantIdFromPathname(location.pathname)
 
@@ -64,10 +70,15 @@ class Header extends React.Component<any, any> {
                 <div className="logo">
                     <div className="name">
                         <i className={type}/>
-                        <div>Block<span>Food</span><span>/{type}</span></div>
+                        <div><span>Block</span><span>Food</span><span>/{type}</span></div>
                     </div>
                 </div>
                 <div className="user">
+                    {hasCustomerOrderListBtn && (
+                        <div className="btn-customer-order-list" onClick={this.onGoToCustomerOrderList}>
+                            <i className="far fa-file-alt"/>My Orders
+                        </div>
+                    )}
                     {hasSelectRestaurant && (
                         <div className="select">
                             <i className="fas fa-home"/>
