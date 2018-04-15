@@ -126,12 +126,12 @@ export default (WrappedComponent: any) => {
                 return true
             }
             else if (step === STEPS.CUSTOMER_DO_PAYMENT && currentRoute === Routes.CUSTOMER_PAYMENT_ROUTE) {
-                    this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_RESTAURANT, () => {
-                        this.props.dispatch(setStep(STEPS.RESTAURANT_ACCEPT_ORDER))
-                        this.props.history.replace(Routes.getDefaultRouteRestaurant(orders[0].restaurantId))
-                    }))
+                this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_RESTAURANT, () => {
+                    this.props.dispatch(setStep(STEPS.RESTAURANT_ACCEPT_ORDER))
+                    this.props.history.replace(Routes.getDefaultRouteRestaurant(orders[0].restaurantId))
+                }))
 
-                    return false
+                return false
             }
             // TODO: update for new design
             else if (step >= STEPS.RESTAURANT_ACCEPT_ORDER && step < STEPS.COURIER_ACCEPT_ORDER) {
