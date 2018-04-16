@@ -83,59 +83,19 @@ class RestaurantOverview extends React.Component<any, any> {
                 <div>
                     <h3>In Progress</h3>
                     {ordersByStatus[1].map((order: IOrder) => (
-                        <OngoingOrder
-                            key={order.id}
-                            onFinish={() => this.finishOrder(order.id)}
-                            orderId={order.id}
-                            orderTime={new Date()}
-                            orderedItems={[
-                                {
-                                    label: 'Rancheros Platters',
-                                    count: 2,
-                                    totalItemPrice: 18.8,
-                                },
-                                {
-                                    label: 'Petite salade',
-                                    count: 3,
-                                    totalItemPrice: 7.4,
-                                },
-                                {
-                                    label: 'Pietra 33cl',
-                                    count: 1,
-                                    totalItemPrice: 3.5,
-                                },
-                            ]}
-                            comment='Les pâtes sans gluten sur le platter, je vous prie. Merci !'
-                        />
+                        <OngoingOrder key={order.id}
+                                      orderId={order.id}
+                                      onFinish={this.finishOrder}
+                                      orderedItems={getOrderedItems(order)}/>
                     ))}
                 </div>
                 <div>
                     <h3>Done</h3>
-                    {ordersByStatus[2].map(
-                        (order: IOrder) => (
-                            <FinishedOrder
-                                key={order.id}
-                                orderId={order.id}
-                                orderTime={new Date()}
-                                orderedItems={[
-                                    {
-                                        label: 'Rancheros Platters',
-                                        count: 2,
-                                        totalItemPrice: 18.8,
-                                    },
-                                    {
-                                        label: 'Petite salade',
-                                        count: 3,
-                                        totalItemPrice: 7.4,
-                                    },
-                                    {
-                                        label: 'Pietra 33cl',
-                                        count: 1,
-                                        totalItemPrice: 3.5,
-                                    },
-                                ]}
-                            />
-                        ))}
+                    {ordersByStatus[2].map((order: IOrder) => (
+                        <FinishedOrder key={order.id}
+                                       orderId={order.id}
+                                       orderedItems={getOrderedItems(order)}/>
+                    ))}
                 </div>
             </div>
         )

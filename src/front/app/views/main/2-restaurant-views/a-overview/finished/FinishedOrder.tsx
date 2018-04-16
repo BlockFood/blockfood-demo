@@ -9,7 +9,7 @@ import './FinishedOrder.scss'
 
 interface FinishedOrderProps {
     orderId: string
-    orderTime: Date
+    orderTime?: Date
     orderedItems: IOrderedItem[]
 }
 

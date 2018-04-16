@@ -10,32 +10,45 @@ import './OngoingOrder.scss'
 
 interface OngoingOrderProps {
     orderId: string
-    orderTime: Date
+    orderTime?: Date
     orderedItems: IOrderedItem[]
     comment?: string
-    onFinish?: () => void
+    onFinish?: (orderId: string) => void
 }
 
-export const OngoingOrder: React.SFC<OngoingOrderProps> = ({orderId, orderTime, orderedItems, comment, onFinish}) => (
-    <Order className='ongoingOrder'>
-        <OrderHeader
-            orderId={orderId}
-            orderTime={orderTime}
-        />
-        <OrderOrderedItemList
-            orderedItems={orderedItems}
-        />
-        {
-            comment &&
-            <OrderComment
-                comment={comment}
-            />
-        }
-        {
-            onFinish &&
-            <OngoingOrderButtons
-                onFinish={onFinish}
-            />
-        }
-    </Order>
-)
+export class OngoingOrder extends React.Component<OngoingOrderProps, any> {
+    constructor(props: any) {
+        super(props)
+
+        this.onFinish = this.onFinish.bind(this)
+    }
+
+    private onFinish() {
+        this.props.onFinish && this.props.onFinish(this.props.orderId)
+    }
+
+    public render() {
+        const {orderId, orderTime, orderedItems, comment} = this.props
+
+        return (
+            <Order className='ongoingOrder'>
+                <OrderHeader
+                    orderId={orderId}
+                    orderTime={orderTime}
+                />
+                <OrderOrderedItemList
+                    orderedItems={orderedItems}
+                />
+                {
+                    comment &&
+                    <OrderComment
+                        comment={comment}
+                    />
+                }
+                <OngoingOrderButtons
+                    onFinish={this.onFinish}
+                />
+            </Order>
+        )
+    }
+}

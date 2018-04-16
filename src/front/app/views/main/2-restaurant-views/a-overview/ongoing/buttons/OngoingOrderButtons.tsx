@@ -6,10 +6,13 @@ interface OngoingOrderButtonsProps {
     onFinish?: () => void
 }
 
-export const OngoingOrderButtons: React.SFC<OngoingOrderButtonsProps> = ({ onFinish = () => {}}) => (
+export const OngoingOrderButtons: React.SFC<OngoingOrderButtonsProps> = ({ onFinish }) => (
     <div className='ongoingOrderButtons'>
-        <button onClick={onFinish} className='button validateButton'>
-            Terminer
-        </button>
+        {
+            onFinish &&
+            <button onClick={onFinish} className='button finishButton'>
+                Finish
+            </button>
+        }
     </div>
 )

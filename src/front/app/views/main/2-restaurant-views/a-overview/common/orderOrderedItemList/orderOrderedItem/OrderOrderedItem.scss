@@ -10,17 +10,23 @@
     flex: 1 0 60%;
     text-align: left;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .orderedItemCount {
-    flex: 0 1 20px;
+    flex: 0 1 10%;
     text-align: right;
     font-weight: bold;
   }
 
   .orderedItemTotalPrice {
-    flex: 1 0 20%;
+    flex: 1 0 30%;
     text-align: right;
     color: $mainColor;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
