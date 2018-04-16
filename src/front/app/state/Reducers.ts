@@ -4,8 +4,9 @@ import {DEFAULT_STATE, INITIAL_STATE, IHelpMessageModal, IState} from './Initial
 import {
     SET_STEP,
     SET_HELP_MESSAGE,
-    SET_ORDERS,
+    TOGGLE_IS_MOBILE,
     RESTART,
+    SET_ORDERS,
     SET_CUSTOMER_LOCATION,
     CREATE_CUSTOMER_ORDER_IN_PROGRESS,
     SET_CUSTOMER_ORDER_IN_PROGRESS,
@@ -28,6 +29,12 @@ const reduceHelpMessage = (state: IState, action: any): IState => {
         onClose: action.onClose
     } : null
     return _.assign({}, state, {helpMessage})
+}
+
+const reduceIsMobile = (state: IState): IState => {
+    const isMobile = !state.isMobile
+    Storage.setIsMobile(isMobile)
+    return _.assign({}, state, {isMobile})
 }
 
 const reduceOrders = (state: IState, action: any): IState => {
@@ -70,6 +77,8 @@ export const rootReducer = (state = INITIAL_STATE, action: any) => {
             return reduceHelpMessage(state, action)
         case SET_ORDERS:
             return reduceOrders(state, action)
+        case TOGGLE_IS_MOBILE:
+            return reduceIsMobile(state)
         case RESTART:
             Storage.clearAll()
             return DEFAULT_STATE

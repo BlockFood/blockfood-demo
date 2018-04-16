@@ -38,7 +38,7 @@ class CustomerPayment extends React.Component<any, any> {
                 this.setState({loading: false, done: true})
 
                 if (this.props.demoController.goToNextStep()) {
-                    // TODO: redirect to the customer view "progress"
+                    this.props.history.replace(Routes.getRouteCustomerOrderList())
                 }
             })
         }

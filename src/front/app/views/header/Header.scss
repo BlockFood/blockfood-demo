@@ -1,8 +1,9 @@
 @import '../../../../../node_modules/react-select/dist/react-select.css';
 @import '../../style/Variables';
+@import '../../style/Mixins';
 
 #bf-demo-header {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -13,12 +14,11 @@
   justify-content: space-between;
   padding: 0 25px;
   box-sizing: border-box;
-  transform: translateY(-$headerHeight - 15px);
-  transition: transform 0.5s;
   z-index: 2;
+  overflow: hidden;
 
-  &.visible {
-    transform: translateY(0);
+  &:not(.visible) {
+    display: none;
   }
 
   .logo {
@@ -56,7 +56,13 @@
         }
       }
 
-      span {
+      span:first-of-type {
+        display: inline-block;
+        position: relative;
+        top: -1px;
+      }
+
+      span:not(:first-of-type) {
         font-weight: normal;
 
         &:last-of-type {
@@ -91,6 +97,17 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
+    .btn-customer-order-list {
+      @include btn();
+      margin-right: 25px;
+      font-size: 1.1em;
+      padding: 8px 10px;
+
+      i {
+        margin-right: 8px;
+      }
+    }
 
     .select {
       display: flex;

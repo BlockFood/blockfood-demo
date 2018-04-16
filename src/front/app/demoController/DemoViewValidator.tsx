@@ -25,6 +25,8 @@ class DemoViewValidator extends React.Component<any, any> {
                 return (isCustomerSteps || isFreeMode) && customerOrderInProgress
             case Routes.CUSTOMER_PAYMENT_ROUTE:
                 return (isCustomerSteps || isFreeMode) && customerOrderInProgress && customerPosition
+            case Routes.CUSTOMER_ORDER_LIST_ROUTE:
+                return isFreeMode
             case Routes.RESTAURANT_EXAMPLE_ROUTE:
                 return isFreeMode || (step >= STEPS.RESTAURANT_ACCEPT_ORDER && step <= STEPS.RESTAURANT_NOTIFY_ORDER_READY)
             case Routes.COURIER_EXAMPLE_ROUTE:

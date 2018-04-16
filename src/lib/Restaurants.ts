@@ -261,8 +261,8 @@ export const RESTAURANTS: IRestaurant[] = [
         ],
         "image": "https://duyt4h9nfnj50.cloudfront.net/resized/39eea2f47cdd7dc388ca42dfe71b21dd-w750-bc.jpg",
         "map": {
-            "position": [444, 550],
-            "labelDirection": 'top'
+            "position": [628, 400],
+            "labelDirection": 'bottom'
         }
     },
     {

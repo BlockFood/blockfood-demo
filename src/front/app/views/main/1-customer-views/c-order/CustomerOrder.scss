@@ -70,7 +70,7 @@
     width: 350px;
     background-color: white;
     border-radius: 5px;
-    box-shadow: 0 0 1px rgba($mainColor, 0.75);
+    border: 1px solid rgba($mainColor, 0.75);
 
     .validate-button {
       @include btn-fill();

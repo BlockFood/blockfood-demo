@@ -3,8 +3,8 @@ import image from '../../style/images/map/map.jpg'
 export default {
     image,
     dimensions: {
-        width: 1100,
-        height: 650
+        width: 750,
+        height: 500
     },
     graph: {
         "0": {"position": [3, 171], "connections": {"1": 88.64536084872124}},
@@ -528,102 +528,5 @@ export default {
             "connections": {"34": 53.33854141237835, "133": 125.53883861180172, "197": 124.73972903610141}
         },
         "200": {"position": [640, 142], "connections": {"80": 18.601075237738275, "81": 20.396078054371138}}
-    },
-    restaurants: [
-        {
-            name: 'Sushiii',
-            position: [140, 106],
-            labelDirection: 'bottom'
-        },
-        {
-            name: 'Burger Q',
-            position: [302, 95],
-            labelDirection: 'bottom'
-        },
-        {
-            name: 'Fish & Fish',
-            position: [550, 165],
-            labelDirection: 'top'
-        },
-        {
-            name: 'Horse Meet',
-            position: [905, 143],
-            labelDirection: 'top'
-        },
-        {
-            name: 'Vegan',
-            position: [130, 345],
-            labelDirection: 'bottom'
-        },
-        {
-            name: '1001 Beans',
-            position: [395, 277],
-            labelDirection: 'top'
-        },
-        {
-            name: 'Eat & Vomit',
-            position: [860, 400],
-            labelDirection: 'top'
-        },
-        {
-            name: 'The French Fourchette',
-            position: [940, 459],
-            labelDirection: 'top'
-        },
-        {
-            name: 'Doggy Bag',
-            position: [444, 550],
-            labelDirection: 'top'
-        },
-        {
-            name: 'K',
-            position: [445, 750],
-            labelDirection: 'top'
-        },
-        {
-            name: 'E',
-            position: [480, 740],
-            labelDirection: 'top'
-        },
-        {
-            name: 'B',
-            position: [515, 740],
-            labelDirection: 'top'
-        },
-        {
-            name: 'A',
-            position: [550, 745],
-            labelDirection: 'top'
-        },
-        {
-            name: 'B',
-            position: [585, 755],
-            labelDirection: 'top'
-        },
-        {
-            name: 'Foodball',
-            position: [200, 742],
-            labelDirection: 'top'
-        },
-        {
-            name: 'Veget-Circus',
-            position: [153, 570],
-            labelDirection: 'top'
-        },
-        {
-            name: 'Knife',
-            position: [770, 570],
-            labelDirection: 'top'
-        },
-        {
-            name: 'BK',
-            position: [1055, 630],
-            labelDirection: 'top'
-        },
-        {
-            name: '101',
-            position: [815, 750],
-            labelDirection: 'top'
-        }
-    ]
+    }
 }
