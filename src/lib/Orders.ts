@@ -9,14 +9,16 @@ export enum ORDER_STATUS {
 
 export interface IOrderDetail {
     menuItemId: string,
-    quantity: Number
+    quantity: number
 }
 
 export interface IOrder {
     id: string,
     status: ORDER_STATUS,
     restaurantId: string,
-    customerPosition: [Number, Number],
+    customerPosition: [number, number],
+    orderTime?: Date,
+    comment?: string,
     details: IOrderDetail[]
 }
 

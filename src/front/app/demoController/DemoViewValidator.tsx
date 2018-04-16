@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {IState} from '../state/InitialState'
 import * as Routes from '../views/Routes'
 import {STEPS} from './types/Steps'
+import {RESTAURANTS_BY_IDS} from '../../../lib/Restaurants'
 import Error from '../components/error/Error'
 
 class DemoViewValidator extends React.Component<any, any> {
@@ -27,8 +28,12 @@ class DemoViewValidator extends React.Component<any, any> {
                 return (isCustomerSteps || isFreeMode) && customerOrderInProgress && customerPosition
             case Routes.CUSTOMER_ORDER_LIST_ROUTE:
                 return isFreeMode
-            case Routes.RESTAURANT_EXAMPLE_ROUTE:
-                return isFreeMode || (step >= STEPS.RESTAURANT_ACCEPT_ORDER && step <= STEPS.RESTAURANT_NOTIFY_ORDER_READY)
+            case Routes.RESTAURANT_OVERVIEW_ROUTE:
+                const restaurantId = Routes.getRestaurantIdFromPathname(pathname)
+                return (
+                    (isFreeMode || (step >= STEPS.RESTAURANT_ACCEPT_ORDER && step <= STEPS.RESTAURANT_NOTIFY_ORDER_READY)) &&
+                    !!RESTAURANTS_BY_IDS[restaurantId]
+                )
             case Routes.COURIER_EXAMPLE_ROUTE:
                 return isFreeMode || (step >= STEPS.COURIER_ACCEPT_ORDER && step <= STEPS.COURIER_NOTIFY_ORDER_DELIVERED)
             default:

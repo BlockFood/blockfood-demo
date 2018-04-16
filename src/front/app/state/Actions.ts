@@ -30,4 +30,4 @@ export const createCustomerOrderInProgress = (restaurantId: string) => ({type: C
 
 export const setCustomerOrderInProgress = (customerOrderInProgress: IOrderInProgress | null) => ({type: SET_CUSTOMER_ORDER_IN_PROGRESS, customerOrderInProgress})
 
-export const setCustomerPosition = (customerPosition: [Number, Number]) => ({type: SET_CUSTOMER_POSITION, customerPosition})
+export const setCustomerPosition = (customerPosition: [number, number]) => ({type: SET_CUSTOMER_POSITION, customerPosition})

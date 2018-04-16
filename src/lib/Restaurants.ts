@@ -49,7 +49,7 @@ export interface IRestaurant {
     menuItems: IMenuItem[],
     image: string,
     map: {
-        position: [Number, Number],
+        position: [number, number],
         labelDirection: string
     }
 }

@@ -1,0 +1,12 @@
+.orderHeader {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #ccc;
+  color: #fff;
+  padding: 4px 5px;
+
+  .orderHeaderTime {
+    order: -1;
+  }
+}

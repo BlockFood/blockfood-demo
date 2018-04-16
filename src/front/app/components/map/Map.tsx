@@ -85,7 +85,7 @@ class Map extends React.Component<any, any> {
 
     getPathFromListOfPoints(points: any) {
         let path = ''
-        _.forEach(points, (point, index: Number) => path += `${index === 0 ? 'M' : 'L'} ${point[0]} ${point[1]} `)
+        _.forEach(points, (point, index: number) => path += `${index === 0 ? 'M' : 'L'} ${point[0]} ${point[1]} `)
         return path
     }
 

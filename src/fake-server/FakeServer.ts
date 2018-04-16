@@ -29,7 +29,7 @@ app.post('/api/start-demo', (req, res) => {
 app.post('/api/:demoId/order', (req, res) => {
     const {demoId} = req.params
     const {restaurantId, customerPosition, details}: {
-        restaurantId: string, customerPosition: [Number, Number], details: IOrderDetail[]
+        restaurantId: string, customerPosition: [number, number], details: IOrderDetail[]
     } = req.body
 
     const orders = database[demoId]

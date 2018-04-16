@@ -9,6 +9,7 @@ import {
     IMenuItem, MENU_CATEGORIES
 } from '../../../../../../lib/Restaurants'
 import {IOrderDetail} from '../../../../../../lib/Orders'
+import {formatCurrency} from '../../../../utils/FormatCurrency'
 import {createCustomerOrderInProgress, setCustomerOrderInProgress} from '../../../../state/Actions'
 import GoBack from '../../../../components/goBack/GoBack'
 import MenuItem from './menuItem/MenuItem'
@@ -159,7 +160,7 @@ class CustomerOrder extends React.Component<any, any> {
                                 <div key={menuItem.id}>
                                     <div className="name">
                                         <span>{detail.quantity} x {menuItem.name} </span>
-                                        <span className="colored">{menuItem.price_eth * detail.quantity} ETH</span>
+                                        <span className="colored">{formatCurrency(menuItem.price_eth * detail.quantity)}</span>
                                     </div>
                                 </div>
                             )
@@ -170,17 +171,17 @@ class CustomerOrder extends React.Component<any, any> {
                     <div className="divider borderGray">
                         <div>
                             <span>Total:</span>
-                            <span className="colored">{this.getTheTotal(false)} ETH</span>
+                            <span className="colored">{formatCurrency(this.getTheTotal(false))}</span>
                         </div>
                         <div>
                             <span>Delivery: </span>
-                            <span className="colored">{DELIVERY_FEE} ETH</span>
+                            <span className="colored">{formatCurrency(DELIVERY_FEE)}</span>
                         </div>
                     </div>
                     <div className="divider borderGray">
                         <div>
                             <span>TOTAL:</span>
-                            <span className="colored">{this.getTheTotal(true)} ETH</span>
+                            <span className="colored">{formatCurrency(this.getTheTotal(true))}</span>
                         </div>
                     </div>
                 </div>

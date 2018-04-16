@@ -1,0 +1,19 @@
+.order {
+  flex-grow: 0;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 80%;
+  padding: 5px;
+  margin-top: 20px;
+  color: #656565;
+  font-size: 14px;
+  overflow: hidden;
+
+  & > *:not(:first-child) {
+    margin-top: 10px;
+  }
+}

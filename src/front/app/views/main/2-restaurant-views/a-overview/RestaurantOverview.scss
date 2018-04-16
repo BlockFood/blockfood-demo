@@ -1,0 +1,31 @@
+@import '../../../../style/Variables';
+
+#bf-demo-view-restaurant-overview {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 35px 50px;
+  box-sizing: border-box;
+
+  & > div {
+    flex: 1 1 0;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    min-height: 100%;
+
+    h3 {
+      color: $mainColor;
+      font-weight: bold;
+      font-size: 18px;
+      white-space: nowrap;
+    }
+
+    &:nth-child(2) {
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+    }
+  }
+}
