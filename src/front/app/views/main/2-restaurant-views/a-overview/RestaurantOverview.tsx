@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {IState} from '../../../../state/InitialState'
@@ -25,7 +26,7 @@ class RestaurantOverview extends React.Component<any, any> {
         this.menuItems = MENU_ITEMS_BY_IDS[restaurantId]
 
         this.state = {
-            loading: false
+            loadingIds: {}
         }
 
         this.acceptOrder = this.acceptOrder.bind(this)
@@ -33,29 +34,40 @@ class RestaurantOverview extends React.Component<any, any> {
     }
 
     acceptOrder = async (orderId: string) => {
-        if (!this.state.loading) {
-            this.setState({loading: true})
+        if (!this.state.loadingIds[orderId]) {
+            const newLoadingIdsBefore = _.assign({}, this.state.loadingIds, {[orderId]: true})
+            this.setState({loadingIds: newLoadingIdsBefore})
 
             const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, ORDER_STATUS.ACCEPTED))
 
             this.props.dispatch(setOrders(orders))
-            this.setState({loading: false})
+            if (this.props.demoController.goToNextStep()) {
+                const newLoadingIdsAfter = _.assign({}, this.state.loadingIds)
+                delete newLoadingIdsAfter[orderId]
+                this.setState({loadingIds: newLoadingIdsAfter})
+            }
         }
     }
 
     finishOrder = async (orderId: string) => {
-        if (!this.state.loading) {
-            this.setState({loading: true})
+        if (!this.state.loadingIds[orderId]) {
+            const newLoadingIdsBefore = _.assign({}, this.state.loadingIds, {[orderId]: true})
+            this.setState({loadingIds: newLoadingIdsBefore})
 
             const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, ORDER_STATUS.READY))
 
             this.props.dispatch(setOrders(orders))
-            this.props.demoController.goToNextStep() && this.setState({loading: false})
+            if (this.props.demoController.goToNextStep()) {
+                const newLoadingIdsAfter = _.assign({}, this.state.loadingIds)
+                delete newLoadingIdsAfter[orderId]
+                this.setState({loadingIds: newLoadingIdsAfter})
+            }
         }
     }
 
     render() {
         const {ordersByStatus} = this.props
+        const {loadingIds} = this.state
 
         const getOrderedItems = (order: IOrder): IOrderedItem[] => {
             return order.details.map((detail: IOrderDetail) => {
@@ -77,7 +89,8 @@ class RestaurantOverview extends React.Component<any, any> {
                         <PendingOrder key={order.id}
                                       orderId={order.id}
                                       onAccept={this.acceptOrder}
-                                      orderedItems={getOrderedItems(order)}/>
+                                      orderedItems={getOrderedItems(order)}
+                                      loading={loadingIds[order.id]}/>
                     ))}
                 </div>
                 <div>
@@ -86,7 +99,8 @@ class RestaurantOverview extends React.Component<any, any> {
                         <OngoingOrder key={order.id}
                                       orderId={order.id}
                                       onFinish={this.finishOrder}
-                                      orderedItems={getOrderedItems(order)}/>
+                                      orderedItems={getOrderedItems(order)}
+                                      loading={loadingIds[order.id]}/>
                     ))}
                 </div>
                 <div>

@@ -133,15 +133,20 @@ export default (WrappedComponent: any) => {
 
                 return false
             }
-            // TODO: update for new design
-            else if (step >= STEPS.RESTAURANT_ACCEPT_ORDER && step < STEPS.COURIER_ACCEPT_ORDER) {
+            else if (step === STEPS.RESTAURANT_ACCEPT_ORDER) {
+                this.props.dispatch(setStep(STEPS.RESTAURANT_NOTIFY_ORDER_READY))
+
+                return true
+            }
+            else if (step === STEPS.RESTAURANT_NOTIFY_ORDER_READY) {
                 this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_COURIER, () => {
                     this.props.dispatch(setStep(STEPS.COURIER_ACCEPT_ORDER))
                     this.props.history.replace(Routes.getDefaultRouteCourier())
                 }))
 
-                return false
+                return true
             }
+            // TODO: update for new design
             else if (step >= STEPS.COURIER_ACCEPT_ORDER) {
                 this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_FREE_MODE, () => {
                     this.props.dispatch(setStep(STEPS.FREE_MODE))

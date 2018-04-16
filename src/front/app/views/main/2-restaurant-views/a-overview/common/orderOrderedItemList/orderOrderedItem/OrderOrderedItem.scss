@@ -3,8 +3,11 @@
 .orderOrderedItem {
   display: flex;
   flex-flow: row nowrap;
-  padding: 1px;
   font-size: 14px;
+
+  & > * {
+    padding: 5px 0;
+  }
 
   .orderedItemLabel {
     flex: 1 0 60%;

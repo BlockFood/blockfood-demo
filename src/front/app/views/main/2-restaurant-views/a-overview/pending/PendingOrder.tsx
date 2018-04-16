@@ -4,6 +4,7 @@ import {OrderHeader} from '../common/orderHeader/OrderHeader'
 import {OrderOrderedItemList} from '../common/orderOrderedItemList/OrderOrderedItemList'
 import {OrderComment} from '../common/orderComment/OrderComment'
 import {PendingOrderButtons} from './buttons/PendingOrderButtons'
+import {OrderLoader} from '../common/orderLoader/OrderLoader'
 import {IOrderedItem} from '../common/orderOrderedItemList/orderOrderedItem/IOrderedItem'
 
 interface PendingOrderProps {
@@ -12,7 +13,8 @@ interface PendingOrderProps {
     orderedItems: IOrderedItem[]
     comment?: string
     onAccept?: (orderId: string) => void
-    onDecline?: () => void
+    onDecline?: () => void,
+    loading: boolean
 }
 
 export class PendingOrder extends React.Component<PendingOrderProps, any> {
@@ -27,7 +29,7 @@ export class PendingOrder extends React.Component<PendingOrderProps, any> {
     }
 
     public render() {
-        const {orderId, orderTime, orderedItems, comment, onDecline} = this.props
+        const {orderId, orderTime, orderedItems, comment, onDecline, loading} = this.props
 
         return (
             <Order className='pendingOrder'>
@@ -48,6 +50,7 @@ export class PendingOrder extends React.Component<PendingOrderProps, any> {
                     onAccept={this.onAccept}
                     onDecline={onDecline}
                 />
+                {loading && <OrderLoader/>}
             </Order>
         )
     }
