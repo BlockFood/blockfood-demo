@@ -26,6 +26,10 @@
     }
   }
 
+  .left, .right {
+    width: 115px;
+  }
+
   button {
     @include btn();
     font-size: 2em;

@@ -3,7 +3,7 @@ import image from '../../style/images/map/map.jpg'
 export default {
     image,
     dimensions: {
-        width: 800,
+        width: 750,
         height: 500
     },
     graph: {
