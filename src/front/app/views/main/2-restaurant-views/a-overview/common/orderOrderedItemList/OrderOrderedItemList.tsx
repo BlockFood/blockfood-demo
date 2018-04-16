@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {OrderOrderedItem} from './orderOrderedItem/OrderOrderedItem'
-import {IOrderedItem} from '../../../../../../../lib/Orders'
+import {IOrderedItem} from './orderOrderedItem/IOrderedItem'
 
 import './OrderOrderedItemList.scss'
 

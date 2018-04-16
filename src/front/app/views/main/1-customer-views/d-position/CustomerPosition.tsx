@@ -38,7 +38,7 @@ class CustomerPosition extends React.Component<any, any> {
         this.props.history.replace(Routes.getRouteCustomerOrder(restaurantId))
     }
 
-    private onCustomerSet(position: [Number, Number]) {
+    private onCustomerSet(position: [number, number]) {
         this.setState({canGoNext: true})
         this.props.dispatch(setCustomerPosition(position))
     }

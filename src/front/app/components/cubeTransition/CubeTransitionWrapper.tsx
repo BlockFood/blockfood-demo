@@ -9,7 +9,7 @@ class CubeTransitionWrapper extends React.Component<any, any> {
     private cubeTransition: any
     private pages: any[]
     private previousHTML: string[]
-    private previousPageIndex: Number | null = null
+    private previousPageIndex: number | null = null
 
     constructor(props: any) {
         super(props)

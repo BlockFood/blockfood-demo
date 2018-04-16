@@ -1,12 +1,12 @@
 import * as React from 'react'
-import {Order} from '../order/Order'
-import {OrderHeader} from '../orderHeader/OrderHeader'
-import {OrderOrderedItemList} from '../orderOrderedItemList/OrderOrderedItemList'
-import {OrderComment} from '../orderComment/OrderComment'
-import {IOrderedItem} from '../../../../../../../lib/Orders'
+import {Order} from '../common/order/Order'
+import {OrderHeader} from '../common/orderHeader/OrderHeader'
+import {OrderOrderedItemList} from '../common/orderOrderedItemList/OrderOrderedItemList'
+import {OrderComment} from '../common/orderComment/OrderComment'
+import {OngoingOrderButtons} from './buttons/OngoingOrderButtons'
+import {IOrderedItem} from '../common/orderOrderedItemList/orderOrderedItem/IOrderedItem'
 
 import './OngoingOrder.scss'
-import {OngoingOrderButtons} from '../ongoingOrderButtons/OngoingOrderButtons'
 
 interface OngoingOrderProps {
     orderId: string

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import {formatCurrency} from '../../../../../../utils/FormatCurrency'
-import {IOrderedItem} from '../../../../../../../../lib/Orders'
+import {formatCurrency} from '../../../../../../../utils/FormatCurrency'
+import {IOrderedItem} from './IOrderedItem'
 
 import './OrderOrderedItem.scss'
 

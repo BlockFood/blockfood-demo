@@ -1,10 +1,16 @@
 .order {
+  flex-grow: 0;
+  flex-shrink: 0;
   display: flex;
   flex-flow: column nowrap;
   border: 1px solid #ccc;
-  width: 260px;
-  padding: 5px 5px 0;
+  width: 80%;
+  padding: 5px;
   margin-top: 20px;
   color: #656565;
   font-size: 14px;
+
+  & > *:not(:last-child) {
+    margin-bottom: 10px;
+  }
 }

@@ -1,4 +1,5 @@
 import * as React from 'react'
+import {formatCurrency} from '../../../../../utils/FormatCurrency'
 
 import './MenuItem.scss'
 
@@ -19,7 +20,7 @@ class OrderInProgressItem extends React.Component<any, any> {
         return (
             <div className="menu-item" onClick={this.addToOrderInProgress}>
                 <h2>{name}</h2>
-                <h3>{price_eth} ETH</h3>
+                <h3>{formatCurrency(price_eth)}</h3>
             </div>
         )
     }

@@ -52,11 +52,11 @@ class Storage {
         return Storage._readObjectFromSessionStorage('customer-order-in-progress')
     }
 
-    static setCustomerPosition(customerPosition: [Number, Number]) {
+    static setCustomerPosition(customerPosition: [number, number]) {
         Storage._writeObjectToSessionStorage('customer-position', customerPosition)
     }
 
-    static getCustomerPosition(): [Number, Number] {
+    static getCustomerPosition(): [number, number] {
         return Storage._readObjectFromSessionStorage('customer-position')
     }
 

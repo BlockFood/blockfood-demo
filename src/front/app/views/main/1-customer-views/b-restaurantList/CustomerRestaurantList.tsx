@@ -66,7 +66,7 @@ class CustomerRestaurantList extends React.Component<any, any> {
                     <h2 className="title">All {RESTAURANTS.length} restaurants</h2>
                 )}
                 <div className="restaurant-list">
-                    {_.reduce(RESTAURANTS, (restaurants: any, restaurant: IRestaurant, index: Number) => {
+                    {_.reduce(RESTAURANTS, (restaurants: any, restaurant: IRestaurant, index: number) => {
                         if (filters.length === 0 || filters.includes(restaurant.category)) {
                             restaurants.push(
                                 <RestaurantItem key={restaurant.id}

@@ -16,7 +16,7 @@ export interface IState {
     orders: IOrder[],
     customerLocation: string,
     customerOrderInProgress: IOrderInProgress | null,
-    customerPosition: [Number, Number] | null,
+    customerPosition: [number, number] | null,
 }
 
 export const DEFAULT_STATE: IState = {

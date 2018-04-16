@@ -2,20 +2,34 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import {IState} from '../../../../state/InitialState'
 import withDemoController from '../../../../demoController/WithDemoController'
-import {IOrder, ORDER_STATUS} from '../../../../../../lib/Orders'
+import {IOrder, IOrderDetail, ORDER_STATUS} from '../../../../../../lib/Orders'
+import {MENU_ITEMS_BY_IDS} from '../../../../../../lib/Restaurants'
 import Api from '../../../../api/Api'
 import doWithMinTime from '../../../../utils/DoWithMinTime'
 import {selectOrdersByRestaurantId} from '../../../../state/Selectors'
 import {setOrders} from '../../../../state/Actions'
-import {PendingOrder} from './pendingOrder/PendingOrder'
-import {OngoingOrder} from './ongoingOrder/OngoingOrder'
-import {FinishedOrder} from './finishedOrder/FinishedOrder'
+import {IOrderedItem} from './common/orderOrderedItemList/orderOrderedItem/IOrderedItem'
+import {PendingOrder} from './pending/PendingOrder'
+import {OngoingOrder} from './ongoing/OngoingOrder'
+import {FinishedOrder} from './finished/FinishedOrder'
 
 import './RestaurantOverview.scss'
 
 class RestaurantOverview extends React.Component<any, any> {
-    state = {
-        loading: false,
+   private menuItems: any
+
+    constructor(props: any) {
+        super(props)
+
+        const {restaurantId} = this.props.match.params
+        this.menuItems = MENU_ITEMS_BY_IDS[restaurantId]
+
+        this.state = {
+            loading: false
+        }
+
+        this.acceptOrder = this.acceptOrder.bind(this)
+        this.finishOrder = this.finishOrder.bind(this)
     }
 
     acceptOrder = async (orderId: string) => {
@@ -41,123 +55,87 @@ class RestaurantOverview extends React.Component<any, any> {
     }
 
     render() {
-        const {orders} = this.props
+        const {ordersByStatus} = this.props
 
-        let ordersByStatus = {}
-        Object.keys(ORDER_STATUS).forEach((status: string) => {
-            ordersByStatus[status] = orders.filter((order: IOrder) => order.status === status)
-        })
+        const getOrderedItems = (order: IOrder): IOrderedItem[] => {
+            return order.details.map((detail: IOrderDetail) => {
+                const menuItem = this.menuItems[detail.menuItemId]
+
+                return {
+                    label: menuItem.name,
+                    count: detail.quantity,
+                    totalItemPrice: menuItem.price_eth * detail.quantity,
+                }
+            })
+        }
 
         return (
             <div id="bf-demo-view-restaurant-overview">
                 <div>
-                    <h3 style={{color: '#4b3f80', fontWeight: 'bold', fontSize: 18, marginTop: 0}}>
-                        Commandes en attente
-                    </h3>
-                    {
-                        ordersByStatus[ORDER_STATUS.SUBMITTED].map(
-                            (order: IOrder) => (
-                                <PendingOrder
-                                    key={order.id}
-                                    onAccept={() => this.acceptOrder(order.id)}
-                                    onDecline={() => alert('faut arrondir les fins de mois ¯\\_(ツ)_/¯')}
-                                    orderId={order.id}
-                                    orderTime={new Date()}
-                                    orderedItems={[
-                                        {
-                                            label: 'Rancheros Platters',
-                                            count: 2,
-                                            totalItemPrice: 18.8,
-                                        },
-                                        {
-                                            label: 'Petite salade',
-                                            count: 3,
-                                            totalItemPrice: 7.4,
-                                        },
-                                        {
-                                            label: 'Pietra 33cl',
-                                            count: 1,
-                                            totalItemPrice: 3.5,
-                                        },
-                                    ]}
-                                    comment='Les pâtes sans gluten sur le platter, je vous prie. Merci !'
-                                />
-                            ),
-                        )
-                    }
+                    <h3>Pending</h3>
+                    {ordersByStatus[0].map((order: IOrder) => (
+                        <PendingOrder key={order.id}
+                                      orderId={order.id}
+                                      onAccept={this.acceptOrder}
+                                      orderedItems={getOrderedItems(order)}/>
+                    ))}
                 </div>
                 <div>
-                    <h3 style={{color: '#4b3f80', fontWeight: 'bold', fontSize: 18, marginTop: 0}}>
-                        En cours
-                    </h3>
-                    {
-                        ordersByStatus[ORDER_STATUS.ACCEPTED].map(
-                            (order: IOrder) => (
-                                <OngoingOrder
-                                    key={order.id}
-                                    onFinish={() => this.finishOrder(order.id)}
-                                    orderId={order.id}
-                                    orderTime={new Date()}
-                                    orderedItems={[
-                                        {
-                                            label: 'Rancheros Platters',
-                                            count: 2,
-                                            totalItemPrice: 18.8,
-                                        },
-                                        {
-                                            label: 'Petite salade',
-                                            count: 3,
-                                            totalItemPrice: 7.4,
-                                        },
-                                        {
-                                            label: 'Pietra 33cl',
-                                            count: 1,
-                                            totalItemPrice: 3.5,
-                                        },
-                                    ]}
-                                    comment='Les pâtes sans gluten sur le platter, je vous prie. Merci !'
-                                />
-                            ),
-                        )
-                    }
+                    <h3>In Progress</h3>
+                    {ordersByStatus[1].map((order: IOrder) => (
+                        <OngoingOrder
+                            key={order.id}
+                            onFinish={() => this.finishOrder(order.id)}
+                            orderId={order.id}
+                            orderTime={new Date()}
+                            orderedItems={[
+                                {
+                                    label: 'Rancheros Platters',
+                                    count: 2,
+                                    totalItemPrice: 18.8,
+                                },
+                                {
+                                    label: 'Petite salade',
+                                    count: 3,
+                                    totalItemPrice: 7.4,
+                                },
+                                {
+                                    label: 'Pietra 33cl',
+                                    count: 1,
+                                    totalItemPrice: 3.5,
+                                },
+                            ]}
+                            comment='Les pâtes sans gluten sur le platter, je vous prie. Merci !'
+                        />
+                    ))}
                 </div>
                 <div>
-                    <h3 style={{color: '#4b3f80', fontWeight: 'bold', fontSize: 18, marginTop: 0}}>
-                        Terminées
-                    </h3>
-                    {
-                        [
-                            ...ordersByStatus[ORDER_STATUS.READY],
-                            ...ordersByStatus[ORDER_STATUS.PICKING],
-                            ...ordersByStatus[ORDER_STATUS.DELIVERING],
-                            ...ordersByStatus[ORDER_STATUS.DONE],
-                        ].map(
-                            (order: IOrder) => (
-                                <FinishedOrder
-                                    key={order.id}
-                                    orderId={order.id}
-                                    orderTime={new Date()}
-                                    orderedItems={[
-                                        {
-                                            label: 'Rancheros Platters',
-                                            count: 2,
-                                            totalItemPrice: 18.8,
-                                        },
-                                        {
-                                            label: 'Petite salade',
-                                            count: 3,
-                                            totalItemPrice: 7.4,
-                                        },
-                                        {
-                                            label: 'Pietra 33cl',
-                                            count: 1,
-                                            totalItemPrice: 3.5,
-                                        },
-                                    ]}
-                                />
-                            ),
-                        )
-                    }
+                    <h3>Done</h3>
+                    {ordersByStatus[2].map(
+                        (order: IOrder) => (
+                            <FinishedOrder
+                                key={order.id}
+                                orderId={order.id}
+                                orderTime={new Date()}
+                                orderedItems={[
+                                    {
+                                        label: 'Rancheros Platters',
+                                        count: 2,
+                                        totalItemPrice: 18.8,
+                                    },
+                                    {
+                                        label: 'Petite salade',
+                                        count: 3,
+                                        totalItemPrice: 7.4,
+                                    },
+                                    {
+                                        label: 'Pietra 33cl',
+                                        count: 1,
+                                        totalItemPrice: 3.5,
+                                    },
+                                ]}
+                            />
+                        ))}
                 </div>
             </div>
         )
@@ -167,8 +145,22 @@ class RestaurantOverview extends React.Component<any, any> {
 const mapStatToProps = (state: IState, props: any) => {
     const {restaurantId} = props.match.params
 
+    const orders = selectOrdersByRestaurantId(state.orders, restaurantId)
+    const ordersByStatus: IOrder[][] = [[], [], []]
+    orders.forEach((order: IOrder) => {
+        if (order.status === ORDER_STATUS.SUBMITTED) {
+            ordersByStatus[0].push(order)
+        }
+        else if (order.status === ORDER_STATUS.ACCEPTED) {
+            ordersByStatus[1].push(order)
+        }
+        else {
+            ordersByStatus[2].push(order)
+        }
+    })
+
     return {
-        orders: selectOrdersByRestaurantId(state.orders, restaurantId),
+        ordersByStatus
     }
 }
 

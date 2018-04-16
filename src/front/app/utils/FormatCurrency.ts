@@ -1,6 +1,6 @@
 const numberFormatter = Intl.NumberFormat('fr-FR', {
     style: 'currency',
-    currency: 'EUR',
+    currency: 'ETH',
     minimumFractionDigits: 2,
 });
 

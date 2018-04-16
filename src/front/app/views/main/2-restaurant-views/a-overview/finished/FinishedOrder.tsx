@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Order } from '../order/Order'
-import { OrderHeader } from '../orderHeader/OrderHeader'
-import { OrderOrderedItemList } from '../orderOrderedItemList/OrderOrderedItemList'
-import { OrderTotal } from '../orderTotal/OrderTotal'
-import {IOrderedItem} from '../../../../../../../lib/Orders'
+import { Order } from '../common/order/Order'
+import { OrderHeader } from '../common/orderHeader/OrderHeader'
+import { OrderOrderedItemList } from '../common/orderOrderedItemList/OrderOrderedItemList'
+import { OrderTotal } from '../common/orderTotal/OrderTotal'
+import {IOrderedItem} from '../common/orderOrderedItemList/orderOrderedItem/IOrderedItem'
 
 import './FinishedOrder.scss'
 
