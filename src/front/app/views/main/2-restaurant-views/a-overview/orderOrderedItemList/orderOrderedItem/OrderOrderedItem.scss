@@ -1,0 +1,26 @@
+@import '../../../../../../style/Variables';
+
+.orderOrderedItem {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 1px;
+  font-size: 14px;
+
+  .orderedItemLabel {
+    flex: 1 0 60%;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .orderedItemCount {
+    flex: 0 1 20px;
+    text-align: right;
+    font-weight: bold;
+  }
+
+  .orderedItemTotalPrice {
+    flex: 1 0 20%;
+    text-align: right;
+    color: $mainColor;
+  }
+}
