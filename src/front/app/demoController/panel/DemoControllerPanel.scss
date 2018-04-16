@@ -14,31 +14,70 @@
   justify-content: space-between;
   padding: 0 25px;
   box-sizing: border-box;
-  transform: translateY($demoControllerHeight + 15px);
-  transition: transform 0.5s;
   z-index: 3;
-
-  &.visible {
-    transform: translateY(0);
-  }
 
   & > * {
     flex-grow: 0;
     flex-shrink: 0;
+    transform: translateY($demoControllerHeight + 15px);
+    transition: transform 0.5s;
   }
 
-  & > button, .logo {
-    width: 140px;
+  &.visible > * {
+    transform: translateY(0);
   }
 
-  & > button {
-    @include btn-reverse-color();
-    padding: 5px 0;
-    font-size: 1.3em;
+  .left, .right {
+    width: 300px;
+  }
 
-    i {
-      margin-right: 10px;
-      font-size: 0.9em;
+  .left {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    button {
+      @include btn-reverse-color();
+      padding: 5px 10px;
+      font-size: 1.3em;
+
+      i {
+        margin-right: 10px;
+        font-size: 0.9em;
+      }
+    }
+
+    .devices {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2em;
+      cursor: default;
+      margin-right: 25px;
+
+      i {
+        &:first-of-type {
+          margin-right: 10px;
+        }
+
+        &:last-of-type {
+          margin-left: 10px;
+        }
+
+        &:not(.active) {
+          cursor: pointer;
+          opacity: 0.5;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+
+        &.active {
+          opacity: 1;
+        }
+      }
     }
   }
 
@@ -157,16 +196,22 @@
     }
   }
 
-  .logo {
-    width: 100px;
-    height: 100px;
-    background: url('../../style/images/blockfood-logo.svg') no-repeat center right;
-    background-size: contain;
-    cursor: pointer;
-    transition: transform 0.3s;
+  .right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 
-    &:hover {
-      transform: scale(1.1);
+    .logo {
+      width: 100px;
+      height: 100px;
+      background: url('../../style/images/blockfood-logo.svg') no-repeat center right;
+      background-size: contain;
+      cursor: pointer;
+      transition: transform 0.3s;
+
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
 }

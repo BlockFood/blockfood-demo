@@ -12,6 +12,7 @@ export interface IHelpMessageModal {
 export interface IState {
     step: STEPS,
     helpMessage: IHelpMessageModal | null,
+    isMobile: boolean,
     orders: IOrder[],
     customerLocation: string,
     customerOrderInProgress: IOrderInProgress | null,
@@ -21,6 +22,7 @@ export interface IState {
 export const DEFAULT_STATE: IState = {
     step: STEPS.DEMO_NOT_STARTED,
     helpMessage: null,
+    isMobile: false,
     orders: [],
     customerLocation: '',
     customerOrderInProgress: null,
@@ -28,6 +30,7 @@ export const DEFAULT_STATE: IState = {
 }
 
 export const INITIAL_STATE: IState = _.assign({}, DEFAULT_STATE, {
+    isMobile: Storage.getIsMobile() || DEFAULT_STATE.isMobile,
     customerLocation: Storage.getCustomerLocation() || DEFAULT_STATE.customerLocation,
     customerOrderInProgress: Storage.getCustomerOrderInProgress() || DEFAULT_STATE.customerOrderInProgress,
     customerPosition: Storage.getCustomerPosition() || DEFAULT_STATE.customerPosition

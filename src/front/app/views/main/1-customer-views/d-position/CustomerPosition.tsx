@@ -65,7 +65,7 @@ class CustomerPosition extends React.Component<any, any> {
 
         return (
             <div id="bf-demo-customer-position">
-                <GoBack onGoBack={this.onGoBack}/>
+                <div className="left"><GoBack onGoBack={this.onGoBack}/></div>
                 <div className="map-scroll-wrapper">
                     <div className="map-wrapper" style={MapData.dimensions}>
                         <Map step={STEPS.SET_CUSTOMER_POSITION} image={MapData.image} dimensions={MapData.dimensions}
@@ -76,7 +76,7 @@ class CustomerPosition extends React.Component<any, any> {
                              onActionStart={this.onActionStart} onActionEnd={this.onActionEnd}/>
                     </div>
                 </div>
-                <div>
+                <div className="right">
                     <button className={!canGoNext ? 'disabled' : ''} onClick={this.onSubmit}>
                         <i className="fas fa-arrow-right"/>
                     </button>

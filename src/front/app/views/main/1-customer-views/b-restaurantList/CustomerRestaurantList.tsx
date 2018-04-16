@@ -76,7 +76,7 @@ class CustomerRestaurantList extends React.Component<any, any> {
 
                         if (restaurants.length === 0 && index === RESTAURANTS.length -1) {
                             restaurants.push(
-                                <h2 className="title empty">No result...</h2>
+                                <h2 key="empty" className="title empty">No result...</h2>
                             )
                         }
 

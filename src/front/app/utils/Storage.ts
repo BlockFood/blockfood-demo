@@ -28,6 +28,14 @@ class Storage {
         catch (e) {}
     }
 
+    static setIsMobile(isMobile: boolean) {
+        Storage._writeObjectToSessionStorage('is-mobile', isMobile)
+    }
+
+    static getIsMobile(): boolean {
+        return Storage._readObjectFromSessionStorage('is-mobile')
+    }
+
     static setCustomerLocation(customerLocation: string) {
         Storage._writeObjectToSessionStorage('customer-location', customerLocation)
     }
