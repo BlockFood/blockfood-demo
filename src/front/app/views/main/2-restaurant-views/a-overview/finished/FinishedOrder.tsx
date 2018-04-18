@@ -16,7 +16,7 @@ interface FinishedOrderProps {
 const computeTotalPrice = (orderedItems: IOrderedItem[]) => orderedItems.reduce((total, item) => (item && item.totalItemPrice) ? total + item.totalItemPrice : total, 0)
 
 export const FinishedOrder: React.SFC<FinishedOrderProps> = ({ orderId, orderTime, orderedItems }) => (
-  <Order className='finishedOrder'>
+  <Order className='finishedOrder' orderId={orderId}>
     <OrderHeader
       orderId={orderId}
       orderTime={orderTime}

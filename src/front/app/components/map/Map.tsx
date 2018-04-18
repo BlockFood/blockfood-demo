@@ -385,12 +385,21 @@ class Map extends React.Component<any, any> {
         this.props.keySpaceHelper && window.addEventListener('keydown', this.onRandomAction, false)
     }
 
-    componentDidUpdate(_prevProps: any, prevState: any) {
+    componentDidUpdate(prevProps: any, prevState: any) {
         if (this.state.customerPositionBuffer.length > 0 && prevState.customerPositionBuffer.length === 0) {
             this.adjustCustomerPosition()
         }
         else if (this.state.courierPositionBuffer.length > 0 && prevState.courierPositionBuffer.length === 0) {
             this.adjustCourierPosition()
+        }
+        else if (this.props.step == STEPS.SET_COURIER_POSITION && !_.isEqual(this.props.initialCustomerPosition, prevProps.initialCustomerPosition)) {
+            if (this.props.initialCustomerPosition) {
+                const {path1, path2} = this.computePaths(this.props.initialCustomerPosition, this.state.courierPosition)
+                this.setState({customerPosition: this.props.initialCustomerPosition, path1, path2})
+            }
+            else {
+                this.setState({customerPosition: null, path1: null, path2: null})
+            }
         }
     }
 

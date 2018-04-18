@@ -69,6 +69,11 @@
 
     .order {
       width: 100%;
+
+      &.selected {
+        border-color: $mainColor;
+        box-shadow: 0 0 10px rgba($mainColor, 0.2) inset;
+      }
     }
   }
 }

@@ -9,6 +9,7 @@ import {IOrderedItem} from '../../../../../components/order/orderedItemList/orde
 
 interface CourierOrderProps {
     orderId: string
+    selected: boolean
     orderTime?: Date
     orderedItems?: IOrderedItem[]
     restaurantName: string
@@ -30,10 +31,10 @@ export class CourierOrder extends React.Component<CourierOrderProps, any> {
     }
 
     public render() {
-        const {orderId, orderTime, orderedItems, restaurantName, comment, onDecline, loading} = this.props
+        const {orderId, selected, orderTime, orderedItems, restaurantName, comment, onDecline, loading} = this.props
 
         return (
-            <Order className='courierOrder'>
+            <Order className={`courierOrder${selected ? ' selected' : ''}`} orderId={orderId}>
                 <OrderHeader
                     orderId={orderId}
                     orderTime={orderTime}

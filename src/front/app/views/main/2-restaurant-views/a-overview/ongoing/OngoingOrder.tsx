@@ -33,7 +33,7 @@ export class OngoingOrder extends React.Component<OngoingOrderProps, any> {
         const {orderId, orderTime, orderedItems, comment, loading} = this.props
 
         return (
-            <Order className='ongoingOrder'>
+            <Order className='ongoingOrder' orderId={orderId}>
                 <OrderHeader
                     orderId={orderId}
                     orderTime={orderTime}
