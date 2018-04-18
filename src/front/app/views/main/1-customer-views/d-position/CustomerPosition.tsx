@@ -22,14 +22,8 @@ class CustomerPosition extends React.Component<any, any> {
         const restaurant = RESTAURANTS_BY_IDS[restaurantId]
         this.restaurantForMap = _.assign({}, {name: restaurant.name}, restaurant.map)
 
-        this.state = {
-            canGoNext: !!this.props.customerPosition
-        }
-
         this.onGoBack = this.onGoBack.bind(this)
         this.onCustomerSet = this.onCustomerSet.bind(this)
-        this.onActionStart = this.onActionStart.bind(this)
-        this.onActionEnd = this.onActionEnd.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     }
 
@@ -39,29 +33,17 @@ class CustomerPosition extends React.Component<any, any> {
     }
 
     private onCustomerSet(position: [number, number]) {
-        this.setState({canGoNext: true})
         this.props.dispatch(setCustomerPosition(position))
     }
 
-    private onActionStart() {
-        this.setState({canGoNext: false})
-    }
-
-    private onActionEnd() {
-        this.setState({canGoNext: true})
-    }
-
     private onSubmit() {
-        if (this.state.canGoNext) {
-            if (this.props.demoController.goToNextStep()) {
-                this.props.history.replace(Routes.getRouteCustomerPayment())
-            }
+        if (this.props.demoController.goToNextStep()) {
+            this.props.history.replace(Routes.getRouteCustomerPayment())
         }
     }
 
     public render() {
         const {customerPosition} = this.props
-        const {canGoNext} = this.state
 
         return (
             <div id="bf-demo-customer-position">
@@ -73,14 +55,13 @@ class CustomerPosition extends React.Component<any, any> {
                                  graph={MapData.graph}
                                  initialCustomerPosition={customerPosition}
                                  restaurants={this.restaurantForMap}
-                                 onCustomerSet={this.onCustomerSet}
-                                 onActionStart={this.onActionStart} onActionEnd={this.onActionEnd}/>
+                                 onCustomerSet={this.onCustomerSet}/>
                         </div>
                     </div>
                     <p><i className="far fa-lightbulb"/> Click on the map to modify your position</p>
                 </div>
                 <div className="right">
-                    <button className={!canGoNext ? 'disabled' : ''} onClick={this.onSubmit}>
+                    <button onClick={this.onSubmit}>
                         <i className="fas fa-arrow-right"/>
                     </button>
                 </div>

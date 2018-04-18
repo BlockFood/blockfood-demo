@@ -131,12 +131,12 @@ class Map extends React.Component<any, any> {
                     requestAnimationFrame(adjust)
                 }
                 else {
-                    this.props.onActionEnd()
+                    this.props.onActionEnd && this.props.onActionEnd()
                 }
             }
         }
 
-        this.props.onActionStart()
+        this.props.onActionStart && this.props.onActionStart()
         adjust()
     }
 
@@ -266,14 +266,14 @@ class Map extends React.Component<any, any> {
             else if (newPath1.length === 0) {
                 this.simulationOngoing = false
                 this.props.onPickingDone()
-                this.props.onActionEnd()
+                this.props.onActionEnd && this.props.onActionEnd()
                 const success1 = [(restaurant.position[0] + newCourierPosition[0]) / 2, (restaurant.position[1] + newCourierPosition[1]) / 2]
                 this.setState({success1})
             }
         }
 
         this.simulationOngoing = true
-        this.props.onActionStart()
+        this.props.onActionStart && this.props.onActionStart()
         run()
     }
 
@@ -295,14 +295,14 @@ class Map extends React.Component<any, any> {
             else if (newPath2.length === 0) {
                 this.simulationOngoing = false
                 this.props.onDeliveryDone()
-                this.props.onActionEnd()
+                this.props.onActionEnd && this.props.onActionEnd()
                 const success2 = [(customerPosition[0] + newCourierPosition[0]) / 2, (customerPosition[1] + newCourierPosition[1]) / 2]
                 this.setState({success2})
             }
         }
 
         this.simulationOngoing = true
-        this.props.onActionStart()
+        this.props.onActionStart && this.props.onActionStart()
         run()
     }
 
