@@ -6,10 +6,13 @@ import {OrderComment} from '../../../../../components/order/comment/OrderComment
 import {CourierOrderButtons} from './buttons/CourierOrderButtons'
 import {OrderLoader} from '../../../../../components/order/loader/OrderLoader'
 import {IOrderedItem} from '../../../../../components/order/orderedItemList/orderOrderedItem/IOrderedItem'
+import {ORDER_STATUS} from '../../../../../../../lib/Orders'
 
 interface CourierOrderProps {
     orderId: string
     selected: boolean
+    locked: boolean
+    orderStatus: ORDER_STATUS
     orderTime?: Date
     orderedItems?: IOrderedItem[]
     restaurantName: string
@@ -31,10 +34,18 @@ export class CourierOrder extends React.Component<CourierOrderProps, any> {
     }
 
     public render() {
-        const {orderId, selected, orderTime, orderedItems, restaurantName, comment, onDecline, loading} = this.props
+        const {orderId, selected, locked, orderStatus, orderTime, orderedItems, restaurantName, comment, onDecline, loading} = this.props
+
+        let className = 'courierOrder'
+        if (selected) {
+            className += ' selected'
+        }
+        if (locked || orderStatus === ORDER_STATUS.DONE) {
+            className += ' locked'
+        }
 
         return (
-            <Order className={`courierOrder${selected ? ' selected' : ''}`} orderId={orderId}>
+            <Order className={className} orderId={orderId}>
                 <OrderHeader
                     orderId={orderId}
                     orderTime={orderTime}
@@ -57,10 +68,14 @@ export class CourierOrder extends React.Component<CourierOrderProps, any> {
                         comment={comment}
                     />
                 }
-                <CourierOrderButtons
-                    onAccept={this.onAccept}
-                    onDecline={onDecline}
-                />
+                {
+                    orderStatus !== ORDER_STATUS.DONE &&
+                    <CourierOrderButtons
+                        orderStatus={orderStatus}
+                        onAccept={this.onAccept}
+                        onDecline={onDecline}
+                    />
+                }
                 {loading && <OrderLoader/>}
             </Order>
         )

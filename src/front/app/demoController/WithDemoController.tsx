@@ -160,7 +160,7 @@ export default (WrappedComponent: any) => {
                     this.props.dispatch(setStep(STEPS.FREE_MODE))
                 }))
 
-                return false
+                return true
             }
         }
 

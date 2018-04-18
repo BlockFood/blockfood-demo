@@ -74,6 +74,15 @@
         border-color: $mainColor;
         box-shadow: 0 0 10px rgba($mainColor, 0.2) inset;
       }
+
+      &:not(.locked):not(.selected) {
+        cursor: pointer;
+      }
+
+      &.locked {
+        opacity: 0.5;
+        pointer-events: none;
+      }
     }
   }
 }
