@@ -3,21 +3,22 @@ import {Order} from '../../../../../components/order/Order'
 import {OrderHeader} from '../../../../../components/order/header/OrderHeader'
 import {OrderOrderedItemList} from '../../../../../components/order/orderedItemList/OrderOrderedItemList'
 import {OrderComment} from '../../../../../components/order/comment/OrderComment'
-import {PendingOrderButtons} from './buttons/PendingOrderButtons'
+import {CourierOrderButtons} from './buttons/CourierOrderButtons'
 import {OrderLoader} from '../../../../../components/order/loader/OrderLoader'
 import {IOrderedItem} from '../../../../../components/order/orderedItemList/orderOrderedItem/IOrderedItem'
 
-interface PendingOrderProps {
+interface CourierOrderProps {
     orderId: string
     orderTime?: Date
-    orderedItems: IOrderedItem[]
+    orderedItems?: IOrderedItem[]
+    restaurantName: string
     comment?: string
     onAccept?: (orderId: string) => void
     onDecline?: () => void,
     loading: boolean
 }
 
-export class PendingOrder extends React.Component<PendingOrderProps, any> {
+export class CourierOrder extends React.Component<CourierOrderProps, any> {
     constructor(props: any) {
         super(props)
 
@@ -29,24 +30,33 @@ export class PendingOrder extends React.Component<PendingOrderProps, any> {
     }
 
     public render() {
-        const {orderId, orderTime, orderedItems, comment, onDecline, loading} = this.props
+        const {orderId, orderTime, orderedItems, restaurantName, comment, onDecline, loading} = this.props
 
         return (
-            <Order className='pendingOrder'>
+            <Order className='courierOrder'>
                 <OrderHeader
                     orderId={orderId}
                     orderTime={orderTime}
                 />
-                <OrderOrderedItemList
-                    orderedItems={orderedItems}
-                />
+                {
+                    orderedItems &&
+                    <OrderOrderedItemList
+                        orderedItems={orderedItems}
+                    />
+                }
+                {
+                    restaurantName &&
+                    <OrderComment
+                        comment={restaurantName}
+                    />
+                }
                 {
                     comment &&
                     <OrderComment
                         comment={comment}
                     />
                 }
-                <PendingOrderButtons
+                <CourierOrderButtons
                     onAccept={this.onAccept}
                     onDecline={onDecline}
                 />

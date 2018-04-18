@@ -6,6 +6,9 @@ import withDemoController from '../../../../demoController/WithDemoController'
 import {RESTAURANTS_BY_IDS} from '../../../../../../lib/Restaurants'
 import Map, {STEPS} from '../../../../components/map/Map'
 import MapData from '../../../../components/map/MapData'
+import {CourierOrder} from './order/CourierOrder'
+import ScrollableDiv from '../../../../components/scrollableDiv/ScrollableDiv'
+import {selectOrdersForCourier} from '../../../../state/Selectors'
 import {setCourierPosition} from '../../../../state/Actions'
 
 import './CourierOverview.scss'
@@ -26,7 +29,7 @@ class CourierOverview extends React.Component<any, any> {
     }
 
     public render() {
-        const {courierPosition} = this.props
+        const {courierPosition, orders} = this.props
 
         return (
             <div id="bf-demo-courier-overview">
@@ -43,9 +46,16 @@ class CourierOverview extends React.Component<any, any> {
                     </div>
                     <p><i className="far fa-lightbulb"/> Click on the map to modify your position</p>
                 </div>
-                <div className="right">
-
-                </div>
+                <ScrollableDiv className="right">
+                    <h3>Orders</h3>
+                    {_.map(orders, order => (
+                        <CourierOrder key={order.id}
+                                      orderId={order.id}
+                                      restaurantName={RESTAURANTS_BY_IDS[order.restaurantId].name}
+                                      onAccept={() => {}}
+                                      loading={false}/>
+                    ))}
+                </ScrollableDiv>
             </div>
         )
     }
@@ -53,7 +63,8 @@ class CourierOverview extends React.Component<any, any> {
 
 const mapStatToProps = (state: IState) => {
     return {
-        courierPosition: state.courierPosition
+        courierPosition: state.courierPosition,
+        orders: selectOrdersForCourier(state.orders)
     }
 }
 
