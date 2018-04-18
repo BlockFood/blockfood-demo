@@ -3,8 +3,8 @@ import image from '../../style/images/map/map.jpg'
 export default {
     image,
     dimensions: {
-        width: 750,
-        height: 500
+        width: 1100,
+        height: 800
     },
     graph: {
         "0": {"position": [3, 171], "connections": {"1": 88.64536084872124}},

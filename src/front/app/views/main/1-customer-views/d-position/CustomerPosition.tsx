@@ -77,7 +77,7 @@ class CustomerPosition extends React.Component<any, any> {
                                  onActionStart={this.onActionStart} onActionEnd={this.onActionEnd}/>
                         </div>
                     </div>
-                    <p><i className="far fa-lightbulb"/> Click on the map to indicate your position</p>
+                    <p><i className="far fa-lightbulb"/> Click on the map to modify your position</p>
                 </div>
                 <div className="right">
                     <button className={!canGoNext ? 'disabled' : ''} onClick={this.onSubmit}>

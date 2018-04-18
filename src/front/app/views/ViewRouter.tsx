@@ -18,7 +18,7 @@ import CustomerPosition from './main/1-customer-views/d-position/CustomerPositio
 import CustomerPayment from './main/1-customer-views/e-payment/CustomerPayment'
 import CustomerOrderList from './main/1-customer-views/f-orderList/CustomerOrderList'
 import RestaurantOverview from './main/2-restaurant-views/a-overview/RestaurantOverview'
-import CourierExample from './main/3-courier-views/CourierExample'
+import CourierOverview from './main/3-courier-views/a-overview/CourierOverview'
 import Loader from '../components/loader/Loader'
 import {setOrders} from '../state/Actions'
 
@@ -100,7 +100,7 @@ class ViewRouter extends React.Component<any, any> {
                                             <Route path={Routes.CUSTOMER_PAYMENT_ROUTE} exact component={CustomerPayment}/>
                                             <Route path={Routes.CUSTOMER_ORDER_LIST_ROUTE} exact component={CustomerOrderList}/>
                                             <Route path={Routes.RESTAURANT_OVERVIEW_ROUTE} exact component={RestaurantOverview}/>
-                                            <Route path={Routes.COURIER_EXAMPLE_ROUTE} exact component={CourierExample}/>
+                                            <Route path={Routes.COURIER_OVERVIEW_ROUTE} exact component={CourierOverview}/>
                                             <Redirect to={Routes.HOME}/>
                                         </Switch>
                                     </div>

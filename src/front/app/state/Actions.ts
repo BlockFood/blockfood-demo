@@ -11,6 +11,7 @@ export const SET_CUSTOMER_LOCATION = 'SET_CUSTOMER_LOCATION'
 export const CREATE_CUSTOMER_ORDER_IN_PROGRESS = 'CREATE_CUSTOMER_ORDER_IN_PROGRESS'
 export const SET_CUSTOMER_ORDER_IN_PROGRESS = 'SET_CUSTOMER_ORDER_IN_PROGRESS'
 export const SET_CUSTOMER_POSITION = 'SET_CUSTOMER_POSITION'
+export const SET_COURIER_POSITION = 'SET_COURIER_POSITION'
 
 export const setStep = (step: STEPS) => ({type: SET_STEP, step})
 
@@ -31,3 +32,5 @@ export const createCustomerOrderInProgress = (restaurantId: string) => ({type: C
 export const setCustomerOrderInProgress = (customerOrderInProgress: IOrderInProgress | null) => ({type: SET_CUSTOMER_ORDER_IN_PROGRESS, customerOrderInProgress})
 
 export const setCustomerPosition = (customerPosition: [number, number]) => ({type: SET_CUSTOMER_POSITION, customerPosition})
+
+export const setCourierPosition = (courierPosition: [number, number]) => ({type: SET_COURIER_POSITION, courierPosition})

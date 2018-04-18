@@ -149,8 +149,13 @@ class Map extends React.Component<any, any> {
     adjustCourierPosition() {
         const getter = () => ({position: this.state.courierPosition, buffer: this.state.courierPositionBuffer})
         const setter = (position: any, buffer: any) => {
-            const {path1, path2} = this.computePaths(this.state.customerPosition, position)
-            this.setState({courierPosition: position, courierPositionBuffer: buffer, path1, path2})
+            if (this.state.customerPosition) {
+                const {path1, path2} = this.computePaths(this.state.customerPosition, position)
+                this.setState({courierPosition: position, courierPositionBuffer: buffer, path1, path2})
+            }
+            else {
+                this.setState({courierPosition: position, courierPositionBuffer: buffer})
+            }
         }
         this.adjustPosition(getter, setter)
     }
@@ -322,8 +327,14 @@ class Map extends React.Component<any, any> {
         else if (step === STEPS.SET_COURIER_POSITION) {
             const courierPositionBuffer = this.getPositionBuffer(eventPoint)
             this.props.onCourierSet(courierPositionBuffer.length > 0 ? _.last(courierPositionBuffer) : eventPoint)
-            const {path1, path2} = this.computePaths(this.state.customerPosition, eventPoint)
-            this.setState({courierPosition: eventPoint, courierPositionBuffer, path1, path2})
+
+            if (this.state.customerPosition) {
+                const {path1, path2} = this.computePaths(this.state.customerPosition, eventPoint)
+                this.setState({courierPosition: eventPoint, courierPositionBuffer, path1, path2})
+            }
+            else {
+                this.setState({courierPosition: eventPoint, courierPositionBuffer})
+            }
         }
     }
 
