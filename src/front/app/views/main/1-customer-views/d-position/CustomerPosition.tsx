@@ -66,15 +66,18 @@ class CustomerPosition extends React.Component<any, any> {
         return (
             <div id="bf-demo-customer-position">
                 <div className="left"><GoBack onGoBack={this.onGoBack}/></div>
-                <div className="map-scroll-wrapper">
-                    <div className="map-wrapper" style={MapData.dimensions}>
-                        <Map step={STEPS.SET_CUSTOMER_POSITION} image={MapData.image} dimensions={MapData.dimensions}
-                             graph={MapData.graph}
-                             initialCustomerPosition={customerPosition}
-                             restaurants={this.restaurantForMap}
-                             onCustomerSet={this.onCustomerSet}
-                             onActionStart={this.onActionStart} onActionEnd={this.onActionEnd}/>
+                <div className="middle">
+                    <div className="map-scroll-wrapper">
+                        <div className="map-wrapper" style={MapData.dimensions}>
+                            <Map step={STEPS.SET_CUSTOMER_POSITION} image={MapData.image} dimensions={MapData.dimensions}
+                                 graph={MapData.graph}
+                                 initialCustomerPosition={customerPosition}
+                                 restaurants={this.restaurantForMap}
+                                 onCustomerSet={this.onCustomerSet}
+                                 onActionStart={this.onActionStart} onActionEnd={this.onActionEnd}/>
+                        </div>
                     </div>
+                    <p><i className="far fa-lightbulb"/> Click on the map to indicate your position</p>
                 </div>
                 <div className="right">
                     <button className={!canGoNext ? 'disabled' : ''} onClick={this.onSubmit}>
