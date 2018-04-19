@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Order } from '../common/order/Order'
-import { OrderHeader } from '../common/orderHeader/OrderHeader'
-import { OrderOrderedItemList } from '../common/orderOrderedItemList/OrderOrderedItemList'
-import { OrderTotal } from '../common/orderTotal/OrderTotal'
-import {IOrderedItem} from '../common/orderOrderedItemList/orderOrderedItem/IOrderedItem'
+import { Order } from '../../../../../components/order/Order'
+import { OrderHeader } from '../../../../../components/order/header/OrderHeader'
+import { OrderOrderedItemList } from '../../../../../components/order/orderedItemList/OrderOrderedItemList'
+import { OrderTotal } from '../../../../../components/order/total/OrderTotal'
+import {IOrderedItem} from '../../../../../components/order/orderedItemList/orderOrderedItem/IOrderedItem'
 
 import './FinishedOrder.scss'
 
@@ -16,7 +16,7 @@ interface FinishedOrderProps {
 const computeTotalPrice = (orderedItems: IOrderedItem[]) => orderedItems.reduce((total, item) => (item && item.totalItemPrice) ? total + item.totalItemPrice : total, 0)
 
 export const FinishedOrder: React.SFC<FinishedOrderProps> = ({ orderId, orderTime, orderedItems }) => (
-  <Order className='finishedOrder'>
+  <Order className='finishedOrder' orderId={orderId}>
     <OrderHeader
       orderId={orderId}
       orderTime={orderTime}

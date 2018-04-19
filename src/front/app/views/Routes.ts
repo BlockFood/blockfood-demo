@@ -17,7 +17,7 @@ export const CUSTOMER_POSITION_ROUTE = `/:demoId/${CUSTOMER_VIEW}/position/`
 export const CUSTOMER_PAYMENT_ROUTE = `/:demoId/${CUSTOMER_VIEW}/payment/`
 export const CUSTOMER_ORDER_LIST_ROUTE = `/:demoId/${CUSTOMER_VIEW}/orders/`
 export const RESTAURANT_OVERVIEW_ROUTE = `/:demoId/${RESTAURANT_VIEW}/:restaurantId/`
-export const COURIER_EXAMPLE_ROUTE = `/:demoId/${COURIER_VIEW}/`
+export const COURIER_OVERVIEW_ROUTE = `/:demoId/${COURIER_VIEW}/`
 
 const CUSTOMER_ROUTES_LIST = [
     CUSTOMER_LOCATION_ROUTE,
@@ -32,10 +32,14 @@ const RESTAURANT_ROUTES_LIST = [
     RESTAURANT_OVERVIEW_ROUTE
 ]
 
+const COURIER_ROUTES_LIST = [
+    COURIER_OVERVIEW_ROUTE
+]
+
 const ALL_ROUTES = _.flatten([
     CUSTOMER_ROUTES_LIST,
     RESTAURANT_ROUTES_LIST,
-    COURIER_EXAMPLE_ROUTE
+    COURIER_ROUTES_LIST
 ])
 
 let CUSTOMER_ORDER_LIST_PREVIOUS_ROUTE: any | null = null
@@ -77,8 +81,8 @@ export const getRouteRestaurantOverview = (restaurantId: string): string => {
     return getRouteWithDemoId(RESTAURANT_OVERVIEW_ROUTE).replace(':restaurantId', restaurantId)
 }
 
-export const getRouteCourierExample = (): string => {
-    return getRouteWithDemoId(COURIER_EXAMPLE_ROUTE)
+export const getRouteCourierOverview = (): string => {
+    return getRouteWithDemoId(COURIER_OVERVIEW_ROUTE)
 }
 
 export const getDefaultRouteCustomer = () => {
@@ -90,7 +94,7 @@ export const getDefaultRouteRestaurant = (restaurantId: string) => {
 }
 
 export const getDefaultRouteCourier = () => {
-    return getRouteCourierExample()
+    return getRouteCourierOverview()
 }
 
 export const getViewFromPathname = (pathname: string): string | null => {

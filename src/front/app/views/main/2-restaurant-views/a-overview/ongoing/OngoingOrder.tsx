@@ -1,11 +1,11 @@
 import * as React from 'react'
-import {Order} from '../common/order/Order'
-import {OrderHeader} from '../common/orderHeader/OrderHeader'
-import {OrderOrderedItemList} from '../common/orderOrderedItemList/OrderOrderedItemList'
-import {OrderComment} from '../common/orderComment/OrderComment'
+import {Order} from '../../../../../components/order/Order'
+import {OrderHeader} from '../../../../../components/order/header/OrderHeader'
+import {OrderOrderedItemList} from '../../../../../components/order/orderedItemList/OrderOrderedItemList'
+import {OrderComment} from '../../../../../components/order/comment/OrderComment'
 import {OngoingOrderButtons} from './buttons/OngoingOrderButtons'
-import {OrderLoader} from '../common/orderLoader/OrderLoader'
-import {IOrderedItem} from '../common/orderOrderedItemList/orderOrderedItem/IOrderedItem'
+import {OrderLoader} from '../../../../../components/order/loader/OrderLoader'
+import {IOrderedItem} from '../../../../../components/order/orderedItemList/orderOrderedItem/IOrderedItem'
 
 import './OngoingOrder.scss'
 
@@ -33,7 +33,7 @@ export class OngoingOrder extends React.Component<OngoingOrderProps, any> {
         const {orderId, orderTime, orderedItems, comment, loading} = this.props
 
         return (
-            <Order className='ongoingOrder'>
+            <Order className='ongoingOrder' orderId={orderId}>
                 <OrderHeader
                     orderId={orderId}
                     orderTime={orderTime}

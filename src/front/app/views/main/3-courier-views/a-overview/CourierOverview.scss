@@ -1,7 +1,7 @@
 @import '../../../../style/Variables';
 @import '../../../../style/Mixins';
 
-#bf-demo-customer-position {
+#bf-demo-courier-overview {
   position: absolute;
   top: 0;
   left: 0;
@@ -18,7 +18,7 @@
     position: relative;
     max-width: 100%;
     max-height: 100%;
-    margin: 0 35px;
+    margin: 0 35px 0 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -51,13 +51,42 @@
     }
   }
 
-  .left, .right {
-    width: 115px;
-  }
+  .right {
+    flex-grow: 1;
+    flex-shrink: 0;
+    max-width: 275px;
+    min-height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-y: auto;
+    overflow-x: hidden;
 
-  button {
-    @include btn();
-    font-size: 2em;
-    padding: 0 10px;
+    h3 {
+      color: $mainColor;
+      font-weight: bold;
+      font-size: 18px;
+      white-space: nowrap;
+    }
+
+    .order {
+      width: 100%;
+
+      &.selected {
+        border-color: $mainColor;
+        box-shadow: 0 0 10px rgba($mainColor, 0.2) inset;
+      }
+
+      &:not(.locked):not(.selected) {
+        cursor: pointer;
+      }
+
+      &.locked {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+    }
   }
 }

@@ -10,7 +10,8 @@ import {
     SET_CUSTOMER_LOCATION,
     CREATE_CUSTOMER_ORDER_IN_PROGRESS,
     SET_CUSTOMER_ORDER_IN_PROGRESS,
-    SET_CUSTOMER_POSITION
+    SET_CUSTOMER_POSITION,
+    SET_COURIER_POSITION
 } from './Actions'
 import Storage from '../utils/Storage'
 
@@ -69,6 +70,11 @@ const reduceCustomerPosition = (state: IState, action: any): IState => {
     return _.assign({}, state, {customerPosition: action.customerPosition})
 }
 
+const reduceCourierPosition = (state: IState, action: any): IState => {
+    Storage.setCourierPosition(action.courierPosition)
+    return _.assign({}, state, {courierPosition: action.courierPosition})
+}
+
 export const rootReducer = (state = INITIAL_STATE, action: any) => {
     switch (action.type) {
         case SET_STEP:
@@ -90,6 +96,8 @@ export const rootReducer = (state = INITIAL_STATE, action: any) => {
             return reduceCustomerOrderInProgress(state, action)
         case SET_CUSTOMER_POSITION:
             return reduceCustomerPosition(state, action)
+        case SET_COURIER_POSITION:
+            return reduceCourierPosition(state, action)
         default:
             return state
     }

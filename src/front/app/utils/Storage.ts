@@ -60,6 +60,14 @@ class Storage {
         return Storage._readObjectFromSessionStorage('customer-position')
     }
 
+    static setCourierPosition(courierPosition: [number, number]) {
+        Storage._writeObjectToSessionStorage('courier-position', courierPosition)
+    }
+
+    static getCourierPosition(): [number, number] {
+        return Storage._readObjectFromSessionStorage('courier-position')
+    }
+
     static clearAll() {
         _.forEach(_.keys(window.sessionStorage), key => {
             if (key.indexOf(STORAGE_PREFIX) === 0) {

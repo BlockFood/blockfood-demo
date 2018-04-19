@@ -12,6 +12,7 @@
   color: #656565;
   font-size: 14px;
   overflow: hidden;
+  box-sizing: border-box;
 
   & > *:not(:first-child) {
     margin-top: 10px;

@@ -40,7 +40,6 @@ export default (WrappedComponent: any) => {
                 step = STEPS.FREE_MODE
             }
             else {
-                // TODO: update for new design (only one view)
                 // After the customer part, each order status = 1 step,
                 // so the step is given by the current order status
                 const statusIndex = _.findIndex(_.values(ORDER_STATUS), status => status === orders[0].status)
@@ -146,15 +145,21 @@ export default (WrappedComponent: any) => {
 
                 return true
             }
-            // TODO: update for new design
-            else if (step >= STEPS.COURIER_ACCEPT_ORDER) {
+            else if (step === STEPS.COURIER_ACCEPT_ORDER) {
+                this.props.dispatch(setStep(STEPS.COURIER_NOTIFY_ORDER_PICKED))
+
+                return true
+            }
+            else if (step === STEPS.COURIER_NOTIFY_ORDER_PICKED) {
+                this.props.dispatch(setStep(STEPS.COURIER_NOTIFY_ORDER_DELIVERED))
+
+                return true
+            }
+            else {
                 this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_FREE_MODE, () => {
                     this.props.dispatch(setStep(STEPS.FREE_MODE))
                 }))
 
-                return false
-            }
-            else {
                 return true
             }
         }

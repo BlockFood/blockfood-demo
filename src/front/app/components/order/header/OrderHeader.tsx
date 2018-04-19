@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {formatTime} from '../../../../../../utils/FormatTime'
+import {formatTime} from '../../../utils/FormatTime'
 
 import './OrderHeader.scss'
 

@@ -63,7 +63,7 @@ export const MENU_CATEGORIES = {
 export const RESTAURANTS: IRestaurant[] = [
     {
         "id": "sdf454azad",
-        "name": "Maroush (Beauchamp place)",
+        "name": "Maroush",
         "category": RESTAURANT_TYPES.FAST_FOOD,
         "rate": 4.4,
         "menuItems": [
@@ -123,7 +123,7 @@ export const RESTAURANTS: IRestaurant[] = [
         }
     }, {
         "id": "a77x84gf1b",
-        "name": "Wok To Walk (Great Windmill St.)",
+        "name": "Wok To Walk",
         "rate": 3.7,
         "category": RESTAURANT_TYPES.ASIAN,
         "menuItems": [
@@ -171,7 +171,7 @@ export const RESTAURANTS: IRestaurant[] = [
         }
     }, {
         "id": "wcwr54dry",
-        "name": "Basilic and bas",
+        "name": "Basilic & Co",
         "category": RESTAURANT_TYPES.SALAD,
         "rate": 4.5,
         "menuItems": [
@@ -213,12 +213,12 @@ export const RESTAURANTS: IRestaurant[] = [
         ],
         "image": "https://ow.roocdn.com/assets/images/campaign-landing-pages/thumbs/vegetarian-fa4b679813cfac9cdeebe704f4a3e07c.jpg",
         "map": {
-            "position": [550, 165],
+            "position": [395, 277],
             "labelDirection": 'top'
         }
     }, {
         "id": "sdfsdfsxv45tyhh",
-        "name": "Sushi shop",
+        "name": "Sushi Shop",
         "category": RESTAURANT_TYPES.ASIAN,
         "rate": 5,
         "menuItems": [
@@ -261,13 +261,13 @@ export const RESTAURANTS: IRestaurant[] = [
         ],
         "image": "https://duyt4h9nfnj50.cloudfront.net/resized/39eea2f47cdd7dc388ca42dfe71b21dd-w750-bc.jpg",
         "map": {
-            "position": [628, 400],
+            "position": [110, 345],
             "labelDirection": 'bottom'
         }
     },
     {
         "id": "874ezar4cf1",
-        "name": "Cumin & Chantilly",
+        "name": "Cumin World",
         "category": RESTAURANT_TYPES.FAST_FOOD,
         "rate": 3.8,
         "menuItems": [
@@ -304,12 +304,12 @@ export const RESTAURANTS: IRestaurant[] = [
         ],
         "image": "https://duyt4h9nfnj50.cloudfront.net/resized/02210e1d2c6fdec88b7ee40604c4da46-w750-bd.jpg",
         "map": {
-            "position": [130, 345],
+            "position": [628, 400],
             "labelDirection": 'bottom'
         }
     }, {
         "id": "qdf4t4y88uuuuu",
-        "name": "pizzaria",
+        "name": "Pizz'",
         "category": RESTAURANT_TYPES.PIZZA,
         "rate": 4.1,
         "menuItems": [
@@ -340,7 +340,7 @@ export const RESTAURANTS: IRestaurant[] = [
         ],
         "image": "https://duyt4h9nfnj50.cloudfront.net/resized/6c30305e0d24fcc3c68975303ec481c5-w750-f1.jpg",
         "map": {
-            "position": [395, 277],
+            "position": [550, 165],
             "labelDirection": 'top'
         }
     }
