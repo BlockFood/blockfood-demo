@@ -160,7 +160,7 @@ class Map extends React.Component<any, any> {
         this.adjustPosition(getter, setter)
     }
 
-    getPathAdditionalPoint(target: any, idPrefix?: any) {
+    getPathAdditionalPoint(target: any, idPrefix: any = '') {
         const {graph} = this.props
 
         const projections = _.map(this.graphLines, ([line1, line2], id) => {
@@ -204,6 +204,12 @@ class Map extends React.Component<any, any> {
             const dist = distance(fromPoint.position, targetPoint.position)
             fromPoint.connections[targetPoint.id] = dist
             targetPoint.connections[fromPoint.id] = dist
+        }
+
+        const fromPointPosition = fromPoint.alreadyInGraph ? graph[fromPoint.id].position : fromPoint.position
+        const targetPointPosition = targetPoint.alreadyInGraph ? graph[targetPoint.id].position : targetPoint.position
+        if (distance(fromPointPosition, targetPointPosition) < 1) {
+            return []
         }
 
         _.forEach(graph, (node, nodeId) => {
@@ -265,7 +271,7 @@ class Map extends React.Component<any, any> {
             }
             else if (newPath1.length === 0) {
                 this.simulationOngoing = false
-                this.props.onPickingDone()
+                this.props.onPickingDone(newCourierPosition)
                 this.props.onActionEnd && this.props.onActionEnd()
                 const success1 = [(restaurant.position[0] + newCourierPosition[0]) / 2, (restaurant.position[1] + newCourierPosition[1]) / 2]
                 this.setState({success1})
@@ -294,7 +300,7 @@ class Map extends React.Component<any, any> {
             }
             else if (newPath2.length === 0) {
                 this.simulationOngoing = false
-                this.props.onDeliveryDone()
+                this.props.onDeliveryDone(newCourierPosition)
                 this.props.onActionEnd && this.props.onActionEnd()
                 const success2 = [(customerPosition[0] + newCourierPosition[0]) / 2, (customerPosition[1] + newCourierPosition[1]) / 2]
                 this.setState({success2})
@@ -335,6 +341,9 @@ class Map extends React.Component<any, any> {
             else {
                 this.setState({courierPosition: eventPoint, courierPositionBuffer})
             }
+        }
+        else if (this.allowSimulation()) {
+            this.onBtnSimulationClick()
         }
     }
 
@@ -383,6 +392,13 @@ class Map extends React.Component<any, any> {
 
         this.containerElement.addEventListener('click', this.onClick, false)
         this.props.keySpaceHelper && window.addEventListener('keydown', this.onRandomAction, false)
+
+        if (this.props.step === STEPS.SIMULATE_COURIER_TO_RESTAURANT && this.state.path1.length === 0) {
+            this.props.onPickingDone(this.state.courierPosition)
+        }
+        else if (this.props.step === STEPS.SIMULATE_COURIER_TO_CUSTOMER && this.state.path2.length === 0) {
+            this.props.onDeliveryDone(this.state.courierPosition)
+        }
     }
 
     componentDidUpdate(prevProps: any, prevState: any) {
@@ -442,10 +458,6 @@ class Map extends React.Component<any, any> {
                         </g>
                     )}
                 </svg>
-                {this.allowSimulation() && (
-                    <i className={`btn-simulation far fa-${!this.simulationOngoing ? 'play' : 'pause'}-circle`}
-                       title="(SPACE)" onClick={this.onBtnSimulationClick}/>
-                )}
                 {success1 && <Success x={success1[0]} y={success1[1]}/>}
                 {success2 && <Success x={success2[0]} y={success2[1]}/>}
             </div>

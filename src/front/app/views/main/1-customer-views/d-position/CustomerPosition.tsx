@@ -58,7 +58,10 @@ class CustomerPosition extends React.Component<any, any> {
                                  onCustomerSet={this.onCustomerSet}/>
                         </div>
                     </div>
-                    <p><i className="far fa-lightbulb"/> Click on the map to modify your position</p>
+                    <p>
+                        <i className="far fa-lightbulb"/>
+                        Click on the map to modify your position
+                    </p>
                 </div>
                 <div className="right">
                     <button onClick={this.onSubmit}>

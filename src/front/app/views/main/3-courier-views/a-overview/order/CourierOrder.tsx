@@ -18,6 +18,7 @@ interface CourierOrderProps {
     restaurantName: string
     comment?: string
     onAccept?: (orderId: string) => void
+    acceptDisabled: boolean
     onDecline?: () => void,
     loading: boolean
 }
@@ -34,7 +35,7 @@ export class CourierOrder extends React.Component<CourierOrderProps, any> {
     }
 
     public render() {
-        const {orderId, selected, locked, orderStatus, orderTime, orderedItems, restaurantName, comment, onDecline, loading} = this.props
+        const {orderId, selected, locked, orderStatus, orderTime, orderedItems, restaurantName, comment, onDecline, acceptDisabled, loading} = this.props
 
         let className = 'courierOrder'
         if (selected) {
@@ -73,6 +74,7 @@ export class CourierOrder extends React.Component<CourierOrderProps, any> {
                     <CourierOrderButtons
                         orderStatus={orderStatus}
                         onAccept={this.onAccept}
+                        acceptDisabled={acceptDisabled}
                         onDecline={onDecline}
                     />
                 }

@@ -31,10 +31,12 @@ class CourierOverview extends React.Component<any, any> {
         this.state = {
             selectedOrder,
             ongoing: !!selectedOrder,
-            loading: false
+            loading: false,
+            simulating: !!selectedOrder
         }
 
         this.onCourierSet = this.onCourierSet.bind(this)
+        this.onSimulationDone = this.onSimulationDone.bind(this)
         this.onOrderAccept = this.onOrderAccept.bind(this)
         this.onClick = this.onClick.bind(this)
     }
@@ -43,15 +45,19 @@ class CourierOverview extends React.Component<any, any> {
         this.props.dispatch(setCourierPosition(position))
     }
 
+    private onSimulationDone(position: [number, number]) {
+        this.onCourierSet(position)
+        this.setState({simulating: false})
+    }
+
     private async onOrderAccept(orderId: string) {
         if (!this.state.ongoing || orderId === this.state.selectedOrder.id) {
             const order = _.find(this.props.orders, ({id}) => id === orderId)
 
-            let isOngoingBefore = true, isOnGoingAfter = true, nextSelectedOrder = this.state.selectedOrder
+            let isOngoingBefore = true, isOnGoingAfter = true
+            let unselectedOrder = false
             let nextStatus: ORDER_STATUS
             if (order.status === ORDER_STATUS.READY) {
-                isOngoingBefore = true
-                isOnGoingAfter = true
                 nextStatus = ORDER_STATUS.PICKING
             }
             else if (order.status === ORDER_STATUS.PICKING) {
@@ -59,17 +65,18 @@ class CourierOverview extends React.Component<any, any> {
             }
             else {
                 isOnGoingAfter = false
-                nextSelectedOrder = null
+                unselectedOrder = true
                 nextStatus = ORDER_STATUS.DONE
             }
 
-            this.setState({loading: true, ongoing: isOngoingBefore})
+            this.setState({loading: true, ongoing: isOngoingBefore, simulating: isOngoingBefore})
 
             const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, nextStatus))
 
             this.props.dispatch(setOrders(orders))
             if (this.props.demoController.goToNextStep()) {
-                this.setState({selectedOrder: nextSelectedOrder, loading: false, ongoing: isOnGoingAfter})
+                const nextSelectedOrder = unselectedOrder ? null : _.find(orders, ({id}) => id === orderId)
+                this.setState({selectedOrder: nextSelectedOrder, loading: false, ongoing: isOnGoingAfter, simulating: isOnGoingAfter})
             }
         }
     }
@@ -108,25 +115,40 @@ class CourierOverview extends React.Component<any, any> {
 
     public render() {
         const {courierPosition, orders} = this.props
-        const {selectedOrder, loading, ongoing} = this.state
+        const {selectedOrder, loading, ongoing, simulating} = this.state
 
         const customerPosition =  selectedOrder ? selectedOrder.customerPosition : null
         const restaurantsForMap = selectedOrder ? this.restaurantsForMap[selectedOrder.restaurantId] : _.values(this.restaurantsForMap)
+
+        let mapStep = STEPS.SET_COURIER_POSITION
+        if (ongoing && selectedOrder.status === ORDER_STATUS.PICKING) {
+            mapStep = STEPS.SIMULATE_COURIER_TO_RESTAURANT
+        }
+        else if (ongoing && selectedOrder.status === ORDER_STATUS.DELIVERING) {
+            mapStep = STEPS.SIMULATE_COURIER_TO_CUSTOMER
+        }
 
         return (
             <div id="bf-demo-courier-overview">
                 <div className="middle">
                     <div className="map-scroll-wrapper">
                         <div className="map-wrapper" style={MapData.dimensions}>
-                            <Map step={STEPS.SET_COURIER_POSITION} image={MapData.image} dimensions={MapData.dimensions}
+                            <Map step={mapStep} image={MapData.image} dimensions={MapData.dimensions}
                                  graph={MapData.graph}
                                  initialCustomerPosition={customerPosition}
                                  initialCourierPosition={courierPosition}
                                  restaurants={restaurantsForMap}
-                                 onCourierSet={this.onCourierSet}/>
+                                 onCourierSet={this.onCourierSet}
+                                 onPickingDone={this.onSimulationDone}
+                                 onDeliveryDone={this.onSimulationDone}/>
                         </div>
                     </div>
-                    <p><i className="far fa-lightbulb"/> Click on the map to modify your position</p>
+                    <p>
+                        <i className="far fa-lightbulb"/>
+                        {!ongoing && 'Click on the map to modify your position'}
+                        {(ongoing && simulating) && 'Click on the map to move to your destination'}
+                        {(ongoing && !simulating) && 'You arrived at your destination!'}
+                    </p>
                 </div>
                 <ScrollableDiv className="right">
                     <h3>Orders</h3>
@@ -141,6 +163,7 @@ class CourierOverview extends React.Component<any, any> {
                                           locked={ongoing && !isSelected}
                                           restaurantName={RESTAURANTS_BY_IDS[order.restaurantId].name}
                                           onAccept={this.onOrderAccept}
+                                          acceptDisabled={simulating}
                                           loading={isSelected && loading}/>
                         )
                     })}

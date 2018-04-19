@@ -7,13 +7,14 @@ interface CourierOrderButtonsProps {
     orderStatus: ORDER_STATUS
     onAccept?: () => void
     onDecline?: () => void
+    acceptDisabled: boolean
 }
 
-export const CourierOrderButtons: React.SFC<CourierOrderButtonsProps> = ({ orderStatus, onAccept, onDecline}) => (
+export const CourierOrderButtons: React.SFC<CourierOrderButtonsProps> = ({ orderStatus, onAccept, acceptDisabled, onDecline}) => (
     <div className='courierOrderButtons'>
         {
             onAccept &&
-            <button onClick={onAccept} className='button validateButton'>
+            <button onClick={onAccept} className='button validateButton'  disabled={acceptDisabled}>
                 {
                     {
                         [ORDER_STATUS.READY]: 'Accept',

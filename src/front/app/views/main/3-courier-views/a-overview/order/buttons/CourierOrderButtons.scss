@@ -23,6 +23,11 @@
     background-color: $mainColor;
     border-color: $mainColor;
 
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+
     &:hover {
       background-color: darken($mainColor, 5%);
       border-color: darken($mainColor, 5%);
