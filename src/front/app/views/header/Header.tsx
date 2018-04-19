@@ -1,16 +1,17 @@
 import * as _ from 'lodash'
 import * as React from 'react'
+import {connect} from 'react-redux'
 import Select from 'react-select'
+import {IState} from '../../state/InitialState'
 import withDemoController from '../../demoController/WithDemoController'
 import {
     CUSTOMER_VIEW, RESTAURANT_VIEW, COURIER_VIEW,
     getRouteCustomerOrderList, getDefaultRouteRestaurant, getRestaurantIdFromPathname
 } from '../Routes'
 import {RESTAURANTS} from '../../../../lib/Restaurants'
+import {selectOrdersCountByRestaurants} from '../../state/Selectors'
 
 import './Header.scss'
-
-const RESTAURANTS_SELECT_VALUE = _.map(RESTAURANTS, restaurant => ({value: restaurant.id, label: restaurant.name}))
 
 class Header extends React.Component<any, any> {
     constructor(props: any) {
@@ -58,12 +59,17 @@ class Header extends React.Component<any, any> {
     }
 
     render() {
-        const {view} = this.props
+        const {view, ordersCount} = this.props
         const {type, userLabel} = this.state
 
         const hasCustomerOrderListBtn = this.props.demoController.isFreeMode() && view === CUSTOMER_VIEW
         const hasSelectRestaurant = this.props.demoController.isFreeMode() && view === RESTAURANT_VIEW
         const restaurantId = hasSelectRestaurant && getRestaurantIdFromPathname(location.pathname)
+
+        const restaurantsSelectValue = _.map(RESTAURANTS, restaurant => ({
+            value: restaurant.id,
+            label: restaurant.name + (ordersCount[restaurant.id] ? ` (${ordersCount[restaurant.id]})` : '')
+        }))
 
         return (
             <header id="bf-demo-header" className={!!view ? 'visible' : ''}>
@@ -86,7 +92,7 @@ class Header extends React.Component<any, any> {
                                 name="form-field-name"
                                 value={restaurantId}
                                 onChange={this.onRestaurantChange}
-                                options={RESTAURANTS_SELECT_VALUE}
+                                options={restaurantsSelectValue}
                                 clearable={false} searchable={false}/>
                         </div>
                     )}
@@ -97,4 +103,10 @@ class Header extends React.Component<any, any> {
     }
 }
 
-export default withDemoController(Header)
+const mapStatToProps = (state: IState) => {
+    return {
+        ordersCount: selectOrdersCountByRestaurants(state.orders)
+    }
+}
+
+export default connect(mapStatToProps)(withDemoController(Header)) as any

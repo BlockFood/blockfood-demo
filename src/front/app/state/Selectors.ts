@@ -5,6 +5,19 @@ export const selectOrdersByRestaurantId = (orders: IOrder[], restaurantId: strin
     return _.filter(orders, order => order.restaurantId === restaurantId)
 }
 
+export const selectOrdersCountByRestaurants = (orders: IOrder[]): any => {
+    const ordersCount = {}
+
+    _.forEach(orders, (order) => {
+        if ([ORDER_STATUS.SUBMITTED, ORDER_STATUS.ACCEPTED].indexOf(order.status) !== -1) {
+            ordersCount[order.restaurantId] = ordersCount[order.restaurantId] || 0
+            ordersCount[order.restaurantId]++
+        }
+    })
+
+    return ordersCount
+}
+
 export const selectOrdersForCourier = (orders: IOrder[]): IOrder[] => {
     return _.filter(orders, order => [
         ORDER_STATUS.READY,
