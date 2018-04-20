@@ -32,6 +32,7 @@ class CustomerOrder extends React.Component<any, any> {
         this.onGoBack = this.onGoBack.bind(this)
         this.addToOrderInProgress = this.addToOrderInProgress.bind(this)
         this.validate = this.validate.bind(this)
+        this.deleteOrder = this.deleteOrder.bind(this)
     }
 
     private onGoBack() {
@@ -64,14 +65,11 @@ class CustomerOrder extends React.Component<any, any> {
 
     private addToOrderInProgress = (menuItemId: string, deltaQuantity: number) => {
         const {customerOrderInProgress} = this.props
-
         let menuItemFound = false
         const newDetails = _.reduce(customerOrderInProgress.details, (newDetails: IOrderDetail[], detail) => {
             if (detail.menuItemId === menuItemId) {
                 menuItemFound = true
-
                 const newQuantity = detail.quantity + deltaQuantity
-
                 if (newQuantity > 0) {
                     const newDetail = _.assign({}, detail, {quantity: newQuantity})
                     newDetails.push(newDetail)
@@ -80,7 +78,7 @@ class CustomerOrder extends React.Component<any, any> {
             else {
                 newDetails.push(detail)
             }
-
+            
             return newDetails
         }, [])
 
@@ -90,6 +88,25 @@ class CustomerOrder extends React.Component<any, any> {
 
         const newOrderInProgress = _.assign({}, customerOrderInProgress, {details: newDetails})
 
+        this.props.dispatch(setCustomerOrderInProgress(newOrderInProgress))
+    }
+
+    private deleteOrder =(menuItemId: string, deltaQuantity: number)=>{
+        const {customerOrderInProgress} = this.props
+        const newDetails = _.reduce(customerOrderInProgress.details, (newDetails: IOrderDetail[], detail) => {
+            if (detail.menuItemId === menuItemId) {
+                const newQuantity = detail.quantity - deltaQuantity
+                if (newQuantity > 0) {
+                    const newDetail = _.assign({}, detail, {quantity: newQuantity})
+                    newDetails.push(newDetail)
+                }
+            }
+            else {
+                newDetails.push(detail)
+            }
+            return newDetails
+        }, [])
+        const newOrderInProgress = _.assign({}, customerOrderInProgress, {details: newDetails})
         this.props.dispatch(setCustomerOrderInProgress(newOrderInProgress))
     }
 
@@ -155,12 +172,12 @@ class CustomerOrder extends React.Component<any, any> {
                     <div className="list divider">
                         {!isEmpty ? _.map(customerOrderInProgress.details, detail => {
                             const menuItem = this.menuItems[detail.menuItemId]
-
                             return (
                                 <div key={menuItem.id}>
                                     <div className="name">
                                         <span>{detail.quantity} x {menuItem.name} </span>
                                         <span className="colored">{formatCurrency(menuItem.price_eth * detail.quantity)}</span>
+                                        <button className="colored" onClick={() => this.deleteOrder(menuItem.id,1)}>X</button>
                                     </div>
                                 </div>
                             )
