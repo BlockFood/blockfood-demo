@@ -101,10 +101,7 @@ export default (WrappedComponent: any) => {
 
             const currentRoute = Routes.getCurrentRoute(pathname) as string
 
-            if (step === STEPS.FREE_MODE) {
-                return true
-            }
-            else if (step === STEPS.CUSTOMER_SET_LOCATION && currentRoute === Routes.CUSTOMER_LOCATION_ROUTE) {
+            if (step === STEPS.CUSTOMER_SET_LOCATION && currentRoute === Routes.CUSTOMER_LOCATION_ROUTE) {
                 this.props.dispatch(setStep(STEPS.CUSTOMER_CHOOSE_RESTAURANT))
 
                 return true
@@ -155,11 +152,17 @@ export default (WrappedComponent: any) => {
 
                 return true
             }
-            else {
+            else if (step === STEPS.COURIER_NOTIFY_ORDER_DELIVERED) {
                 this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_FREE_MODE, () => {
                     this.props.dispatch(setStep(STEPS.FREE_MODE))
                 }))
 
+                return true
+            }
+            else if (step === STEPS.FREE_MODE) {
+                return true
+            }
+            else {
                 return true
             }
         }
