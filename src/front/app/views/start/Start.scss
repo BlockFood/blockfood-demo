@@ -11,13 +11,6 @@
   align-items: center;
   justify-content: center;
 
-  i {
-    font-size: 2em;
-    color: $mainColor;
-    animation-duration: 0.9s;
-    animation-timing-function: ease-in-out;
-  }
-
   button {
     @include btn();
     padding: 5px 25px;

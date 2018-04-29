@@ -34,7 +34,7 @@ class Start extends React.Component<any, any> {
         return (
             <div id="bf-demo-start">
                 {loading ? (
-                    <i className="fas fa-circle-notch fa-spin"/>
+                    <i className="spin-circle-loader fa-spin"/>
                 ) : (
                     <button onClick={this.onStartDemo}>Start</button>
                 )}

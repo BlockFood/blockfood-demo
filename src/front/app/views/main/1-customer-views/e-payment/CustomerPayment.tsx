@@ -58,7 +58,7 @@ class CustomerPayment extends React.Component<any, any> {
                     {done ? (
                         <i className="fas fa-check"/>
                     ) : loading ? (
-                        <i className="fas fa-circle-notch fa-spin"/>
+                        <i className="spin-circle-loader fa-spin"/>
                     ) : (
                         <i className="fas fa-dollar-sign"/>
                     )}

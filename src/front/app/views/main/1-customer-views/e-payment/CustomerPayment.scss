@@ -26,11 +26,6 @@
     &.not-a-btn {
       font-size: 2em;
       border-color: transparent;
-
-      i {
-        animation-duration: 0.9s;
-        animation-timing-function: ease-in-out;
-      }
     }
 
     &:not(.not-a-btn):hover {
