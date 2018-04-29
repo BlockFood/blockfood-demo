@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {preventDrag} from '../../utils/JSX'
-import {distance, nearestPointOnLine, splitPath, getVector} from './utils/Geometry'
+import {distance, nearestPointOnLine, splitPath, getVector} from '../../utils/Geometry'
 import Success from './success/Success'
 
 import './Map.scss'
@@ -11,16 +11,14 @@ const GraphDijkstra = require('node-dijkstra')
 
 export const STEPS = {
     SET_CUSTOMER_POSITION: 0,
-    CHOOSE_RESTAURANT: 1,
-    SET_COURIER_POSITION: 2,
-    SIMULATE_COURIER_TO_RESTAURANT: 3,
-    SIMULATE_COURIER_TO_CUSTOMER: 4
+    SET_COURIER_POSITION: 1,
+    SIMULATE_COURIER_TO_RESTAURANT: 2,
+    SIMULATE_COURIER_TO_CUSTOMER: 3
 }
 
 const SPEED = 2
 const POSITION_MARGIN = 15
 const STOP_MARGIN = 18
-const MIN_RESTAURANT_DETECTION_RANGE = 150
 
 class Map extends React.Component<any, any> {
     private simulationOngoing: any
@@ -47,7 +45,6 @@ class Map extends React.Component<any, any> {
         this.state = {
             customerPosition,
             customerPositionBuffer: [],
-            selectedRestaurantIndex: null,
             courierPosition,
             courierPositionBuffer: [],
             path1,
@@ -58,7 +55,6 @@ class Map extends React.Component<any, any> {
 
         this.onClick = this.onClick.bind(this)
         this.onBtnSimulationClick = this.onBtnSimulationClick.bind(this)
-        this.onRandomAction = this.onRandomAction.bind(this)
     }
 
     computeGraphLines(graph: any) {
@@ -93,16 +89,6 @@ class Map extends React.Component<any, any> {
     getNearestPosition(target: any) {
         const projections = _.map(this.graphLines, ([line1, line2]) => nearestPointOnLine(line1, line2, target))
         return _.minBy(projections, (projection: any) => projection.dist).position
-    }
-
-    getNearestRestaurantIndex(eventPoint: any) {
-        const {restaurants} = this.props
-
-        const nearRestaurantIndex = _.minBy(_.range(restaurants.length), index => {
-            return distance(restaurants[index].position, eventPoint)
-        }) as any
-
-        return distance(restaurants[nearRestaurantIndex].position, eventPoint) < MIN_RESTAURANT_DETECTION_RANGE ? nearRestaurantIndex : null
     }
 
     getPositionBuffer(eventPoint: any) {
@@ -323,14 +309,6 @@ class Map extends React.Component<any, any> {
             this.props.onCustomerSet(customerPositionBuffer.length > 0 ? _.last(customerPositionBuffer) : eventPoint)
             this.setState({customerPosition: eventPoint, customerPositionBuffer})
         }
-        else if (step === STEPS.CHOOSE_RESTAURANT) {
-            const nearRestaurantIndex = this.getNearestRestaurantIndex(eventPoint)
-
-            if (nearRestaurantIndex !== null) {
-                this.props.onRestaurantSelected(nearRestaurantIndex)
-                this.setState({selectedRestaurantIndex: nearRestaurantIndex})
-            }
-        }
         else if (step === STEPS.SET_COURIER_POSITION) {
             const courierPositionBuffer = this.getPositionBuffer(eventPoint)
             this.props.onCourierSet(courierPositionBuffer.length > 0 ? _.last(courierPositionBuffer) : eventPoint)
@@ -362,37 +340,10 @@ class Map extends React.Component<any, any> {
         }
     }
 
-    onRandomAction(event: any) {
-        if (event.keyCode === 32) {
-            const {step, dimensions, restaurants} = this.props
-
-            if (this.allowSimulation()) {
-                this.onBtnSimulationClick()
-            }
-            else if (step === STEPS.CHOOSE_RESTAURANT) {
-                const restaurantIndex = ((this.state.selectedRestaurantIndex || 0) + 1) % restaurants.length
-                const event = {
-                    offsetX: restaurants[restaurantIndex].position[0],
-                    offsetY: restaurants[restaurantIndex].position[1]
-                }
-                this.onClick(event)
-            }
-
-            else {
-                const event = {
-                    offsetX: _.random(0, dimensions.width),
-                    offsetY: _.random(0, dimensions.height)
-                }
-                this.onClick(event)
-            }
-        }
-    }
-
     componentDidMount() {
         this.containerElement = ReactDOM.findDOMNode(this)
 
         this.containerElement.addEventListener('click', this.onClick, false)
-        this.props.keySpaceHelper && window.addEventListener('keydown', this.onRandomAction, false)
 
         if (this.props.step === STEPS.SIMULATE_COURIER_TO_RESTAURANT && this.state.path1.length === 0) {
             this.props.onPickingDone(this.state.courierPosition)
@@ -409,12 +360,16 @@ class Map extends React.Component<any, any> {
         else if (this.state.courierPositionBuffer.length > 0 && prevState.courierPositionBuffer.length === 0) {
             this.adjustCourierPosition()
         }
-        else if (this.props.step == STEPS.SET_COURIER_POSITION && !_.isEqual(this.props.initialCustomerPosition, prevProps.initialCustomerPosition)) {
-            if (this.props.initialCustomerPosition) {
+        else if (this.props.step == STEPS.SET_COURIER_POSITION) {
+            const hasNewPaths =
+                !_.isEqual(this.props.initialCustomerPosition, prevProps.initialCustomerPosition) ||
+                !_.isEqual(this.props.restaurants, prevProps.restaurants)
+
+            if (hasNewPaths && this.props.initialCustomerPosition) {
                 const {path1, path2} = this.computePaths(this.props.initialCustomerPosition, this.state.courierPosition)
                 this.setState({customerPosition: this.props.initialCustomerPosition, path1, path2})
             }
-            else {
+            else if (hasNewPaths) {
                 this.setState({customerPosition: null, path1: null, path2: null})
             }
         }
@@ -422,14 +377,11 @@ class Map extends React.Component<any, any> {
 
     componentWillUnmount() {
         this.containerElement.removeEventListener('click', this.onClick, false)
-        this.props.keySpaceHelper && window.removeEventListener('keydown', this.onRandomAction, false)
     }
 
     render() {
         const {step, image, restaurants} = this.props
         const {customerPosition, courierPosition, path1, success1, path2, success2} = this.state
-
-        const selectedRestaurantIndex = step === STEPS.CHOOSE_RESTAURANT ? this.state.selectedRestaurantIndex : null
 
         return (
             <div className="map">
@@ -439,7 +391,7 @@ class Map extends React.Component<any, any> {
                     {path2 && <path d={this.getPathFromListOfPoints(path2)} style={{strokeDasharray: step < STEPS.SIMULATE_COURIER_TO_CUSTOMER ? 7 : 0}}/>}
                 </svg>
                 {_.map(_.isArray(restaurants) ? restaurants : [restaurants], (restaurant, index) => (
-                    <div key={index} className={`restaurant ${restaurant.labelDirection}${selectedRestaurantIndex !== null && selectedRestaurantIndex !== index ? ' not-selected' : ''}`}
+                    <div key={index} className={`restaurant ${restaurant.labelDirection}`}
                          style={{transform: `translate(${restaurant.position[0]}px, ${restaurant.position[1]}px)`}}>
                         <div className="icon"><i className="fas fa-utensils"/></div>
                         <div className="name">{restaurant.name}</div>

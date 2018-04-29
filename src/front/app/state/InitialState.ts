@@ -4,7 +4,7 @@ import {STEPS} from '../demoController/types/Steps'
 import {HELP_MESSAGES} from '../demoController/types/HelpMessages'
 import MapData from '../components/map/MapData.js'
 import Storage from '../utils/Storage'
-import {distance} from '../components/map/utils/Geometry.js'
+import {distance} from '../utils/Geometry.js'
 
 export interface IHelpMessageModal {
     id: HELP_MESSAGES,
