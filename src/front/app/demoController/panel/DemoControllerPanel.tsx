@@ -13,14 +13,16 @@ import {closeHelpMessage, toggleIsMobile} from '../../state/Actions'
 import './DemoControllerPanel.scss'
 
 class DemoControllerPanel extends React.Component<any, any> {
+    private initialStep: STEPS
+
     constructor(props: any) {
         super(props)
 
-        const {step} = this.props
+        this.initialStep = this.props.step
 
         this.state = {
-            step,
-            stepLabel: getStepLabel(step)
+            step: this.initialStep,
+            stepLabel: getStepLabel(this.initialStep)
         }
 
         this.onHelpMessageClose = this.onHelpMessageClose.bind(this)
@@ -45,8 +47,13 @@ class DemoControllerPanel extends React.Component<any, any> {
     }
 
     componentWillReceiveProps(nextProps: any) {
-        if (nextProps.step !== this.props.step && nextProps.step !== STEPS.DEMO_NOT_STARTED) {
-            this.setState({step: nextProps.step, stepLabel: getStepLabel(nextProps.step)})
+        if (nextProps.step !== this.props.step) {
+            if (nextProps.step !== STEPS.DEMO_NOT_STARTED) {
+                this.setState({step: nextProps.step, stepLabel: getStepLabel(nextProps.step)})
+            }
+            else {
+                this.initialStep = STEPS.DEMO_NOT_STARTED
+            }
         }
     }
 
@@ -56,10 +63,13 @@ class DemoControllerPanel extends React.Component<any, any> {
 
         const getStep = (minStep: STEPS, icon: string | null = null) => {
             const isCompleted = step >= minStep
+            const completedClassName = minStep <= this.initialStep ? 'initial-completed' : 'completed'
 
             return (
-                <div className={`${icon ? `icon ${icon}` : 'step'}${isCompleted ? ' completed' : ''}`}>
-                    {!icon ? minStep + 1 : null}
+                <div key={`${minStep}_${icon ? 'i' : ''}`}
+                     className={`${icon ? `icon ${icon}` : 'step'}${isCompleted ? ` ${completedClassName}` : ''}`}>
+                    <div className="circle">{!icon ? minStep + 1 : null}</div>
+                    <div className="line"/>
                 </div>
             )
         }

@@ -108,19 +108,41 @@
 
       & > * {
         position: relative;
-        transition: opacity 0.3s;
-        opacity: 1;
         user-select: none;
+        opacity: 0.3;
 
-        &:not(.completed) {
-          opacity: 0.3;
+        &.completed {
+          opacity: 1;
+          transition: opacity 1s;
+
+          .circle {
+            animation: anim-circle 1.5s forwards;
+
+            @keyframes anim-circle {
+              0% {
+                transform: scale(1);
+              }
+              20% {
+                transform: scale(1);
+              }
+              60% {
+                transform: scale(1.25);
+              }
+              100% {
+                transform: scale(1);
+              }
+            }
+          }
+        }
+
+        &.initial-completed {
+          opacity: 1;
         }
 
         &:not(:first-of-type) {
           margin-left: 25px;
 
-          &:before {
-            content: '';
+          .line {
             position: absolute;
             top: calc((100% - 4px) / 2);
             left: -25px;
@@ -133,26 +155,28 @@
       }
 
       .icon {
-        width: 60px;
-        height: 60px;
-        background: white no-repeat center;
-        background-size: 65%;
-        border-radius: 100%;
+        .circle {
+          width: 60px;
+          height: 60px;
+          background: white no-repeat center;
+          background-size: 65%;
+          border-radius: 100%;
+        }
 
-        &.customer-view {
+        &.customer-view .circle {
           background-image: url('../../style/images/customer.svg');
         }
 
-        &.restaurant-view {
+        &.restaurant-view .circle {
           background-image: url('../../style/images/restaurant.svg');
         }
 
-        &.courier-view {
+        &.courier-view .circle {
           background-image: url('../../style/images/courier.svg');
         }
       }
 
-      .step {
+      .step .circle {
         width: 30px;
         height: 30px;
         line-height: 30px;
