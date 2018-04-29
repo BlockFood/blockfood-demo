@@ -102,14 +102,14 @@ export const getViewFromPathname = (pathname: string): string | null => {
 }
 
 export const getCustomerRouteIndex = (pathname: string) => {
-    return _.findIndex(CUSTOMER_ROUTES_LIST, path => matchPath(pathname, {path, exact: true}))
+    return _.findIndex(CUSTOMER_ROUTES_LIST, path => !!matchPath(pathname, {path, exact: true}))
 }
 
-export const getCurrentRoute = (pathname: string) => {
-    return _.find(ALL_ROUTES, path => matchPath(pathname, {path, exact: true}))
+export const getCurrentRoute = (pathname: string): string => {
+    return _.find(ALL_ROUTES, path => !!matchPath(pathname, {path, exact: true})) as string
 }
 
 export const getRestaurantIdFromPathname = (pathname: string): string => {
-    const currentRestaurantRoute = _.find(RESTAURANT_ROUTES_LIST, path => matchPath(pathname, {path, exact: true}))
+    const currentRestaurantRoute = _.find(RESTAURANT_ROUTES_LIST, path => !!matchPath(pathname, {path, exact: true}))
     return (matchPath(pathname, {path: currentRestaurantRoute, exact: true}) as any).params.restaurantId
 }

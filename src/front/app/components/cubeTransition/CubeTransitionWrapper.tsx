@@ -22,7 +22,7 @@ class CubeTransitionWrapper extends React.Component<any, any> {
     }
 
     public componentDidMount() {
-        this.pages = _.toArray(ReactDOM.findDOMNode(this).querySelectorAll('.page'))
+        this.pages = _.toArray((ReactDOM.findDOMNode(this) as HTMLElement).querySelectorAll('.page'))
         this.cubeTransition = new CubeTransition(this.pages, this.props.index + 1)
 
         this.setState({mounted: true})
