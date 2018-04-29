@@ -1,6 +1,7 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import {preventDrag} from '../../utils/JSX'
 import {distance, nearestPointOnLine, splitPath, getVector} from './utils/Geometry'
 import Success from './success/Success'
 
@@ -432,7 +433,7 @@ class Map extends React.Component<any, any> {
 
         return (
             <div className="map">
-                <img src={image} alt="" draggable={false}/>
+                <img src={image} alt="" {...preventDrag}/>
                 <svg>
                     {path1 && <path d={this.getPathFromListOfPoints(path1)}/>}
                     {path2 && <path d={this.getPathFromListOfPoints(path2)} style={{strokeDasharray: step < STEPS.SIMULATE_COURIER_TO_CUSTOMER ? 7 : 0}}/>}
