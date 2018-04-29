@@ -71,11 +71,10 @@
     background-color: white;
     border-radius: 5px;
     border: 1px solid rgba($mainColor, 0.75);
+    padding: 20px;
 
     .validate-button {
       @include btn-fill();
-      width: 90%;
-      margin: 5% 5% 0;
       font-size: 1.2em;
       height: 55px;
     }
@@ -86,8 +85,8 @@
     }
 
     .divider {
-      width: 90%;
-      padding: 20px 0;
+      width: 100%;
+      padding-top: 20px;
       margin: 0 auto;
       display: flex;
       flex-flow: column;
