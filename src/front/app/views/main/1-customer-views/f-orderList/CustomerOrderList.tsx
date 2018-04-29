@@ -3,7 +3,7 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import {IState} from '../../../../state/InitialState'
 import * as Routes from '../../../Routes'
-import {RESTAURANTS_BY_IDS} from '../../../../../../lib/Restaurants'
+import {Order} from '../../../../components/order/Order'
 import GoBack from '../../../../components/goBack/GoBack'
 
 import './CustomerOrderList.scss'
@@ -28,11 +28,9 @@ class CustomerOrderList extends React.Component<any, any> {
                 <h2>My orders</h2>
                 <div className="list">
                     {_.map(orders, order => (
-                        <div key={order.id} className="item">
-                            <div className="id">Order #{order.id}</div>
-                            <div className="restaurant">{RESTAURANTS_BY_IDS[order.restaurantId].name}</div>
-                            <div className="status">{order.status}</div>
-                        </div>
+                        <Order key={order.id}
+                               order={order}
+                               showAll/>
                     ))}
                 </div>
             </div>

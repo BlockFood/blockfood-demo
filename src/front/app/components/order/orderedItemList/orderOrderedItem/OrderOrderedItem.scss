@@ -4,10 +4,8 @@
   display: flex;
   flex-flow: row nowrap;
   font-size: 14px;
-
-  & > * {
-    padding: 5px 0;
-  }
+  height: 25px;
+  line-height: 25px;
 
   .orderedItemLabel {
     flex: 1 0 60%;

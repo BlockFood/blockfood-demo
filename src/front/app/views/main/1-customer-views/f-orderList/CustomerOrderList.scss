@@ -12,34 +12,4 @@
     border-bottom: 1px solid #cecece;
     margin-bottom: 25px;
   }
-
-  .list {
-    .item {
-      border-radius: 5px;
-      border: 1px solid #cecece;
-      padding: 10px;
-
-      .id {
-        padding: 5px;
-        background-color: #999999;
-        color: white;
-        border-radius: 5px;
-      }
-
-      .status {
-        text-align: right;
-        color: $mainColor;
-        font-weight: bold;
-        font-style: italic;
-      }
-
-      & > *:not(:last-of-type) {
-        margin-bottom: 10px;
-      }
-
-      &:not(:last-of-type) {
-        margin-bottom: 20px;
-      }
-    }
-  }
 }

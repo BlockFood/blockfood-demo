@@ -10,11 +10,14 @@
   box-sizing: border-box;
 
   & > div {
-    flex: 1 1 0;
+    flex: 0 0 33%;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
     min-height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 0 50px;
 
     h3 {
       color: $mainColor;

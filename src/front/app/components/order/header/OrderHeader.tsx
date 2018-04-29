@@ -4,22 +4,22 @@ import {formatTime} from '../../../utils/FormatTime'
 import './OrderHeader.scss'
 
 interface OrderHeaderProps {
-    orderId?: string
-    orderTime?: Date
+    id?: string
+    time?: number
 }
 
-export const OrderHeader: React.SFC<OrderHeaderProps> = ({orderId, orderTime}) => (
+export const OrderHeader: React.SFC<OrderHeaderProps> = ({id, time}) => (
     <div className='orderHeader'>
         {
-            orderId &&
+            id &&
             <div className='orderHeaderLabel'>
-                Order #{orderId}
+                Order #{id}
             </div>
         }
         {
-            orderTime &&
+            time &&
             <div className='orderHeaderTime'>
-                🕑 {formatTime(orderTime)}
+                🕑 {formatTime(new Date(time))}
             </div>
         }
     </div>

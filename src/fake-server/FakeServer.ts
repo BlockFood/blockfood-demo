@@ -43,6 +43,7 @@ app.post('/api/:demoId/order', (req, res) => {
             restaurantId,
             customerPosition,
             status: ORDER_STATUS.SUBMITTED,
+            time: +new Date(),
             details
         }
 

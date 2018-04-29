@@ -10,7 +10,7 @@ import MapData from '../../../../components/map/MapData'
 import doWithMinTime from '../../../../utils/DoWithMinTime'
 import Api from '../../../../api/Api'
 import {ORDER_STATUS} from '../../../../../../lib/Orders'
-import {CourierOrder} from './order/CourierOrder'
+import {Order} from '../../../../components/order/Order'
 import ScrollableDiv from '../../../../components/scrollableDiv/ScrollableDiv'
 import {selectOrdersForCourier} from '../../../../state/Selectors'
 import {setCourierPosition, setOrders} from '../../../../state/Actions'
@@ -37,7 +37,7 @@ class CourierOverview extends React.Component<any, any> {
 
         this.onCourierSet = this.onCourierSet.bind(this)
         this.onSimulationDone = this.onSimulationDone.bind(this)
-        this.onOrderAccept = this.onOrderAccept.bind(this)
+        this.onOrderValid = this.onOrderValid.bind(this)
         this.onClick = this.onClick.bind(this)
     }
 
@@ -50,7 +50,7 @@ class CourierOverview extends React.Component<any, any> {
         this.setState({simulating: false})
     }
 
-    private async onOrderAccept(orderId: string) {
+    private async onOrderValid(orderId: string) {
         if (!this.state.ongoing || orderId === this.state.selectedOrder.id) {
             const order = _.find(this.props.orders, ({id}) => id === orderId)
 
@@ -154,17 +154,31 @@ class CourierOverview extends React.Component<any, any> {
                     <h3>Orders</h3>
                     {_.map(orders, order => {
                         const isSelected = selectedOrder ? selectedOrder.id === order.id : false
+                        const isDone = order.status === ORDER_STATUS.DONE
+
+                        const onValidLabel = {
+                            [ORDER_STATUS.READY]: 'Accept',
+                            [ORDER_STATUS.PICKING]: 'Notify picked',
+                            [ORDER_STATUS.DELIVERING]: 'Done'
+                        }[order.status]
+
+                        let className = 'courierOrder'
+                        if (isSelected) {
+                            className += ' selected'
+                        }
+                        else if ((ongoing && !isSelected) || isDone) {
+                            className += ' locked'
+                        }
 
                         return (
-                            <CourierOrder key={order.id}
-                                          orderId={order.id}
-                                          orderStatus={order.status}
-                                          selected={isSelected}
-                                          locked={ongoing && !isSelected}
-                                          restaurantName={RESTAURANTS_BY_IDS[order.restaurantId].name}
-                                          onAccept={this.onOrderAccept}
-                                          acceptDisabled={simulating}
-                                          loading={isSelected && loading}/>
+                            <Order key={order.id}
+                                   className={className}
+                                   order={order}
+                                   onValidLabel={onValidLabel}
+                                   onValid={!isDone ? this.onOrderValid : undefined}
+                                   onValidDisabled={simulating}
+                                   loading={isSelected && loading}
+                                   showRestaurantName/>
                         )
                     })}
                 </ScrollableDiv>

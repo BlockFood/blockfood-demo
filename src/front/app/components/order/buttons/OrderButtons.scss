@@ -1,39 +1,55 @@
-@import '../../../../../../style/Variables';
+@import '../../../style/Variables';
 
-.pendingOrderButtons {
+.orderButtons {
+  margin: 0 10px;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-around;
+  justify-content: flex-start;
 
   .button {
+    flex-grow: 1;
+    flex-shrink: 1;
     display: inline-block;
     text-align: center;
     vertical-align: middle;
     user-select: none;
     border: 1px solid transparent;
-    padding: 8px 30px;
+    padding: 8px 25px;
     border-radius: 2px;
-    transition: all .2s ease-in-out;
     cursor: pointer;
     color: #fff;
     outline: none;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
   }
 
   .validateButton {
     background-color: $mainColor;
     border-color: $mainColor;
 
-    &:hover {
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+
+    &:not(:disabled):hover {
       background-color: darken($mainColor, 5%);
       border-color: darken($mainColor, 5%);
     }
   }
 
   .declineButton {
+    margin-left: 15px;
     background-color: $red;
     border-color: $red;
 
-    &:hover {
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+
+    &:not(:disabled):hover {
       background-color: darken($red, 5%);
       border-color: darken($red, 5%);
     }

@@ -5,13 +5,13 @@ import {IOrderedItem} from './orderOrderedItem/IOrderedItem'
 import './OrderOrderedItemList.scss'
 
 interface OrderOrderedItemListProps {
-    orderedItems: IOrderedItem[]
+    items: IOrderedItem[]
 }
 
-export const OrderOrderedItemList: React.SFC<OrderOrderedItemListProps> = ({orderedItems}) => (
+export const OrderOrderedItemList: React.SFC<OrderOrderedItemListProps> = ({items}) => (
     <ul className='orderOrderedItems'>
         {
-            orderedItems.map(({label, count, totalItemPrice}) => (
+            items.map(({label, count, totalItemPrice}) => (
                 <OrderOrderedItem
                     key={label}
                     label={label}

@@ -17,7 +17,7 @@ export interface IOrder {
     status: ORDER_STATUS,
     restaurantId: string,
     customerPosition: [number, number],
-    orderTime?: Date,
+    time?: number,
     comment?: string,
     details: IOrderDetail[]
 }

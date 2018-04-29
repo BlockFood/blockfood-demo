@@ -5,7 +5,8 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   border-top: 1px solid rgba(101, 101, 101, 60%);
-  padding: 10px 0 5px;
+  margin: 0 10px;
+  padding-top: 15px;
 
   .orderTotalAmount {
     color: $mainColor;

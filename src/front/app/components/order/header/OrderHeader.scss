@@ -1,12 +1,19 @@
 .orderHeader {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  background-color: #ccc;
+  justify-content: space-between;
+  background-color: #999999;
   color: #fff;
   padding: 4px 5px;
 
-  .orderHeaderTime {
-    order: -1;
+  & > * {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 700;
+  }
+
+  .orderHeaderLabel {
+    max-width: 75%;
   }
 }

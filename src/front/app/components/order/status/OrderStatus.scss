@@ -1,0 +1,19 @@
+@import '../../../style/Variables';
+
+.orderStatus {
+  margin: 0 10px;
+  text-align: right;
+  color: $mainColor;
+  font-weight: bold;
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  & > span {
+    margin-top: 10px;
+    border: 2px solid $mainColor;
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
+}
