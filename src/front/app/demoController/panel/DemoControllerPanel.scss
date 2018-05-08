@@ -7,8 +7,8 @@
   left: 0;
   width: 100%;
   height: $demoControllerHeight;
-  background: $mainColor;
-  border-top: 2px solid darken($mainColor, 10%);
+  background: $altColor;
+  border-top: 2px solid darken($altColor, 10%);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,7 +37,7 @@
     justify-content: space-between;
 
     button {
-      @include btn-reverse-color();
+      @include btn-reverse-color($altColor);
       padding: 5px 10px;
       font-size: 1.3em;
 
@@ -107,6 +107,7 @@
       justify-content: center;
 
       & > * {
+        color: $altColor;
         position: relative;
         user-select: none;
         opacity: 0.3;
@@ -164,15 +165,15 @@
         }
 
         &.customer-view .circle {
-          background-image: url('../../style/images/customer.svg');
+          background-image: url('../../style/images/customer-alt-color.svg');
         }
 
         &.restaurant-view .circle {
-          background-image: url('../../style/images/restaurant.svg');
+          background-image: url('../../style/images/restaurant-alt-color.svg');
         }
 
         &.courier-view .circle {
-          background-image: url('../../style/images/courier.svg');
+          background-image: url('../../style/images/courier-alt-color.svg');
         }
       }
 
@@ -228,7 +229,7 @@
     .logo {
       width: 100px;
       height: 100px;
-      background: url('../../style/images/blockfood-logo.svg') no-repeat center right;
+      background: url('../../style/images/blockfood-logo-alt-color.svg') no-repeat center right;
       background-size: contain;
       cursor: pointer;
       transition: transform 0.3s;
