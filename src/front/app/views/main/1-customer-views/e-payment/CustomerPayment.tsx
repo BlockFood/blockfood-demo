@@ -7,7 +7,7 @@ import doWithMinTime from '../../../../utils/DoWithMinTime'
 import Api from '../../../../api/Api'
 import GoBack from '../../../../components/goBack/GoBack'
 import {setCustomerOrderInProgress, setOrders} from '../../../../state/Actions'
-import Web3 from 'web3'
+
 
 import './CustomerPayment.scss'
 
