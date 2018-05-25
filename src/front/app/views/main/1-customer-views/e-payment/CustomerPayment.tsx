@@ -7,8 +7,6 @@ import doWithMinTime from '../../../../utils/DoWithMinTime'
 import Api from '../../../../api/Api'
 import GoBack from '../../../../components/goBack/GoBack'
 import {setCustomerOrderInProgress, setOrders} from '../../../../state/Actions'
-
-
 import './CustomerPayment.scss'
 
 
@@ -20,17 +18,8 @@ class CustomerPayment extends React.Component<any, any> {
             loading: false,
             done: false
         }
-
         this.onGoBack = this.onGoBack.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
-        
-        // if(typeof web3 != 'undefined'){
-        //     console.log("Using web3 detected from external source like Metamask")
-        //     this.web3 = new Web3(web3.currentProvider)
-        //  }else{
-        //     console.log("No web3 detected. Falling back to http://localhost:8545. You should remove this fallback when you deploy live, as it's inherently insecure. Consider switching to Metamask for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask");
-        //     this.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
-        //  }
     }
 
     private onGoBack() {
