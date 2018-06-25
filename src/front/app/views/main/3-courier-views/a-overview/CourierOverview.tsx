@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {connect} from 'react-redux'
-import {IState} from '../../../../state/InitialState'
+import {IRootState} from '../../../../state/Reducers'
 import withDemoController from '../../../../demoController/WithDemoController'
 import {RESTAURANTS_BY_IDS} from '../../../../../../lib/Restaurants'
 import Map, {STEPS} from '../../../../components/map/Map'
@@ -42,7 +42,7 @@ class CourierOverview extends React.Component<any, any> {
     }
 
     private onCourierSet(position: [number, number]) {
-        this.props.dispatch(setCourierPosition(position))
+        this.props.setCourierPosition(position)
     }
 
     private onSimulationDone(position: [number, number]) {
@@ -73,7 +73,7 @@ class CourierOverview extends React.Component<any, any> {
 
             const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, nextStatus))
 
-            this.props.dispatch(setOrders(orders))
+            this.props.setOrders(orders)
             if (this.props.demoController.goToNextStep()) {
                 const nextSelectedOrder = unselectedOrder ? null : _.find(orders, ({id}) => id === orderId)
                 this.setState({selectedOrder: nextSelectedOrder, loading: false, ongoing: isOnGoingAfter, simulating: isOnGoingAfter})
@@ -187,11 +187,19 @@ class CourierOverview extends React.Component<any, any> {
     }
 }
 
-const mapStatToProps = (state: IState) => {
+const mapStatToProps = (state: IRootState) => {
     return {
-        courierPosition: state.courierPosition,
-        orders: selectOrdersForCourier(state.orders)
+        courierPosition: state.application.courierPosition,
+        orders: selectOrdersForCourier(state.application.orders)
     }
 }
 
-export default connect(mapStatToProps)(withDemoController(CourierOverview))
+const mapDispatchToProps = (dispatch:any) => {
+  return {
+    setCourierPosition: (courierPosition: [number, number]) => dispatch(setCourierPosition(courierPosition)),
+    setOrders: (orders:any) => dispatch(setOrders(orders))
+  }
+}
+
+
+export default connect(mapStatToProps,mapDispatchToProps)(withDemoController(CourierOverview))

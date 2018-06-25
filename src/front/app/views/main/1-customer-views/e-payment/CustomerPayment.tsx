@@ -1,9 +1,10 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {IState} from '../../../../state/InitialState'
+import {IRootState} from '../../../../state/Reducers'
 import withDemoController from '../../../../demoController/WithDemoController'
 import * as Routes from '../../../Routes'
 import doWithMinTime from '../../../../utils/DoWithMinTime'
+import {IOrder, IOrderInProgress} from '../../../../../../lib/Orders'
 import Api from '../../../../api/Api'
 import GoBack from '../../../../components/goBack/GoBack'
 import {setCustomerOrderInProgress, setOrders} from '../../../../state/Actions'
@@ -34,7 +35,7 @@ class CustomerPayment extends React.Component<any, any> {
 
             this.setState({loading: true})
             doWithMinTime(() => Api.createNewOrder(restaurantId, customerPosition, details)).then((orders) => {
-                this.props.dispatch(setOrders(orders))
+                this.props.setOrders(orders)
                 this.setState({loading: false, done: true})
 
                 if (this.props.demoController.goToNextStep()) {
@@ -45,7 +46,7 @@ class CustomerPayment extends React.Component<any, any> {
     }
 
     public componentWillUnmount() {
-        this.state.done && this.props.dispatch(setCustomerOrderInProgress(null))
+        this.state.done && this.props.setCustomerOrderInProgress(null)
     }
 
     public render() {
@@ -68,11 +69,18 @@ class CustomerPayment extends React.Component<any, any> {
     }
 }
 
-const mapStatToProps = (state: IState) => {
+const mapStatToProps = (state: IRootState) => {
     return {
-        customerOrderInProgress: state.customerOrderInProgress,
-        customerPosition: state.customerPosition
+        customerOrderInProgress: state.application.customerOrderInProgress,
+        customerPosition: state.application.customerPosition
     }
 }
 
-export default connect(mapStatToProps)(withDemoController(CustomerPayment))
+const mapDispatchToProps = (dispatch:any) => {
+  return {
+    setCustomerOrderInProgress: (newOrderInProgress:IOrderInProgress | null) => dispatch(setCustomerOrderInProgress(newOrderInProgress)),
+    setOrders: (orders: IOrder[]) => dispatch(setOrders(orders))
+  }
+}
+
+export default connect(mapStatToProps,mapDispatchToProps)(withDemoController(CustomerPayment))

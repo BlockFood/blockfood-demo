@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {IState} from '../state/InitialState'
+import {IRootState} from '../state/Reducers'
 import * as Routes from '../views/Routes'
 import {STEPS} from './types/Steps'
 import {RESTAURANTS_BY_IDS} from '../../../lib/Restaurants'
@@ -51,11 +51,11 @@ class DemoViewValidator extends React.Component<any, any> {
     }
 }
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: IRootState) => {
     return {
-        step: state.step,
-        customerOrderInProgress: state.customerOrderInProgress,
-        customerPosition: state.customerPosition
+        step: state.application.step,
+        customerOrderInProgress: state.application.customerOrderInProgress,
+        customerPosition: state.application.customerPosition
     }
 }
 

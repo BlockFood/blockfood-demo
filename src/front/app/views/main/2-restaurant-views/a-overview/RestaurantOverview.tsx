@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {IState} from '../../../../state/InitialState'
+import {IRootState} from '../../../../state/Reducers'
 import withDemoController from '../../../../demoController/WithDemoController'
 import {IOrder, ORDER_STATUS} from '../../../../../../lib/Orders'
 import Api from '../../../../api/Api'
@@ -31,7 +31,7 @@ class RestaurantOverview extends React.Component<any, any> {
 
             const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, ORDER_STATUS.ACCEPTED))
 
-            this.props.dispatch(setOrders(orders))
+            this.props.setOrders(orders)
             if (this.props.demoController.goToNextStep()) {
                 const newLoadingIdsAfter = _.assign({}, this.state.loadingIds)
                 delete newLoadingIdsAfter[orderId]
@@ -47,7 +47,7 @@ class RestaurantOverview extends React.Component<any, any> {
 
             const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, ORDER_STATUS.READY))
 
-            this.props.dispatch(setOrders(orders))
+            this.props.setOrders(orders)
             if (this.props.demoController.goToNextStep()) {
                 const newLoadingIdsAfter = _.assign({}, this.state.loadingIds)
                 delete newLoadingIdsAfter[orderId]
@@ -100,10 +100,10 @@ class RestaurantOverview extends React.Component<any, any> {
     }
 }
 
-const mapStatToProps = (state: IState, props: any) => {
+const mapStatToProps = (state: IRootState, props: any) => {
     const {restaurantId} = props.match.params
 
-    const orders = selectOrdersByRestaurantId(state.orders, restaurantId)
+    const orders = selectOrdersByRestaurantId(state.application.orders, restaurantId)
     const ordersByStatus: IOrder[][] = [[], [], []]
     orders.forEach((order: IOrder) => {
         if (order.status === ORDER_STATUS.SUBMITTED) {
@@ -122,4 +122,10 @@ const mapStatToProps = (state: IState, props: any) => {
     }
 }
 
-export default connect(mapStatToProps)(withDemoController(RestaurantOverview))
+const mapDispatchToProps = (dispatch:any) => {
+  return {
+    setOrders: (orders: IOrder[]) => dispatch(setOrders(orders))
+  }
+}
+
+export default connect(mapStatToProps,mapDispatchToProps)(withDemoController(RestaurantOverview))

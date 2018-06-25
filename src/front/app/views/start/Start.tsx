@@ -43,4 +43,10 @@ class Start extends React.Component<any, any> {
     }
 }
 
-export default connect()(withDemoController(Start))
+const mapDispatchToProps = (dispatch:any) => {
+  return {
+    restart: () => dispatch(restart())
+  }
+}
+
+export default connect(mapDispatchToProps)(withDemoController(Start))

@@ -1,8 +1,8 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import {connect} from 'react-redux'
+import {IRootState} from '../../state/Reducers'
 import Select from 'react-select'
-import {IState} from '../../state/InitialState'
 import withDemoController from '../../demoController/WithDemoController'
 import {
     CUSTOMER_VIEW, RESTAURANT_VIEW, COURIER_VIEW,
@@ -103,9 +103,9 @@ class Header extends React.Component<any, any> {
     }
 }
 
-const mapStatToProps = (state: IState) => {
+const mapStatToProps = (state: IRootState) => {
     return {
-        ordersCount: selectOrdersCountByRestaurants(state.orders)
+        ordersCount: selectOrdersCountByRestaurants(state.application.orders)
     }
 }
 

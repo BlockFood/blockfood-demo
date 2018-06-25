@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {IState} from '../../../../state/InitialState'
+import {IRootState} from '../../../../state/Reducers'
 import * as Routes from '../../../Routes'
 import {Order} from '../../../../components/order/Order'
 import GoBack from '../../../../components/goBack/GoBack'
@@ -38,9 +38,9 @@ class CustomerOrderList extends React.Component<any, any> {
     }
 }
 
-const mapStatToProps = (state: IState) => {
+const mapStatToProps = (state: IRootState) => {
     return {
-        orders: state.orders
+        orders: state.application.orders
     }
 }
 

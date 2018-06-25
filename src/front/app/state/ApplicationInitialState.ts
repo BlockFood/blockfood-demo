@@ -11,7 +11,7 @@ export interface IHelpMessageModal {
     onClose: () => any
 }
 
-export interface IState {
+export interface IApplicationState {
     step: STEPS,
     helpMessage: IHelpMessageModal | null,
     isMobile: boolean,
@@ -30,7 +30,7 @@ while (distance(position1, position2) < 100 && i < validPositions.length - 1) {
     position2 = validPositions[++i]
 }
 
-export const DEFAULT_STATE: IState = {
+export const DEFAULT_STATE: IApplicationState = {
     step: STEPS.DEMO_NOT_STARTED,
     helpMessage: null,
     isMobile: false,
@@ -41,7 +41,7 @@ export const DEFAULT_STATE: IState = {
     courierPosition: position2,
 }
 
-export const INITIAL_STATE: IState = _.assign({}, DEFAULT_STATE, {
+export const INITIAL_STATE: IApplicationState = _.assign({}, DEFAULT_STATE, {
     isMobile: Storage.getIsMobile() || DEFAULT_STATE.isMobile,
     customerLocation: Storage.getCustomerLocation() || DEFAULT_STATE.customerLocation,
     customerOrderInProgress: Storage.getCustomerOrderInProgress() || DEFAULT_STATE.customerOrderInProgress,

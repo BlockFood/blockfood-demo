@@ -1,6 +1,9 @@
 import * as _ from 'lodash'
+import { combineReducers } from 'redux'
 import {IOrderInProgress} from '../../../lib/Orders'
-import {DEFAULT_STATE, INITIAL_STATE, IHelpMessageModal, IState} from './InitialState'
+import * as ApplicationInitialState  from './ApplicationInitialState'
+import * as IDemoState  from './DemoInitialState'
+
 import {
     SET_STEP,
     SET_HELP_MESSAGE,
@@ -15,7 +18,7 @@ import {
 } from './Actions'
 import Storage from '../utils/Storage'
 
-const reduceStep = (state: IState, action: any): IState => {
+const reduceStep = (state: ApplicationInitialState.IApplicationState, action: any): ApplicationInitialState.IApplicationState => {
     if (action.allowBack || action.step > state.step) {
         return _.assign({}, state, {step: action.step})
     }
@@ -24,30 +27,30 @@ const reduceStep = (state: IState, action: any): IState => {
     }
 }
 
-const reduceHelpMessage = (state: IState, action: any): IState => {
-    const helpMessage: IHelpMessageModal | null = !action.close ? {
+const reduceHelpMessage = (state: ApplicationInitialState.IApplicationState, action: any): ApplicationInitialState.IApplicationState => {
+    const helpMessage: ApplicationInitialState.IHelpMessageModal | null = !action.close ? {
         id: action.id,
         onClose: action.onClose
     } : null
     return _.assign({}, state, {helpMessage})
 }
 
-const reduceIsMobile = (state: IState): IState => {
+const reduceIsMobile = (state: ApplicationInitialState.IApplicationState): ApplicationInitialState.IApplicationState => {
     const isMobile = !state.isMobile
     Storage.setIsMobile(isMobile)
     return _.assign({}, state, {isMobile})
 }
 
-const reduceOrders = (state: IState, action: any): IState => {
+const reduceOrders = (state: ApplicationInitialState.IApplicationState, action: any): ApplicationInitialState.IApplicationState => {
     return _.assign({}, state, {orders: action.orders})
 }
 
-const reduceCustomerLocation = (state: IState, action: any): IState => {
+const reduceCustomerLocation = (state: ApplicationInitialState.IApplicationState, action: any): ApplicationInitialState.IApplicationState => {
     Storage.setCustomerLocation(action.customerLocation)
     return _.assign({}, state, {customerLocation: action.customerLocation})
 }
 
-const reduceNewCustomerOrderInProgress = (state: IState, action: any): IState => {
+const reduceNewCustomerOrderInProgress = (state: ApplicationInitialState.IApplicationState, action: any): ApplicationInitialState.IApplicationState => {
     if (state.customerOrderInProgress && state.customerOrderInProgress.restaurantId === action.restaurantId) {
         return state
     }
@@ -60,22 +63,27 @@ const reduceNewCustomerOrderInProgress = (state: IState, action: any): IState =>
     }
 }
 
-const reduceCustomerOrderInProgress = (state: IState, action: any): IState => {
+const reduceCustomerOrderInProgress = (state: ApplicationInitialState.IApplicationState, action: any): ApplicationInitialState.IApplicationState => {
     Storage.setCustomerOrderInProgress(action.customerOrderInProgress)
     return _.assign({}, state, {customerOrderInProgress: action.customerOrderInProgress})
 }
 
-const reduceCustomerPosition = (state: IState, action: any): IState => {
+const reduceCustomerPosition = (state: ApplicationInitialState.IApplicationState, action: any): ApplicationInitialState.IApplicationState => {
     Storage.setCustomerPosition(action.customerPosition)
     return _.assign({}, state, {customerPosition: action.customerPosition})
 }
 
-const reduceCourierPosition = (state: IState, action: any): IState => {
+const reduceCourierPosition = (state: ApplicationInitialState.IApplicationState, action: any): ApplicationInitialState.IApplicationState => {
     Storage.setCourierPosition(action.courierPosition)
     return _.assign({}, state, {courierPosition: action.courierPosition})
 }
 
-export const rootReducer = (state = INITIAL_STATE, action: any) => {
+export interface IRootState {
+    application: ApplicationInitialState.IApplicationState,
+    demo: IDemoState.IDemoState
+}
+
+export const application = (state = ApplicationInitialState.INITIAL_STATE, action: any) => {
     switch (action.type) {
         case SET_STEP:
             return reduceStep(state, action)
@@ -87,7 +95,7 @@ export const rootReducer = (state = INITIAL_STATE, action: any) => {
             return reduceIsMobile(state)
         case RESTART:
             Storage.clearAll()
-            return DEFAULT_STATE
+            return ApplicationInitialState.DEFAULT_STATE
         case SET_CUSTOMER_LOCATION:
             return reduceCustomerLocation(state, action)
         case CREATE_CUSTOMER_ORDER_IN_PROGRESS:
@@ -102,3 +110,13 @@ export const rootReducer = (state = INITIAL_STATE, action: any) => {
             return state
     }
 }
+
+export const demo = (state = IDemoState.INITIAL_STATE, action: any) => {
+  return state
+}
+
+export const rootReducer = combineReducers({
+  application,
+  demo
+})
+​

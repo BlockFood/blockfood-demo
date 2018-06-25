@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {IState} from '../../../../state/InitialState'
+import {IRootState} from '../../../../state/Reducers'
 import * as Routes from '../../../Routes'
 import withDemoController from '../../../../demoController/WithDemoController'
 import {setCustomerLocation} from '../../../../state/Actions'
@@ -17,7 +17,9 @@ export class CustomerLocation extends React.Component<any, any> {
     }
 
     private onChange = (event: any) => {
-        this.props.dispatch(setCustomerLocation(event.target.value))
+      this.props.setCustomerLocation(event.target.value)
+
+        // this.props.dispatch(setCustomerLocation(event.target.value))
     }
 
     private _onSubmit() {
@@ -35,7 +37,8 @@ export class CustomerLocation extends React.Component<any, any> {
     }
 
     private onBrowseAll() {
-        this.props.dispatch(setCustomerLocation(''))
+        this.props.setCustomerLocation('')
+        // this.props.dispatch(setCustomerLocation(''))
         this._onSubmit()
     }
 
@@ -58,10 +61,16 @@ export class CustomerLocation extends React.Component<any, any> {
     }
 }
 
-const mapStatToProps = (state: IState) => {
+const mapStatToProps = (state: IRootState) => {
     return {
-        customerLocation: state.customerLocation
+        customerLocation: state.application.customerLocation
     }
 }
 
-export default connect(mapStatToProps)(withDemoController(CustomerLocation))
+const mapDispatchToProps = (dispatch:any) => {
+  return {
+    setCustomerLocation: (customerLocation: string) => dispatch(setCustomerLocation(customerLocation))
+  }
+}
+
+export default connect(mapStatToProps,mapDispatchToProps)(withDemoController(CustomerLocation))

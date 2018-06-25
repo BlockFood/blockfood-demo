@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {IState} from '../../../../state/InitialState'
+import {IRootState} from '../../../../state/Reducers'
 import withDemoController from '../../../../demoController/WithDemoController'
 import * as Routes from '../../../Routes'
 import {RESTAURANTS_BY_IDS} from '../../../../../../lib/Restaurants'
@@ -33,7 +33,7 @@ class CustomerPosition extends React.Component<any, any> {
     }
 
     private onCustomerSet(position: [number, number]) {
-        this.props.dispatch(setCustomerPosition(position))
+        this.props.setCustomerPosition(position)
     }
 
     private onSubmit() {
@@ -73,11 +73,17 @@ class CustomerPosition extends React.Component<any, any> {
     }
 }
 
-const mapStatToProps = (state: IState) => {
+const mapStatToProps = (state: IRootState) => {
     return {
-        customerOrderInProgress: state.customerOrderInProgress,
-        customerPosition: state.customerPosition
+        customerOrderInProgress: state.application.customerOrderInProgress,
+        customerPosition: state.application.customerPosition
     }
 }
 
-export default connect(mapStatToProps)(withDemoController(CustomerPosition))
+const mapDispatchToProps = (dispatch:any) => {
+  return {
+    setCustomerPosition: (customerPosition: [number, number]) => dispatch(setCustomerPosition(customerPosition)),
+  }
+}
+
+export default connect(mapStatToProps,mapDispatchToProps)(withDemoController(CustomerPosition))

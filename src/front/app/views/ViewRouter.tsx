@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Switch, Route, Redirect} from 'react-router'
-import {IState} from '../state/InitialState'
+import {IRootState} from '../state/Reducers'
 import Api from '../api/Api'
 import * as Routes from './Routes'
 import withDemoController from '../demoController/WithDemoController'
@@ -53,7 +53,8 @@ class ViewRouter extends React.Component<any, any> {
         if (pathname !== Routes.HOME) {
             Api.getOrders(false)
                 .then((orders) => {
-                    this.props.dispatch(setOrders(orders))
+                   this.props.setOrders(orders)
+                    //this.props.dispatch(setOrders(orders))
                     this.props.demoController.init(orders)
                     this.setState({ready: true})
                 })
@@ -116,10 +117,15 @@ class ViewRouter extends React.Component<any, any> {
     }
 }
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: IRootState) => {
     return {
-        isMobile: state.isMobile
+        isMobile: state.application.isMobile
     }
 }
 
-export default withRouter(connect(mapStateToProps)(withDemoController(ViewRouter)) as any) as any
+const mapDispatchToProps = (dispatch:any) => {
+  return {
+    setOrders: (orders:any) => dispatch(setOrders(orders))
+  }
+}
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(withDemoController(ViewRouter)) as any) as any

@@ -1,7 +1,8 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {IState} from '../../../../state/InitialState'
+import {IRootState} from '../../../../state/Reducers'
+import {IOrder, IOrderInProgress} from '../../../../../../lib/Orders'
 import withDemoController from '../../../../demoController/WithDemoController'
 import * as Routes from '../../../Routes'
 import {
@@ -90,14 +91,14 @@ class CustomerOrder extends React.Component<any, any> {
 
         const newOrderInProgress = _.assign({}, customerOrderInProgress, {details: newDetails})
 
-        this.props.dispatch(setCustomerOrderInProgress(newOrderInProgress))
+        this.props.setCustomerOrderInProgress(newOrderInProgress)
     }
 
     public componentDidMount() {
         const {customerOrderInProgress} = this.props
 
         if (customerOrderInProgress.restaurantId !== this.restaurant.id) {
-            this.props.dispatch(createCustomerOrderInProgress(this.restaurant.id))
+            this.props.createCustomerOrderInProgress(this.restaurant.id)
         }
     }
 
@@ -190,10 +191,17 @@ class CustomerOrder extends React.Component<any, any> {
     }
 }
 
-const mapStatToProps = (state: IState) => {
+const mapStatToProps = (state: IRootState) => {
     return {
-        customerOrderInProgress: state.customerOrderInProgress
+        customerOrderInProgress: state.application.customerOrderInProgress
     }
 }
 
-export default connect(mapStatToProps)(withDemoController(CustomerOrder))
+const mapDispatchToProps = (dispatch:any) => {
+  return {
+    setCustomerOrderInProgress: (newOrderInProgress:IOrderInProgress | null) => dispatch(setCustomerOrderInProgress(newOrderInProgress)),
+    createCustomerOrderInProgress:  (restaurantId: string) => dispatch(restaurantId)
+  }
+}
+
+export default connect(mapStatToProps,mapDispatchToProps)(withDemoController(CustomerOrder))

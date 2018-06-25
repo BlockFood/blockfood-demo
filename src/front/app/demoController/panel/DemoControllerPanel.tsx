@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {IState} from '../../state/InitialState'
+import {IRootState} from '../../state/Reducers'
 import {ALL_VIEWS, CUSTOMER_VIEW, RESTAURANT_VIEW, COURIER_VIEW} from '../../views/Routes'
 import {getHelpMessageContent} from '../types/HelpMessages'
 import {STEPS, getStepLabel} from '../types/Steps'
@@ -61,12 +61,18 @@ class DemoControllerPanel extends React.Component<any, any> {
         const {view, demoController, helpMessage, isMobile} = this.props
         const {step, stepLabel} = this.state
 
-        const getStep = (minStep: STEPS, icon: string | null = null) => {
+        const getStep = (minStep: STEPS, icon: string | null = null, clickable=false) => {
             const isCompleted = step >= minStep
             const completedClassName = minStep <= this.initialStep ? 'initial-completed' : 'completed'
 
+const go = () => {
+  if (clickable) {
+    this.props.demoController.switchView(icon)
+  }
+}
             return (
                 <div key={`${minStep}_${icon ? 'i' : ''}`}
+                  onClick={go}
                      className={`${icon ? `icon ${icon}` : 'step'}${isCompleted ? ` ${completedClassName}` : ''}`}>
                     <div className="circle">{!icon ? minStep + 1 : null}</div>
                     <div className="line"/>
@@ -111,16 +117,11 @@ class DemoControllerPanel extends React.Component<any, any> {
                                 {getStep(STEPS.COURIER_NOTIFY_ORDER_DELIVERED)}
                             </React.Fragment>
                         ) : (
-                            <React.Fragment>
-                                {_.map(ALL_VIEWS, currentView => {
-                                    const isActive = currentView === view
-                                    const className = `icon btn ${currentView}${isActive ? ' active' : ''}`
-
-                                    return (
-                                        <div key={currentView} className={className} onClick={this.switchView}/>
-                                    )
-                                })}
-                            </React.Fragment>
+                          <React.Fragment>
+                              {getStep(STEPS.CUSTOMER_SET_LOCATION, CUSTOMER_VIEW, true)}
+                              {getStep(STEPS.RESTAURANT_ACCEPT_ORDER, RESTAURANT_VIEW, true)}
+                              {getStep(STEPS.COURIER_ACCEPT_ORDER, COURIER_VIEW, true)}
+                          </React.Fragment>
                         )}
                     </div>
                 </div>
@@ -137,11 +138,11 @@ class DemoControllerPanel extends React.Component<any, any> {
     }
 }
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: IRootState) => {
     return {
-        step: state.step,
-        helpMessage: state.helpMessage,
-        isMobile: state.isMobile
+        step: state.application.step,
+        helpMessage: state.application.helpMessage,
+        isMobile: state.application.isMobile
     }
 }
 
