@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import Http from 'axios'
 import { combineReducers } from 'redux'
-import {IOrderInProgress} from '../../../lib/Orders'
+import {IOrderInProgress,IOrder} from '../../../lib/Orders'
 import * as ApplicationInitialState  from './ApplicationInitialState'
 import * as IDemoState  from './DemoInitialState'
 
@@ -21,7 +21,9 @@ import {
     START_DEMO,
     GET_ORDERS,
     CREATE_NEW_ORDER,
-    UPDATE_ORDER_STATUS
+    UPDATE_ORDER_STATUS,
+    ISFETCHING,
+    FETCHED
 } from './Actions'
 import Storage from '../utils/Storage'
 
@@ -121,26 +123,37 @@ export const application = (state = ApplicationInitialState.INITIAL_STATE, actio
 }
 
 const init = (state: IDemoState.IDemoState,action:any):IDemoState.IDemoState => {
-  console.log(action.demoId)
   return _.assign({},state,{demoId: action.demoId})
 }
 
 const getDemoId = (state: IDemoState.IDemoState,action:any) => {
+  return(state.demoId)
 }
 
 const startDemo = (state: IDemoState.IDemoState,action:any) => {
 }
 
 const getOrders = (state: IDemoState.IDemoState,action:any) => {
-  // return Http.get(`${API_REMOTE_URL}/api/${this.demoId}/orders`)
-  //     .then(({data: orders}: any) => orders as IOrder[])
-  //     .catch((err) => defaultErrorHandler ? this.onError() : Promise.reject(err))
+  return (dispatch) => {
+    dispatch(isfetching)
+    return Http.post(`${API_REMOTE_URL}/api/start-demo`).
+    .then(({data: orders}: any) => orders as IOrder[])
+    .catch((err) => defaultErrorHandler ? this.onError() : Promise.reject(err))
+  }
 }
 
 const createNewOrder = (state: IDemoState.IDemoState,action:any) => {
 }
 
 const updateOrderStatus = (state: IDemoState.IDemoState,action:any) => {
+}
+
+const isfetching = (state: IDemoState.IDemoState,action:any) => {
+  return _.assign({},state,{demoId: true})
+}
+
+const fetched = (state: IDemoState.IDemoState,action:any) => {
+  return _.assign({},state,{demoId: false})
 }
 
 export const demo = (state = IDemoState.INITIAL_STATE, action: any) => {

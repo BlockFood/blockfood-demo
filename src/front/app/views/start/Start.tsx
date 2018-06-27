@@ -25,7 +25,7 @@ class Start extends React.Component<any, any> {
     }
 
     componentDidMount() {
-        this.props.dispatch(restart())
+        this.props.restart()
     }
 
     render() {
