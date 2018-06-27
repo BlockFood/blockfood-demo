@@ -20,7 +20,7 @@ import CustomerOrderList from './main/1-customer-views/f-orderList/CustomerOrder
 import RestaurantOverview from './main/2-restaurant-views/a-overview/RestaurantOverview'
 import CourierOverview from './main/3-courier-views/a-overview/CourierOverview'
 import Loader from '../components/loader/Loader'
-import {setOrders} from '../state/Actions'
+import {setOrders,init} from '../state/Actions'
 
 class ViewRouter extends React.Component<any, any> {
     constructor(props: any) {
@@ -28,14 +28,12 @@ class ViewRouter extends React.Component<any, any> {
 
         const {pathname} = this.props.location
         const demoId = pathname !== Routes.HOME ? pathname.split('/')[1] : null
-
+        this.props.init(demoId,this.onError.bind(this))
         Api.init(demoId, this.onError.bind(this))
-
         this.state = {
             error: false,
             ready: false
         }
-
         this.onRestart = this.onRestart.bind(this)
     }
 
@@ -70,6 +68,7 @@ class ViewRouter extends React.Component<any, any> {
         else {
             this.setState({ready: true})
         }
+        console.log(this.props)
     }
 
     render() {
@@ -125,7 +124,8 @@ const mapStateToProps = (state: IRootState) => {
 
 const mapDispatchToProps = (dispatch:any) => {
   return {
-    setOrders: (orders:any) => dispatch(setOrders(orders))
+    setOrders: (orders:any) => dispatch(setOrders(orders)),
+    init: (demoId: string,onError: () => any) => dispatch(init(demoId,onError))
   }
 }
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(withDemoController(ViewRouter)) as any) as any

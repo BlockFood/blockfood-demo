@@ -1,4 +1,5 @@
 import * as _ from 'lodash'
+import Http from 'axios'
 import { combineReducers } from 'redux'
 import {IOrderInProgress} from '../../../lib/Orders'
 import * as ApplicationInitialState  from './ApplicationInitialState'
@@ -14,9 +15,17 @@ import {
     CREATE_CUSTOMER_ORDER_IN_PROGRESS,
     SET_CUSTOMER_ORDER_IN_PROGRESS,
     SET_CUSTOMER_POSITION,
-    SET_COURIER_POSITION
+    SET_COURIER_POSITION,
+    INIT,
+    GET_DEMO_ID,
+    START_DEMO,
+    GET_ORDERS,
+    CREATE_NEW_ORDER,
+    UPDATE_ORDER_STATUS
 } from './Actions'
 import Storage from '../utils/Storage'
+
+const API_REMOTE_URL = 'http://localhost:4242'
 
 const reduceStep = (state: ApplicationInitialState.IApplicationState, action: any): ApplicationInitialState.IApplicationState => {
     if (action.allowBack || action.step > state.step) {
@@ -111,8 +120,46 @@ export const application = (state = ApplicationInitialState.INITIAL_STATE, actio
     }
 }
 
+const init = (state: IDemoState.IDemoState,action:any):IDemoState.IDemoState => {
+  console.log(action.demoId)
+  return _.assign({},state,{demoId: action.demoId})
+}
+
+const getDemoId = (state: IDemoState.IDemoState,action:any) => {
+}
+
+const startDemo = (state: IDemoState.IDemoState,action:any) => {
+}
+
+const getOrders = (state: IDemoState.IDemoState,action:any) => {
+  // return Http.get(`${API_REMOTE_URL}/api/${this.demoId}/orders`)
+  //     .then(({data: orders}: any) => orders as IOrder[])
+  //     .catch((err) => defaultErrorHandler ? this.onError() : Promise.reject(err))
+}
+
+const createNewOrder = (state: IDemoState.IDemoState,action:any) => {
+}
+
+const updateOrderStatus = (state: IDemoState.IDemoState,action:any) => {
+}
+
 export const demo = (state = IDemoState.INITIAL_STATE, action: any) => {
-  return state
+  switch (action.type) {
+      case INIT:
+          return init(state, action)
+      case GET_DEMO_ID:
+          return getDemoId(state, action)
+      case START_DEMO:
+          return startDemo(state, action)
+      case GET_ORDERS:
+          return getOrders(state,action)
+      case CREATE_NEW_ORDER:
+          return createNewOrder(state, action)
+      case UPDATE_ORDER_STATUS:
+          return updateOrderStatus(state, action)
+      default:
+          return state
+  }
 }
 
 export const rootReducer = combineReducers({
