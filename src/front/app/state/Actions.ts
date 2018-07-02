@@ -1,6 +1,9 @@
 import {STEPS} from '../demoController/types/Steps'
 import {HELP_MESSAGES} from '../demoController/types/HelpMessages'
 import {IOrder, IOrderInProgress,IOrderDetail,ORDER_STATUS} from '../../../lib/Orders'
+import * as IDemoState  from './DemoInitialState'
+const API_REMOTE_URL = 'http://localhost:4242'
+import Http from 'axios'
 
 //ACTION APPLICATION
 
@@ -38,21 +41,44 @@ export const setCustomerPosition = (customerPosition: [number, number]) => ({typ
 export const setCourierPosition = (courierPosition: [number, number]) => ({type: SET_COURIER_POSITION, courierPosition})
 
 //ACTION DEMO
-export const ISFETCHING = "ISFETCHING"
+export const IS_FETCHING = "IS_FETCHING"
 export const FETCHED = "FETCHED"
-
 export const INIT = 'INIT'
 export const GET_DEMO_ID = 'GET_DEMO_ID'
 export const START_DEMO = 'START_DEMO'
-export const GET_ORDERS = 'GET_ORDERS'
 export const CREATE_NEW_ORDER = 'CREATE_NEW_ORDER'
 export const UPDATE_ORDER_STATUS = 'UPDATE_ORDER_STATUS'
+export const GET_ORDERS = 'GET_ORDERS'
 
-export const isfetching = () =>({type: ISFETCHING})
+export const isfetching = () =>({type: IS_FETCHING})
 export const fetched   = () =>({type: FETCHED})
 export const init = (demoId: string,onError: () => any) => ({type: INIT,demoId,onError})
 export const getDemoId = () => ({type: GET_DEMO_ID})
-export const startDemo = () => ({type: START_DEMO})
-export const getOrders = (defaultErrorHandler: boolean) => ({type: GET_ORDERS})
+// export const startDemo = () => ({type: START_DEMO})
 export const createNewOrder = (restaurantId:string, customerPosition: [number][number],details: IOrderDetail[]) => ({type: CREATE_NEW_ORDER})
 export const updateOrderStatus = (orderId: string, status: ORDER_STATUS) => ({type: UPDATE_ORDER_STATUS})
+export const getOrders = (demoId:string) => {
+  return (dispatch:any) => {
+    dispatch(isfetching)
+    Http.get(`${API_REMOTE_URL}/api/${demoId}/orders`)
+        .then(({data: orders}: any) =>
+         setOrders(orders))
+        .catch((err) => {
+        if (!err || !err.response || !err.response.status || err.response.status !== 403) {
+        console.error(err)}
+        dispatch(fetched)
+    })
+  }
+}
+export const startDemo = (demoId:string) => {
+  return (dispatch:any) => {
+    dispatch(isfetching)
+    Http.post(`${API_REMOTE_URL}/api/start-demo`)
+        .then(({data: demo}: any) => {
+            demoId = demo
+            return demo
+        })
+        .catch()
+    dispatch(fetched)
+  }
+}

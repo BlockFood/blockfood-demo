@@ -14,7 +14,7 @@ export interface IDemoState {
 export const DEFAULT_STATE: IDemoState = {
     demoId: '',
     onError: () => {return null},
-    fetching: false;
+    fetching: false
 }
 
 export const INITIAL_STATE: IDemoState = _.assign({}, DEFAULT_STATE, {

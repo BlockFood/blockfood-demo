@@ -19,11 +19,11 @@ import {
     INIT,
     GET_DEMO_ID,
     START_DEMO,
-    GET_ORDERS,
     CREATE_NEW_ORDER,
     UPDATE_ORDER_STATUS,
-    ISFETCHING,
-    FETCHED
+    IS_FETCHING,
+    FETCHED,
+    GET_ORDERS
 } from './Actions'
 import Storage from '../utils/Storage'
 
@@ -130,17 +130,9 @@ const getDemoId = (state: IDemoState.IDemoState,action:any) => {
   return(state.demoId)
 }
 
-const startDemo = (state: IDemoState.IDemoState,action:any) => {
-}
-
-const getOrders = (state: IDemoState.IDemoState,action:any) => {
-  return (dispatch) => {
-    dispatch(isfetching)
-    return Http.post(`${API_REMOTE_URL}/api/start-demo`).
-    .then(({data: orders}: any) => orders as IOrder[])
-    .catch((err) => defaultErrorHandler ? this.onError() : Promise.reject(err))
-  }
-}
+// const startDemo = (state: IDemoState.IDemoState,action:any) => {
+//
+// }
 
 const createNewOrder = (state: IDemoState.IDemoState,action:any) => {
 }
@@ -158,14 +150,14 @@ const fetched = (state: IDemoState.IDemoState,action:any) => {
 
 export const demo = (state = IDemoState.INITIAL_STATE, action: any) => {
   switch (action.type) {
+      case IS_FETCHING:
+        return isfetching(state,action)
+      case FETCHED:
+        return fetched(state,action)
       case INIT:
           return init(state, action)
       case GET_DEMO_ID:
           return getDemoId(state, action)
-      case START_DEMO:
-          return startDemo(state, action)
-      case GET_ORDERS:
-          return getOrders(state,action)
       case CREATE_NEW_ORDER:
           return createNewOrder(state, action)
       case UPDATE_ORDER_STATUS:
