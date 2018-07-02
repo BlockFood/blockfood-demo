@@ -26,10 +26,9 @@ import {setOrders,init,getOrders} from '../state/Actions'
 class ViewRouter extends React.Component<any, any> {
     constructor(props: any) {
         super(props)
-
         const {pathname} = this.props.location
         const demoId = pathname !== Routes.HOME ? pathname.split('/')[1] : null
-        this.props.init(demoId,this.onError.bind(this))
+        // this.props.init(demoId,this.onError.bind(this))
         Api.init(demoId, this.onError.bind(this))
         this.state = {
             error: false,
@@ -121,6 +120,7 @@ class ViewRouter extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state: IRootState) => {
+  console.log(state.demo.demoId)
     return {
         isMobile: state.application.isMobile,
         demoId: state.demo.demoId,

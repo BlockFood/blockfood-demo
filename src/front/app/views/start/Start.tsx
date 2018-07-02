@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import Api from '../../api/Api'
 import doWithMinTime from '../../utils/DoWithMinTime'
 import withDemoController from '../../demoController/WithDemoController'
-import {restart} from '../../state/Actions'
+import {restart,startDemo} from '../../state/Actions'
 
 import './Start.scss'
 
@@ -14,13 +14,12 @@ class Start extends React.Component<any, any> {
         this.state = {
             loading: false
         }
-
+        this.props.startDemo()
         this.onStartDemo = this.onStartDemo.bind(this)
     }
 
     onStartDemo() {
         this.setState({loading: true})
-
         doWithMinTime(() => Api.startDemo()).then(() => this.props.demoController.start())
     }
 
@@ -45,8 +44,9 @@ class Start extends React.Component<any, any> {
 
 const mapDispatchToProps = (dispatch:any) => {
   return {
-    restart: () => dispatch(restart())
+    restart: () => dispatch(restart()),
+    startDemo: () => dispatch(startDemo())
   }
 }
 
-export default connect(mapDispatchToProps)(withDemoController(Start))
+export default connect(null,mapDispatchToProps)(withDemoController(Start))

@@ -44,6 +44,7 @@ export const setCourierPosition = (courierPosition: [number, number]) => ({type:
 export const IS_FETCHING = "IS_FETCHING"
 export const FETCHED = "FETCHED"
 export const INIT = 'INIT'
+export const SET_INIT = 'SET_INIT'
 export const GET_DEMO_ID = 'GET_DEMO_ID'
 export const START_DEMO = 'START_DEMO'
 export const CREATE_NEW_ORDER = 'CREATE_NEW_ORDER'
@@ -53,6 +54,7 @@ export const GET_ORDERS = 'GET_ORDERS'
 export const isfetching = () =>({type: IS_FETCHING})
 export const fetched   = () =>({type: FETCHED})
 export const init = (demoId: string,onError: () => any) => ({type: INIT,demoId,onError})
+export const setInit = (demoId: string) => ({type: SET_INIT,demoId})
 export const getDemoId = () => ({type: GET_DEMO_ID})
 // export const startDemo = () => ({type: START_DEMO})
 export const createNewOrder = (restaurantId:string, customerPosition: [number][number],details: IOrderDetail[]) => ({type: CREATE_NEW_ORDER})
@@ -70,15 +72,18 @@ export const getOrders = (demoId:string) => {
     })
   }
 }
-export const startDemo = (demoId:string) => {
+
+export const startDemo = () => {
   return (dispatch:any) => {
     dispatch(isfetching)
     Http.post(`${API_REMOTE_URL}/api/start-demo`)
         .then(({data: demo}: any) => {
-            demoId = demo
-            return demo
+            dispatch(setInit(demo))
         })
-        .catch()
-    dispatch(fetched)
-  }
+        .catch((err) => {
+          if (!err || !err.response || !err.response.status || err.response.status !== 403) {
+            console.error(err)
+          }
+        })
+    }
 }

@@ -17,6 +17,7 @@ import {
     SET_CUSTOMER_POSITION,
     SET_COURIER_POSITION,
     INIT,
+    SET_INIT,
     GET_DEMO_ID,
     START_DEMO,
     CREATE_NEW_ORDER,
@@ -126,6 +127,10 @@ const init = (state: IDemoState.IDemoState,action:any):IDemoState.IDemoState => 
   return _.assign({},state,{demoId: action.demoId})
 }
 
+const setInit = (state: IDemoState.IDemoState,action:any):IDemoState.IDemoState => {
+  return _.assign({},state,{demoId: action.demoId})
+}
+
 const getDemoId = (state: IDemoState.IDemoState,action:any) => {
   return(state.demoId)
 }
@@ -156,6 +161,8 @@ export const demo = (state = IDemoState.INITIAL_STATE, action: any) => {
         return fetched(state,action)
       case INIT:
           return init(state, action)
+      case SET_INIT:
+          return setInit(state, action)
       case GET_DEMO_ID:
           return getDemoId(state, action)
       case CREATE_NEW_ORDER:
