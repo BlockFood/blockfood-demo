@@ -41,8 +41,6 @@ export const setCustomerPosition = (customerPosition: [number, number]) => ({typ
 export const setCourierPosition = (courierPosition: [number, number]) => ({type: SET_COURIER_POSITION, courierPosition})
 
 //ACTION DEMO
-export const IS_FETCHING = "IS_FETCHING"
-export const FETCHED = "FETCHED"
 export const INIT = 'INIT'
 export const SET_INIT = 'SET_INIT'
 export const GET_DEMO_ID = 'GET_DEMO_ID'
@@ -51,35 +49,57 @@ export const CREATE_NEW_ORDER = 'CREATE_NEW_ORDER'
 export const UPDATE_ORDER_STATUS = 'UPDATE_ORDER_STATUS'
 export const GET_ORDERS = 'GET_ORDERS'
 
-export const isfetching = () =>({type: IS_FETCHING})
-export const fetched   = () =>({type: FETCHED})
 export const init = (demoId: string,onError: () => any) => ({type: INIT,demoId,onError})
 export const setInit = (demoId: string) => ({type: SET_INIT,demoId})
 export const getDemoId = () => ({type: GET_DEMO_ID})
+
 // export const startDemo = () => ({type: START_DEMO})
-export const createNewOrder = (restaurantId:string, customerPosition: [number][number],details: IOrderDetail[]) => ({type: CREATE_NEW_ORDER})
-export const updateOrderStatus = (orderId: string, status: ORDER_STATUS) => ({type: UPDATE_ORDER_STATUS})
+// export const createNewOrder = (restaurantId:string, customerPosition: [number][number],details: IOrderDetail[]) => ({type: CREATE_NEW_ORDER})
+// export const updateOrderStatus = (orderId: string, status: ORDER_STATUS) => ({type: UPDATE_ORDER_STATUS})
+
 export const getOrders = (demoId:string) => {
   return (dispatch:any) => {
-    dispatch(isfetching)
     Http.get(`${API_REMOTE_URL}/api/${demoId}/orders`)
         .then(({data: orders}: any) =>
          setOrders(orders))
         .catch((err) => {
         if (!err || !err.response || !err.response.status || err.response.status !== 403) {
         console.error(err)}
-        dispatch(fetched)
     })
   }
 }
 
 export const startDemo = () => {
   return (dispatch:any) => {
-    dispatch(isfetching)
     Http.post(`${API_REMOTE_URL}/api/start-demo`)
         .then(({data: demo}: any) => {
             dispatch(setInit(demo))
         })
+        .catch((err) => {
+          if (!err || !err.response || !err.response.status || err.response.status !== 403) {
+            console.error(err)
+          }
+        })
+    }
+}
+
+export const createNewOrder = (demoId:string,restaurantId: string, customerPosition: [number, number], details: IOrderDetail[]) =>{
+    const orderData = {restaurantId, customerPosition, details}
+    return (dispatch:any) => {
+    Http.post(`${API_REMOTE_URL}/api/${demoId}/order`, orderData)
+        .then(({data: orders}: any) => dispatch(setOrders(orders)))
+        .catch((err) => {
+          if (!err || !err.response || !err.response.status || err.response.status !== 403) {
+            console.error(err)
+          }
+        })
+    }
+}
+
+export const updateOrderStatus = (demoId:string,orderId: string, status: ORDER_STATUS) => {
+    return (dispatch:any) => {
+    Http.put(`${API_REMOTE_URL}/api/${demoId}/order/${orderId}`, {status})
+        .then(({data: orders}: any) => dispatch(setOrders(orders)))
         .catch((err) => {
           if (!err || !err.response || !err.response.status || err.response.status !== 403) {
             console.error(err)

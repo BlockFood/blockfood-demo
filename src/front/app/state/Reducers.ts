@@ -22,8 +22,6 @@ import {
     START_DEMO,
     CREATE_NEW_ORDER,
     UPDATE_ORDER_STATUS,
-    IS_FETCHING,
-    FETCHED,
     GET_ORDERS
 } from './Actions'
 import Storage from '../utils/Storage'
@@ -135,40 +133,14 @@ const getDemoId = (state: IDemoState.IDemoState,action:any) => {
   return(state.demoId)
 }
 
-// const startDemo = (state: IDemoState.IDemoState,action:any) => {
-//
-// }
-
-const createNewOrder = (state: IDemoState.IDemoState,action:any) => {
-}
-
-const updateOrderStatus = (state: IDemoState.IDemoState,action:any) => {
-}
-
-const isfetching = (state: IDemoState.IDemoState,action:any) => {
-  return _.assign({},state,{demoId: true})
-}
-
-const fetched = (state: IDemoState.IDemoState,action:any) => {
-  return _.assign({},state,{demoId: false})
-}
-
 export const demo = (state = IDemoState.INITIAL_STATE, action: any) => {
   switch (action.type) {
-      case IS_FETCHING:
-        return isfetching(state,action)
-      case FETCHED:
-        return fetched(state,action)
       case INIT:
           return init(state, action)
       case SET_INIT:
           return setInit(state, action)
       case GET_DEMO_ID:
           return getDemoId(state, action)
-      case CREATE_NEW_ORDER:
-          return createNewOrder(state, action)
-      case UPDATE_ORDER_STATUS:
-          return updateOrderStatus(state, action)
       default:
           return state
   }
