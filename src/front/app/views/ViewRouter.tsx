@@ -120,7 +120,6 @@ class ViewRouter extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state: IRootState) => {
-  console.log(state.demo.demoId)
     return {
         isMobile: state.application.isMobile,
         demoId: state.demo.demoId,
