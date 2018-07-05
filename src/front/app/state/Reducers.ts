@@ -126,11 +126,12 @@ const init = (state: IDemoState.IDemoState,action:any):IDemoState.IDemoState => 
 }
 
 const setInit = (state: IDemoState.IDemoState,action:any):IDemoState.IDemoState => {
+  console.log('action demoId : ' ,action.demoId)
   return _.assign({},state,{demoId: action.demoId})
 }
 
 const getDemoId = (state: IDemoState.IDemoState,action:any) => {
-  return(state.demoId)
+  return(state)
 }
 
 export const demo = (state = IDemoState.INITIAL_STATE, action: any) => {

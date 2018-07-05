@@ -36,7 +36,7 @@ class CustomerPayment extends React.Component<any, any> {
             this.setState({loading: true})
             //Test action asynch
             this.props.createNewOrder(this.props.demoId,restaurantId,customerPosition,details)
-            doWithMinTime(() => Api.createNewOrder(restaurantId, customerPosition, details)).then((orders) => {
+            doWithMinTime(() => Api.createNewOrder(restaurantId, customerPosition, details)).then((orders:any) => {
                 this.props.setOrders(orders)
                 this.setState({loading: false, done: true})
 

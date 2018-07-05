@@ -19,7 +19,6 @@ class DemoControllerPanel extends React.Component<any, any> {
         super(props)
 
         this.initialStep = this.props.step
-
         this.state = {
             step: this.initialStep,
             stepLabel: getStepLabel(this.initialStep)

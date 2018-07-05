@@ -57,11 +57,13 @@ export const getDemoId = () => ({type: GET_DEMO_ID})
 // export const createNewOrder = (restaurantId:string, customerPosition: [number][number],details: IOrderDetail[]) => ({type: CREATE_NEW_ORDER})
 // export const updateOrderStatus = (orderId: string, status: ORDER_STATUS) => ({type: UPDATE_ORDER_STATUS})
 
-export const getOrders = (demoId:string) => {
+export const getOrders = (demoId:string, demoController:any ) => {
   return (dispatch:any) => {
     Http.get(`${API_REMOTE_URL}/api/${demoId}/orders`)
-        .then(({data: orders}: any) =>
-         setOrders(orders))
+        .then(({data: orders}: any) => {
+          dispatch(setOrders(orders))
+          demoController.init(orders)
+        })
         .catch((err) => {
         if (!err || !err.response || !err.response.status || err.response.status !== 403) {
         console.error(err)}
@@ -70,18 +72,17 @@ export const getOrders = (demoId:string) => {
 }
 
 export const startDemo = () => {
-  return (dispatch:any) => {
-    Http.post(`${API_REMOTE_URL}/api/start-demo`)
-        .then(({data: demo}: any) => {
-            dispatch(setInit(demo))
-        })
-        .catch((err) => {
-          if (!err || !err.response || !err.response.status || err.response.status !== 403) {
-            console.error(err)
-          }
-        })
+  return async (dispatch:any) => {
+    try {
+      const {data : demo} = await Http.post(`${API_REMOTE_URL}/api/start-demo`)
+      console.log("startdemo : ",demo)
+      dispatch(setInit(demo))
+    } catch(err) {
+      if (!err || !err.response || !err.response.status || err.response.status !== 403) {
+        console.error(err)
+      }
     }
-}
+}}
 
 export const createNewOrder = (demoId:string,restaurantId: string, customerPosition: [number, number], details: IOrderDetail[]) =>{
     const orderData = {restaurantId, customerPosition, details}

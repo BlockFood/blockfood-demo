@@ -14,13 +14,13 @@ class Start extends React.Component<any, any> {
         this.state = {
             loading: false
         }
-        this.props.startDemo()
         this.onStartDemo = this.onStartDemo.bind(this)
     }
 
     onStartDemo() {
         this.setState({loading: true})
-        doWithMinTime(() => Api.startDemo()).then(() => this.props.demoController.start())
+        doWithMinTime(() => this.props.startDemo()).then(() => this.props.demoController.start())
+        // doWithMinTime(() => Api.startDemo()).then(() => this.props.demoController.start())
     }
 
     componentDidMount() {

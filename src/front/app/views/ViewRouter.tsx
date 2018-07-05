@@ -20,15 +20,18 @@ import CustomerOrderList from './main/1-customer-views/f-orderList/CustomerOrder
 import RestaurantOverview from './main/2-restaurant-views/a-overview/RestaurantOverview'
 import CourierOverview from './main/3-courier-views/a-overview/CourierOverview'
 import Loader from '../components/loader/Loader'
-import {setOrders,init,getOrders} from '../state/Actions'
+import {setOrders,init,getOrders,setInit} from '../state/Actions'
 
 
 class ViewRouter extends React.Component<any, any> {
+  private demoId:any;
+
     constructor(props: any) {
         super(props)
         const {pathname} = this.props.location
         const demoId = pathname !== Routes.HOME ? pathname.split('/')[1] : null
-        // this.props.init(demoId,this.onError.bind(this))
+        this.props.setInit(demoId)
+        this.demoId = demoId
         Api.init(demoId, this.onError.bind(this))
         this.state = {
             error: false,
@@ -46,28 +49,11 @@ class ViewRouter extends React.Component<any, any> {
     }
 
     componentDidMount() {
+      console.log('je suis ici')
         const {pathname} = this.props.location
         if (pathname !== Routes.HOME) {
-            this.props.getOrders(this.props.demoId);
-            this.props.demoController.init(this.props.orders)
-            this.setState({ready: true})
-            this.props.history.replace(Routes.HOME)
-            this.setState({ready: true})
-            // Api.getOrders(false)
-            //     .then((orders) => {
-            //        this.props.setOrders(orders)
-            //         //this.props.dispatch(setOrders(orders))
-            //         this.props.demoController.init(orders)
-            //         this.setState({ready: true})
-            //     })
-            //     .catch((err) => {
-            //         if (!err || !err.response || !err.response.status || err.response.status !== 403) {
-            //             console.error(err)
-            //         }
-            //
-            //         this.props.history.replace(Routes.HOME)
-            //         this.setState({ready: true})
-            //     })
+          this.props.getOrders(this.demoId, this.props.demoController);
+          this.setState({ready: true})
         }
         else {
             this.setState({ready: true})
@@ -77,7 +63,6 @@ class ViewRouter extends React.Component<any, any> {
     render() {
         const {isMobile} = this.props
         const {error, ready} = this.state
-
         if (error) {
             return <Error/>
         }
@@ -120,7 +105,6 @@ class ViewRouter extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state: IRootState) => {
-  console.log(state.demo.demoId)
     return {
         isMobile: state.application.isMobile,
         demoId: state.demo.demoId,
@@ -131,8 +115,8 @@ const mapStateToProps = (state: IRootState) => {
 const mapDispatchToProps = (dispatch:any) => {
   return {
     setOrders: (orders:any) => dispatch(setOrders(orders)),
-    init: (demoId: string,onError: () => any) => dispatch(init(demoId,onError)),
-    getOrders: (demoId:string) => dispatch(getOrders(demoId))
+    setInit: (demoId: string) => dispatch(setInit(demoId)),
+    getOrders: (demoId:string, demoController: any) => dispatch(getOrders(demoId,demoController))
   }
 }
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(withDemoController(ViewRouter)) as any) as any
