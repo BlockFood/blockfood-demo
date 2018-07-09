@@ -46,6 +46,7 @@ let CUSTOMER_ORDER_LIST_PREVIOUS_ROUTE: any | null = null
 
 const getRouteWithDemoId = (route: string): string => {
     return route.replace(':demoId', Api.getDemoId())
+    
 }
 
 export const getRouteCustomerLocation = (): string => {
