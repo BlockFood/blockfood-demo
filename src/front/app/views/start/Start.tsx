@@ -19,8 +19,12 @@ class Start extends React.Component<any, any> {
 
     onStartDemo() {
         this.setState({loading: true})
-        doWithMinTime(() => this.props.startDemo()).then(() => this.props.demoController.start())
-        // doWithMinTime(() => Api.startDemo()).then(() => this.props.demoController.start())
+        // this.props.startDemo(this.props.demoController)
+        // doWithMinTime(() => this.props.startDemo()).then(() => this.props.demoController.start())
+        doWithMinTime(() => Api.startDemo()).then(() =>{
+        console.log(this.props.location)
+        this.props.demoController.start()
+        })
     }
 
     componentDidMount() {
@@ -45,7 +49,7 @@ class Start extends React.Component<any, any> {
 const mapDispatchToProps = (dispatch:any) => {
   return {
     restart: () => dispatch(restart()),
-    startDemo: () => dispatch(startDemo())
+    startDemo: (demoController:any) => dispatch(startDemo(demoController))
   }
 }
 

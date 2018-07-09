@@ -49,7 +49,6 @@ class ViewRouter extends React.Component<any, any> {
     }
 
     componentDidMount() {
-      console.log('je suis ici')
         const {pathname} = this.props.location
         if (pathname !== Routes.HOME) {
           this.props.getOrders(this.demoId, this.props.demoController);

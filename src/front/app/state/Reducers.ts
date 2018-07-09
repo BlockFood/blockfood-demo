@@ -126,7 +126,6 @@ const init = (state: IDemoState.IDemoState,action:any):IDemoState.IDemoState => 
 }
 
 const setInit = (state: IDemoState.IDemoState,action:any):IDemoState.IDemoState => {
-  console.log('action demoId : ' ,action.demoId)
   return _.assign({},state,{demoId: action.demoId})
 }
 

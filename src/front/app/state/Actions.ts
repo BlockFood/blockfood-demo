@@ -71,18 +71,32 @@ export const getOrders = (demoId:string, demoController:any ) => {
   }
 }
 
-export const startDemo = () => {
-  return async (dispatch:any) => {
-    try {
-      const {data : demo} = await Http.post(`${API_REMOTE_URL}/api/start-demo`)
-      console.log("startdemo : ",demo)
-      dispatch(setInit(demo))
-    } catch(err) {
-      if (!err || !err.response || !err.response.status || err.response.status !== 403) {
-        console.error(err)
-      }
-    }
-}}
+export const startDemo = (demoController:any) => {
+  return (dispatch:any) => {
+  Http.post(`${API_REMOTE_URL}/api/start-demo`)
+      .then(({data: demo}: any) => {
+        dispatch(setInit(demo))
+        demoController.start()
+  })
+      .catch((err) => {
+        if (!err || !err.response || !err.response.status || err.response.status !== 403) {
+          console.error(err)
+        }
+      })
+  }
+}
+
+//   return async (dispatch:any) => {
+//     try {
+//       const {data : demo} = await Http.post(`${API_REMOTE_URL}/api/start-demo`)
+//       console.log("startdemo : ",demo)
+//       dispatch(setInit(demo))
+//     } catch(err) {
+//       if (!err || !err.response || !err.response.status || err.response.status !== 403) {
+//         console.error(err)
+//       }
+//     }
+// }}
 
 export const createNewOrder = (demoId:string,restaurantId: string, customerPosition: [number, number], details: IOrderDetail[]) =>{
     const orderData = {restaurantId, customerPosition, details}
