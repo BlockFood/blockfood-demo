@@ -4,6 +4,7 @@ import {IOrder, IOrderInProgress,IOrderDetail,ORDER_STATUS} from '../../../lib/O
 import * as IDemoState  from './DemoInitialState'
 const API_REMOTE_URL = 'http://localhost:4242'
 import Http from 'axios'
+import Store from './Store'
 
 //ACTION APPLICATION
 
@@ -98,11 +99,17 @@ export const startDemo = (demoController:any) => {
 //     }
 // }}
 
-export const createNewOrder = (demoId:string,restaurantId: string, customerPosition: [number, number], details: IOrderDetail[]) =>{
+
+
+export const createNewOrder = (restaurantId: string, customerPosition: [number, number], details: IOrderDetail[]) =>{
     const orderData = {restaurantId, customerPosition, details}
+    console.log(Store.getState().demo.demoId)
     return (dispatch:any) => {
-    Http.post(`${API_REMOTE_URL}/api/${demoId}/order`, orderData)
-        .then(({data: orders}: any) => dispatch(setOrders(orders)))
+    Http.post(`${API_REMOTE_URL}/api/${Store.getState().demo.demoId}/order`, orderData)
+        .then(({data: orders}: any) =>{
+          console.log(orders)
+          dispatch(setOrders(orders))
+        })
         .catch((err) => {
           if (!err || !err.response || !err.response.status || err.response.status !== 403) {
             console.error(err)
@@ -111,9 +118,9 @@ export const createNewOrder = (demoId:string,restaurantId: string, customerPosit
     }
 }
 
-export const updateOrderStatus = (demoId:string,orderId: string, status: ORDER_STATUS) => {
+export const updateOrderStatus = (orderId: string, status: ORDER_STATUS) => {
     return (dispatch:any) => {
-    Http.put(`${API_REMOTE_URL}/api/${demoId}/order/${orderId}`, {status})
+    Http.put(`${API_REMOTE_URL}/api/${Store.getState().demo.demoId}/order/${orderId}`, {status})
         .then(({data: orders}: any) => dispatch(setOrders(orders)))
         .catch((err) => {
           if (!err || !err.response || !err.response.status || err.response.status !== 403) {

@@ -7,7 +7,7 @@ import {IOrder, ORDER_STATUS} from '../../../../../../lib/Orders'
 import Api from '../../../../api/Api'
 import doWithMinTime from '../../../../utils/DoWithMinTime'
 import {selectOrdersByRestaurantId} from '../../../../state/Selectors'
-import {setOrders} from '../../../../state/Actions'
+import {setOrders,updateOrderStatus} from '../../../../state/Actions'
 import {Order} from '../../../../components/order/Order'
 
 import './RestaurantOverview.scss'
@@ -28,10 +28,10 @@ class RestaurantOverview extends React.Component<any, any> {
         if (!this.state.loadingIds[orderId]) {
             const newLoadingIdsBefore = _.assign({}, this.state.loadingIds, {[orderId]: true})
             this.setState({loadingIds: newLoadingIdsBefore})
-
-            const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, ORDER_STATUS.ACCEPTED))
-
-            this.props.setOrders(orders)
+            this.props.updateOrderStatus(orderId,ORDER_STATUS.ACCEPTED)
+            // const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, ORDER_STATUS.ACCEPTED))
+            //
+            // this.props.setOrders(orders)
             if (this.props.demoController.goToNextStep()) {
                 const newLoadingIdsAfter = _.assign({}, this.state.loadingIds)
                 delete newLoadingIdsAfter[orderId]
@@ -44,10 +44,9 @@ class RestaurantOverview extends React.Component<any, any> {
         if (!this.state.loadingIds[orderId]) {
             const newLoadingIdsBefore = _.assign({}, this.state.loadingIds, {[orderId]: true})
             this.setState({loadingIds: newLoadingIdsBefore})
-
-            const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, ORDER_STATUS.READY))
-
-            this.props.setOrders(orders)
+            this.props.updateOrderStatus(orderId,ORDER_STATUS.READY)
+            // const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, ORDER_STATUS.READY))
+            // this.props.setOrders(orders)
             if (this.props.demoController.goToNextStep()) {
                 const newLoadingIdsAfter = _.assign({}, this.state.loadingIds)
                 delete newLoadingIdsAfter[orderId]
@@ -124,7 +123,8 @@ const mapStatToProps = (state: IRootState, props: any) => {
 
 const mapDispatchToProps = (dispatch:any) => {
   return {
-    setOrders: (orders: IOrder[]) => dispatch(setOrders(orders))
+    setOrders: (orders: IOrder[]) => dispatch(setOrders(orders)),
+    updateOrderStatus: (orderId: string, status: ORDER_STATUS) => dispatch(updateOrderStatus(orderId,status))
   }
 }
 

@@ -13,7 +13,7 @@ import {ORDER_STATUS} from '../../../../../../lib/Orders'
 import {Order} from '../../../../components/order/Order'
 import ScrollableDiv from '../../../../components/scrollableDiv/ScrollableDiv'
 import {selectOrdersForCourier} from '../../../../state/Selectors'
-import {setCourierPosition, setOrders} from '../../../../state/Actions'
+import {setCourierPosition, setOrders,updateOrderStatus} from '../../../../state/Actions'
 
 import './CourierOverview.scss'
 
@@ -70,9 +70,8 @@ class CourierOverview extends React.Component<any, any> {
             }
 
             this.setState({loading: true, ongoing: isOngoingBefore, simulating: isOngoingBefore})
-
+            // this.props.updateOrderStatus(orderId,ORDER_STATUS.ACCEPTED)
             const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, nextStatus))
-
             this.props.setOrders(orders)
             if (this.props.demoController.goToNextStep()) {
                 const nextSelectedOrder = unselectedOrder ? null : _.find(orders, ({id}) => id === orderId)
@@ -197,7 +196,9 @@ const mapStatToProps = (state: IRootState) => {
 const mapDispatchToProps = (dispatch:any) => {
   return {
     setCourierPosition: (courierPosition: [number, number]) => dispatch(setCourierPosition(courierPosition)),
-    setOrders: (orders:any) => dispatch(setOrders(orders))
+    setOrders: (orders:any) => dispatch(setOrders(orders)),
+    updateOrderStatus: (orderId: string, status: ORDER_STATUS) => dispatch(updateOrderStatus(orderId,status))
+
   }
 }
 

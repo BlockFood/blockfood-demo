@@ -17,7 +17,6 @@ class CustomerPosition extends React.Component<any, any> {
 
     constructor(props: any) {
         super(props)
-
         const {restaurantId} = this.props.customerOrderInProgress
         const restaurant = RESTAURANTS_BY_IDS[restaurantId]
         this.restaurantForMap = _.assign({}, {name: restaurant.name}, restaurant.map)

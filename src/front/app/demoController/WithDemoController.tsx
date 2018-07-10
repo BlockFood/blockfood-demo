@@ -103,7 +103,6 @@ export default (WrappedComponent: any) => {
         goToNextStep() {
             const {pathname} = this.props.location
             const {step, orders} = this.props._demoControllerProps
-
             const currentRoute = Routes.getCurrentRoute(pathname) as string
 
             if (step === STEPS.CUSTOMER_SET_LOCATION && currentRoute === Routes.CUSTOMER_LOCATION_ROUTE) {
@@ -135,7 +134,8 @@ export default (WrappedComponent: any) => {
             else if (step === STEPS.CUSTOMER_DO_PAYMENT && currentRoute === Routes.CUSTOMER_PAYMENT_ROUTE) {
               this.props.setHelpMessage(HELP_MESSAGES.START_AS_RESTAURANT, () => {
                   this.props.setStep(STEPS.RESTAURANT_ACCEPT_ORDER)
-                  this.props.history.replace(Routes.getDefaultRouteRestaurant(orders[0].restaurantId))
+                  console.log(this.props._demoControllerProps)
+                  this.props.history.replace(Routes.getDefaultRouteRestaurant(this.props._demoControllerProps.orders[0].restaurantId))
               })
                 // this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_RESTAURANT, () => {
                 //     this.props.dispatch(setStep(STEPS.RESTAURANT_ACCEPT_ORDER))
@@ -156,10 +156,6 @@ export default (WrappedComponent: any) => {
                     this.props.history.replace(Routes.getDefaultRouteCourier())
                 })
 
-                // this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_COURIER, () => {
-                //     this.props.dispatch(setStep(STEPS.COURIER_ACCEPT_ORDER))
-                //     this.props.history.replace(Routes.getDefaultRouteCourier())
-                // }))
 
                 return true
             }
@@ -179,9 +175,6 @@ export default (WrappedComponent: any) => {
                 this.props.setHelpMessage(HELP_MESSAGES.START_FREE_MODE, () => {
                     this.props.setStep(STEPS.FREE_MODE)
                 })
-                // this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_FREE_MODE, () => {
-                //     this.props.dispatch(setStep(STEPS.FREE_MODE))
-                // }))
 
                 return true
             }

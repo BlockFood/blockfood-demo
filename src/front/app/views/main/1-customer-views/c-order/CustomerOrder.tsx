@@ -25,7 +25,6 @@ class CustomerOrder extends React.Component<any, any> {
 
     constructor(props: any) {
         super(props)
-
         const {restaurantId} = this.props.match.params
         this.restaurant = RESTAURANTS_BY_IDS[restaurantId]
         this.menuItems = MENU_ITEMS_BY_IDS[restaurantId]

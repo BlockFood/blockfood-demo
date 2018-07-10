@@ -32,18 +32,23 @@ class CustomerPayment extends React.Component<any, any> {
         if (!this.state.loading) {
             const {restaurantId, details} = this.props.customerOrderInProgress
             const {customerPosition} = this.props
-
             this.setState({loading: true})
             //Test action asynch
-            this.props.createNewOrder(this.props.demoId,restaurantId,customerPosition,details)
-            doWithMinTime(() => Api.createNewOrder(restaurantId, customerPosition, details)).then((orders:any) => {
-                this.props.setOrders(orders)
-                this.setState({loading: false, done: true})
+            this.props.createNewOrder(restaurantId,customerPosition,details)
+            this.setState({loading: false, done: true})
+            if (this.props.demoController.goToNextStep()) {
+              console.log('here')
+                this.props.history.replace(Routes.getRouteCustomerOrderList())
+            }
+            // doWithMinTime(() => Api.createNewOrder(restaurantId, customerPosition, details)).then((orders:any) => {
+            //     this.props.setOrders(orders)
+            //     this.setState({loading: false, done: true})
+            //
+            //     if (this.props.demoController.goToNextStep()) {
+            //         this.props.history.replace(Routes.getRouteCustomerOrderList())
+            //     }
+            // })
 
-                if (this.props.demoController.goToNextStep()) {
-                    this.props.history.replace(Routes.getRouteCustomerOrderList())
-                }
-            })
         }
     }
 
@@ -83,7 +88,7 @@ const mapDispatchToProps = (dispatch:any) => {
   return {
     setCustomerOrderInProgress: (newOrderInProgress:IOrderInProgress | null) => dispatch(setCustomerOrderInProgress(newOrderInProgress)),
     setOrders: (orders: IOrder[]) => dispatch(setOrders(orders)),
-    createNewOrder: (demoId:string,restaurantId: string, customerPosition: [number, number], details: IOrderDetail[]) => dispatch(createNewOrder(demoId,restaurantId,customerPosition,details))
+    createNewOrder: (restaurantId: string, customerPosition: [number, number], details: IOrderDetail[]) => dispatch(createNewOrder(restaurantId,customerPosition,details))
   }
 }
 
