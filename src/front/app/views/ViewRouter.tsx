@@ -32,6 +32,7 @@ class ViewRouter extends React.Component<any, any> {
         const demoId = pathname !== Routes.HOME ? pathname.split('/')[1] : null
         this.props.setInit(demoId)
         this.demoId = demoId
+
         Api.init(demoId, this.onError.bind(this))
         this.state = {
             error: false,
@@ -50,6 +51,7 @@ class ViewRouter extends React.Component<any, any> {
 
     componentDidMount() {
         const {pathname} = this.props.location
+
         if (pathname !== Routes.HOME) {
           this.props.getOrders(this.demoId, this.props.demoController);
           this.setState({ready: true})

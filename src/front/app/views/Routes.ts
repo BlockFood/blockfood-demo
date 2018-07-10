@@ -1,6 +1,8 @@
 import * as _ from 'lodash'
 import {matchPath} from 'react-router-dom'
 import Api from '../api/Api'
+import { createStore, applyMiddleware } from 'redux'
+import Store from '../state/Store'
 
 export const HOME = '/'
 
@@ -45,7 +47,8 @@ const ALL_ROUTES = _.flatten([
 let CUSTOMER_ORDER_LIST_PREVIOUS_ROUTE: any | null = null
 
 const getRouteWithDemoId = (route: string): string => {
-    return route.replace(':demoId', Api.getDemoId())
+    return route.replace(':demoId', Store.getState().demo.demoId)
+    // return route.replace(':demoId', Api.getDemoId())
 }
 
 export const getRouteCustomerLocation = (): string => {

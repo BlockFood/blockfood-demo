@@ -61,7 +61,6 @@ export default (WrappedComponent: any) => {
             this.props.setHelpMessage(HELP_MESSAGES.START_AS_CUSTOMER)
             // this.props.dispatch(setHelpMessage(HELP_MESSAGES.START_AS_CUSTOMER))
             this.props.history.replace(Routes.getDefaultRouteCustomer())
-console.log(this.props.location)
           }
 
 
