@@ -48,26 +48,21 @@ class ViewRouter extends React.Component<any, any> {
     componentDidMount() {
         const {pathname} = this.props.location
         if (pathname !== Routes.HOME) {
-            this.props.getOrders(this.props.demoId);
-            this.props.demoController.init(this.props.orders)
-            this.setState({ready: true})
-            this.props.history.replace(Routes.HOME)
-            this.setState({ready: true})
-            // Api.getOrders(false)
-            //     .then((orders) => {
-            //        this.props.setOrders(orders)
-            //         //this.props.dispatch(setOrders(orders))
-            //         this.props.demoController.init(orders)
-            //         this.setState({ready: true})
-            //     })
-            //     .catch((err) => {
-            //         if (!err || !err.response || !err.response.status || err.response.status !== 403) {
-            //             console.error(err)
-            //         }
-            //
-            //         this.props.history.replace(Routes.HOME)
-            //         this.setState({ready: true})
-            //     })
+            Api.getOrders(false)
+                .then((orders) => {
+                   this.props.setOrders(orders)
+                    //this.props.dispatch(setOrders(orders))
+                    this.props.demoController.init(orders)
+                    this.setState({ready: true})
+                })
+                .catch((err) => {
+                    if (!err || !err.response || !err.response.status || err.response.status !== 403) {
+                        console.error(err)
+                    }
+
+                    this.props.history.replace(Routes.HOME)
+                    this.setState({ready: true})
+                })
         }
         else {
             this.setState({ready: true})
