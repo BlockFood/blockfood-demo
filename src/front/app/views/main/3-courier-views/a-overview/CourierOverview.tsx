@@ -14,20 +14,20 @@ import {Order} from '../../../../components/order/Order'
 import ScrollableDiv from '../../../../components/scrollableDiv/ScrollableDiv'
 import {selectOrdersForCourier} from '../../../../state/Selectors'
 import {setCourierPosition, setOrders,updateOrderStatus} from '../../../../state/Actions'
+import Store from '../../../../state/Store'
 
 import './CourierOverview.scss'
 
 class CourierOverview extends React.Component<any, any> {
     private restaurantsForMap: any
     private containerElement: HTMLElement
-
     constructor(props: any) {
         super(props)
 
         this.restaurantsForMap = _.mapValues(RESTAURANTS_BY_IDS, (restaurant) => _.assign({}, {name: restaurant.name}, restaurant.map))
 
         const selectedOrder = _.find(this.props.orders, order => [ORDER_STATUS.PICKING, ORDER_STATUS.DELIVERING].indexOf(order.status) !== -1) || null
-
+        console.log('selected order',selectedOrder)
         this.state = {
             selectedOrder,
             ongoing: !!selectedOrder,
@@ -53,7 +53,6 @@ class CourierOverview extends React.Component<any, any> {
     private async onOrderValid(orderId: string) {
         if (!this.state.ongoing || orderId === this.state.selectedOrder.id) {
             const order = _.find(this.props.orders, ({id}) => id === orderId)
-
             let isOngoingBefore = true, isOnGoingAfter = true
             let unselectedOrder = false
             let nextStatus: ORDER_STATUS
@@ -70,13 +69,19 @@ class CourierOverview extends React.Component<any, any> {
             }
 
             this.setState({loading: true, ongoing: isOngoingBefore, simulating: isOngoingBefore})
-            // this.props.updateOrderStatus(orderId,ORDER_STATUS.ACCEPTED)
-            const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, nextStatus))
-            this.props.setOrders(orders)
+            this.props.updateOrderStatus(orderId,nextStatus)
             if (this.props.demoController.goToNextStep()) {
-                const nextSelectedOrder = unselectedOrder ? null : _.find(orders, ({id}) => id === orderId)
+              console.log(this.props.orders)
+                const nextSelectedOrder = unselectedOrder ? null : _.find(this.props.orders, ({id}) => id === orderId)
                 this.setState({selectedOrder: nextSelectedOrder, loading: false, ongoing: isOnGoingAfter, simulating: isOnGoingAfter})
             }
+            // const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, nextStatus))
+            // this.props.setOrders(orders)
+            // console.log(orders)
+            // if (this.props.demoController.goToNextStep()) {
+            //     const nextSelectedOrder = unselectedOrder ? null : _.find(orders, ({id}) => id === orderId)
+            //     this.setState({selectedOrder: nextSelectedOrder, loading: false, ongoing: isOnGoingAfter, simulating: isOnGoingAfter})
+            // }
         }
     }
 
@@ -113,14 +118,17 @@ class CourierOverview extends React.Component<any, any> {
     }
 
     public render() {
+      console.log(this.props.orders)
         const {courierPosition, orders} = this.props
         const {selectedOrder, loading, ongoing, simulating} = this.state
-
         const customerPosition =  selectedOrder ? selectedOrder.customerPosition : null
         const restaurantsForMap = selectedOrder ? this.restaurantsForMap[selectedOrder.restaurantId] : _.values(this.restaurantsForMap)
 
         let mapStep = STEPS.SET_COURIER_POSITION
+        console.log('ongoing' ,ongoing)
+        console.log('status' ,selectedOrder.status)
         if (ongoing && selectedOrder.status === ORDER_STATUS.PICKING) {
+          console.log('here')
             mapStep = STEPS.SIMULATE_COURIER_TO_RESTAURANT
         }
         else if (ongoing && selectedOrder.status === ORDER_STATUS.DELIVERING) {

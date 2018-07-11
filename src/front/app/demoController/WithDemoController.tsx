@@ -162,12 +162,14 @@ export default (WrappedComponent: any) => {
             else if (step === STEPS.COURIER_ACCEPT_ORDER) {
                 this.props.setStep(STEPS.COURIER_NOTIFY_ORDER_PICKED)
                 // this.props.dispatch(setStep(STEPS.COURIER_NOTIFY_ORDER_PICKED))
-
+                console.log("hello")
                 return true
             }
             else if (step === STEPS.COURIER_NOTIFY_ORDER_PICKED) {
                 this.props.setStep(STEPS.COURIER_NOTIFY_ORDER_DELIVERED)
                 // this.props.dispatch(setStep(STEPS.COURIER_NOTIFY_ORDER_DELIVERED))
+                console.log("hell55o")
+
                 return true
 
             }
