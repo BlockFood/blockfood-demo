@@ -121,9 +121,7 @@ class CourierOverview extends React.Component<any, any> {
     }
 
     public render() {
-      console.log("NEW RENDERING")
       console.log("State id: ",this.state.i)
-
         const {courierPosition, orders} = this.props
         const {selectedOrder, loading, ongoing, simulating} = this.state
         console.log("Selected Order : ",selectedOrder)
