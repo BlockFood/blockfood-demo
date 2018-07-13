@@ -27,12 +27,13 @@ class CourierOverview extends React.Component<any, any> {
         this.restaurantsForMap = _.mapValues(RESTAURANTS_BY_IDS, (restaurant) => _.assign({}, {name: restaurant.name}, restaurant.map))
         const selectedOrder = _.find(this.props.orders, order => [ORDER_STATUS.PICKING, ORDER_STATUS.DELIVERING].indexOf(order.status) !== -1) || null
         console.log('selected order',selectedOrder,"props",this.props.orders)
+        const id = _.indexOf(this.props.orders,selectedOrder)
         this.state = {
             selectedOrder,
             ongoing: !!selectedOrder,
             loading: false,
             simulating: !!selectedOrder,
-            i:0
+            i:id
         }
 
         this.onCourierSet = this.onCourierSet.bind(this)
@@ -73,7 +74,8 @@ class CourierOverview extends React.Component<any, any> {
             if (this.props.demoController.goToNextStep()) {
                 const nextSelectedOrder = unselectedOrder ? null : _.find(this.props.orders, ({id}) => id === orderId)
                 console.log("next Selector",nextSelectedOrder)
-                this.setState({selectedOrder: nextSelectedOrder, loading: false, ongoing: isOnGoingAfter, simulating: isOnGoingAfter})
+                const id = _.indexOf(this.props.orders,order)
+                this.setState({selectedOrder: nextSelectedOrder, loading: false, ongoing: isOnGoingAfter, simulating: isOnGoingAfter,i: id})
             }
             // const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, nextStatus))
             // this.props.setOrders(orders)
