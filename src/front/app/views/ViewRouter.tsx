@@ -2,7 +2,7 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Switch, Route, Redirect} from 'react-router'
 import {IRootState} from '../state/Reducers'
-import Api from '../api/Api'
+// import Api from '../api/Api'
 import * as Routes from './Routes'
 import withDemoController from '../demoController/WithDemoController'
 import CubeTransitionWrapper from '../components/cubeTransition/CubeTransitionWrapper'
@@ -24,16 +24,15 @@ import {setOrders,init,getOrders,setInit} from '../state/Actions'
 
 
 class ViewRouter extends React.Component<any, any> {
-  private demoId:any;
+  private demoId:number;
 
     constructor(props: any) {
         super(props)
         const {pathname} = this.props.location
         const demoId = pathname !== Routes.HOME ? pathname.split('/')[1] : null
         this.props.setInit(demoId)
+        console.log(demoId)
         this.demoId = demoId
-
-        Api.init(demoId, this.onError.bind(this))
         this.state = {
             error: false,
             ready: false
@@ -116,8 +115,8 @@ const mapStateToProps = (state: IRootState) => {
 const mapDispatchToProps = (dispatch:any) => {
   return {
     setOrders: (orders:any) => dispatch(setOrders(orders)),
-    setInit: (demoId: string) => dispatch(setInit(demoId)),
-    getOrders: (demoId:string, demoController: any) => dispatch(getOrders(demoId,demoController))
+    setInit: (demoId: number) => dispatch(setInit(demoId)),
+    getOrders: (demoId:number, demoController: any) => dispatch(getOrders(demoId,demoController))
   }
 }
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(withDemoController(ViewRouter)) as any) as any

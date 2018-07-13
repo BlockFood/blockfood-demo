@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import Api from '../../api/Api'
+// import Api from '../../api/Api'
 import doWithMinTime from '../../utils/DoWithMinTime'
 import doWithTime from '../../utils/DoWithTime'
 import withDemoController from '../../demoController/WithDemoController'
@@ -20,11 +20,7 @@ class Start extends React.Component<any, any> {
 
     onStartDemo() {
         this.setState({loading: true})
-        console.log(this.props.startDemo)
         doWithTime(this.props.startDemo,this.props.demoController)
-        // doWithMinTime(() => Api.startDemo()).then(() =>{
-        // this.props.demoController.start()
-        // })
     }
 
     componentDidMount() {

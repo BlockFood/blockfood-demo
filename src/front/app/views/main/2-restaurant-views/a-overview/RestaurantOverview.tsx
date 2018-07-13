@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {IRootState} from '../../../../state/Reducers'
 import withDemoController from '../../../../demoController/WithDemoController'
 import {IOrder, ORDER_STATUS} from '../../../../../../lib/Orders'
-import Api from '../../../../api/Api'
+// import Api from '../../../../api/Api'
 import doWithMinTime from '../../../../utils/DoWithMinTime'
 import doWithTime from '../../../../utils/DoWithTime'
 import {selectOrdersByRestaurantId} from '../../../../state/Selectors'
@@ -30,9 +30,6 @@ class RestaurantOverview extends React.Component<any, any> {
             const newLoadingIdsBefore = _.assign({}, this.state.loadingIds, {[orderId]: true})
             this.setState({loadingIds: newLoadingIdsBefore})
             this.props.updateOrderStatus(orderId,ORDER_STATUS.ACCEPTED)
-            // const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, ORDER_STATUS.ACCEPTED))
-            //
-            // this.props.setOrders(orders)
             if (this.props.demoController.goToNextStep()) {
                 const newLoadingIdsAfter = _.assign({}, this.state.loadingIds)
                 delete newLoadingIdsAfter[orderId]
@@ -46,8 +43,6 @@ class RestaurantOverview extends React.Component<any, any> {
             const newLoadingIdsBefore = _.assign({}, this.state.loadingIds, {[orderId]: true})
             this.setState({loadingIds: newLoadingIdsBefore})
             this.props.updateOrderStatus(orderId,ORDER_STATUS.READY)
-            // const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, ORDER_STATUS.READY))
-            // this.props.setOrders(orders)
             if (this.props.demoController.goToNextStep()) {
                 const newLoadingIdsAfter = _.assign({}, this.state.loadingIds)
                 delete newLoadingIdsAfter[orderId]

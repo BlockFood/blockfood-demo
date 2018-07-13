@@ -8,7 +8,7 @@ import {RESTAURANTS_BY_IDS} from '../../../../../../lib/Restaurants'
 import Map, {STEPS} from '../../../../components/map/Map'
 import MapData from '../../../../components/map/MapData'
 import doWithMinTime from '../../../../utils/DoWithMinTime'
-import Api from '../../../../api/Api'
+// import Api from '../../../../api/Api'
 import {ORDER_STATUS} from '../../../../../../lib/Orders'
 import {Order} from '../../../../components/order/Order'
 import ScrollableDiv from '../../../../components/scrollableDiv/ScrollableDiv'
@@ -77,13 +77,7 @@ class CourierOverview extends React.Component<any, any> {
                 const id = _.indexOf(this.props.orders,order)
                 this.setState({selectedOrder: nextSelectedOrder, loading: false, ongoing: isOnGoingAfter, simulating: isOnGoingAfter,i: id})
             }
-            // const orders = await doWithMinTime(() => Api.updateOrderStatus(orderId, nextStatus))
-            // this.props.setOrders(orders)
-            // console.log(orders)
-            // if (this.props.demoController.goToNextStep()) {
-            //     const nextSelectedOrder = unselectedOrder ? null : _.find(orders, ({id}) => id === orderId)
-            //     this.setState({selectedOrder: nextSelectedOrder, loading: false, ongoing: isOnGoingAfter, simulating: isOnGoingAfter})
-            // }
+    
         }
     }
 

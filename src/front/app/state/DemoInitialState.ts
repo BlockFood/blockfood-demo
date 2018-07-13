@@ -4,14 +4,14 @@ import * as _ from 'lodash'
 
 
 export interface IDemoState {
-    demoId: string,
+    demoId: number,
     onError: () => any,
 }
 
 
 
 export const DEFAULT_STATE: IDemoState = {
-    demoId: '',
+    demoId: 0,
     onError: () => {return null},
 }
 

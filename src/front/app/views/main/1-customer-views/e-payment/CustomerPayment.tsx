@@ -5,7 +5,7 @@ import withDemoController from '../../../../demoController/WithDemoController'
 import * as Routes from '../../../Routes'
 import doWithMinTime from '../../../../utils/DoWithMinTime'
 import {IOrder, IOrderInProgress,IOrderDetail} from '../../../../../../lib/Orders'
-import Api from '../../../../api/Api'
+// import Api from '../../../../api/Api'
 import GoBack from '../../../../components/goBack/GoBack'
 import {setCustomerOrderInProgress, setOrders,createNewOrder} from '../../../../state/Actions'
 
@@ -40,15 +40,6 @@ class CustomerPayment extends React.Component<any, any> {
               console.log('here')
                 this.props.history.replace(Routes.getRouteCustomerOrderList())
             }
-            // doWithMinTime(() => Api.createNewOrder(restaurantId, customerPosition, details)).then((orders:any) => {
-            //     this.props.setOrders(orders)
-            //     this.setState({loading: false, done: true})
-            //
-            //     if (this.props.demoController.goToNextStep()) {
-            //         this.props.history.replace(Routes.getRouteCustomerOrderList())
-            //     }
-            // })
-
         }
     }
 

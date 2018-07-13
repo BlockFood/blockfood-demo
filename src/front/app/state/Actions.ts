@@ -3,11 +3,12 @@ import {HELP_MESSAGES} from '../demoController/types/HelpMessages'
 import {IOrder, IOrderInProgress,IOrderDetail,ORDER_STATUS} from '../../../lib/Orders'
 import * as IDemoState  from './DemoInitialState'
 const API_REMOTE_URL = 'http://localhost:4242'
+import {web3,bStartDemo} from '../api/Api'
 import Http from 'axios'
 import Store from './Store'
 
 //ACTION APPLICATION
-
+console.log(bStartDemo)
 export const SET_STEP = 'SET_STEP'
 export const SET_HELP_MESSAGE = 'SET_HELP_MESSAGE'
 export const SET_ORDERS = 'SET_ORDERS'
@@ -50,15 +51,15 @@ export const CREATE_NEW_ORDER = 'CREATE_NEW_ORDER'
 export const UPDATE_ORDER_STATUS = 'UPDATE_ORDER_STATUS'
 export const GET_ORDERS = 'GET_ORDERS'
 
-export const init = (demoId: string,onError: () => any) => ({type: INIT,demoId,onError})
-export const setInit = (demoId: string) => ({type: SET_INIT,demoId})
+export const init = (demoId: number,onError: () => any) => ({type: INIT,demoId,onError})
+export const setInit = (demoId: number) => ({type: SET_INIT,demoId})
 export const getDemoId = () => ({type: GET_DEMO_ID})
 
 // export const startDemo = () => ({type: START_DEMO})
 // export const createNewOrder = (restaurantId:string, customerPosition: [number][number],details: IOrderDetail[]) => ({type: CREATE_NEW_ORDER})
 // export const updateOrderStatus = (orderId: string, status: ORDER_STATUS) => ({type: UPDATE_ORDER_STATUS})
 
-export const getOrders = (demoId:string, demoController:any ) => {
+export const getOrders = (demoId:number, demoController:any ) => {
   return (dispatch:any) => {
     Http.get(`${API_REMOTE_URL}/api/${demoId}/orders`)
         .then(({data: orders}: any) => {
@@ -74,17 +75,9 @@ export const getOrders = (demoId:string, demoController:any ) => {
 
 export const startDemo = (demoController:any) => {
   return (dispatch:any) => {
-  Http.post(`${API_REMOTE_URL}/api/start-demo`)
-      .then(({data: demo}: any) => {
-        dispatch(setInit(demo))
-        demoController.start()
-  })
-      .catch((err) => {
-        if (!err || !err.response || !err.response.status || err.response.status !== 403) {
-          console.error(err)
-        }
-      })
-  }
+    dispatch(setInit(bStartDemo()))
+    demoController.start()
+}
 }
 
 //   return async (dispatch:any) => {
